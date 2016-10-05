@@ -14,7 +14,7 @@ char( *arr)[]; // Pointer to an array of char
 * When it comes to arrays and pointers, read from right to left.
 
 ### 6.3.3 Names
-* Nonlocal names starting with an underscore are reserved for special facilities in the implementation and the run-time environtment, so such names should not be used in application programs. Similarly, names starting with a double underscore (__) or an underscore followed by an uppercase letter (e.g., _Foo) are reserved.
+* Nonlocal names starting with an underscore are reserved for special facilities in the implementation and the run-time environment, so such names should not be used in application programs. Similarly, names starting with a double underscore (__) or an underscore followed by an uppercase letter (e.g., _Foo) are reserved.
 * Use all capitals for macros and never for non-macros (not even for non-macro constants). Use underscores to separate words in an identifier.
 * Language and the standard library use lowercase for types; this can be seen as a standard.
 
@@ -33,8 +33,8 @@ void foo() {
 
 ### 6.3.5 Initialization
 
-* Initialize variables with **{}** (list initializer) instead of traditional **=** initializaer.
-* List initializers does not allow narrowing (check for precission lose and unsafe implicit type casts). They can also be customized for user defined objects.
+* Initialize variables with **{}** (list initializer) instead of traditional **=** initializer.
+* List initializers does not allow narrowing (check for precision lose and unsafe implicit type casts). They can also be customized for user defined objects.
 * When no argument is supplied to a list initializer, an object is initialized with its default constructor or default value.
 
 ```c++
@@ -81,4 +81,16 @@ std::cout << "x is " << x << std::endl; // x is 6
 	* Always refers to the object it was initialized with.
 	* There's no "null reference".
 
-#### 7.7.1 Lvalue References
+### 7.7.1 Lvalue References
+* **T&** lval;
+* The value of a reference cannot be changed after initialization.
+* Cannot define an array of references.
+* The initializer for a "plain" **T&** must be an lvalue of type **T**.
+
+### 7.7.2 Rvalue References
+* **T&&** rval;
+* Both a **const** lvalue reference and a rvalue reference can bind to an rvalue, but their purposes are fundamentally different:
+	* We use rvalue references to implement a "destructive read" for optimization of what would otherwise have required a copy.
+	* We use a **const** lvalue reference to prevent modification of an argument.
+* Use **move()** instead of **static_cast\<T&&\>(x)** to get a rvalue reference.
+* 
