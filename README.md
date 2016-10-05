@@ -70,6 +70,7 @@ ___
 
 ### 7.4.2 Multidimensional Arrays
 * When n-dimensional array is used as function argument, the last n - 1 dimensions' sizes has to be known by the compiler.
+
 ```c++
 void foo1(int arr[][]); // error: array has incomplete element type 'int []'
 void foo2(int arr[][5]); // OK
