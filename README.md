@@ -20,7 +20,7 @@ std::cout << "age is " << p.age() << std::endl; // age is 21
 
 ```
 
-* **\*** is prefix, **[]** and **()** are postfix; the postfix declarator operators bind tighter than the prefix ones.
+* ***** is prefix, **[]** and **()** are postfix; the postfix declarator operators bind tighter than the prefix ones.
 * When it comes to arrays and pointers, read from right to left.
 
 ```c++
