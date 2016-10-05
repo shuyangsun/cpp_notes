@@ -93,4 +93,8 @@ std::cout << "x is " << x << std::endl; // x is 6
 	* We use rvalue references to implement a "destructive read" for optimization of what would otherwise have required a copy.
 	* We use a **const** lvalue reference to prevent modification of an argument.
 * Use **move()** instead of **static_cast\<T&&\>(x)** to get a rvalue reference.
-* 
+
+### 7.7.4 Pointers and References
+* If you need to change which object to refer to, use a pointer.
+* If you want to be sure that a name always refers to the same object, use a reference.
+* If you want to use a user-defined (overloaded) operator on something that refers to an object, use a reference.
