@@ -1,5 +1,8 @@
 # C++ Notes
 
+___
+___
+
 ## 6. Types and Declarations
 
 ### 6.3.1 The Structure of Declarations
@@ -62,6 +65,7 @@ std::cout << "age is " << p.age() << std::endl; // age is 21
 * **auto** and **decltype()** simply report the type of an expression already known to the compiler.
 * **decltype(expr)** is the type of **expr**, return type of **expr** must can be known by the compiler.
 
+___
 ## 7. Pointers, Arrays, and References
 
 ### 7.7 References
@@ -98,3 +102,6 @@ std::cout << "x is " << x << std::endl; // x is 6
 * If you need to change which object to refer to, use a pointer.
 * If you want to be sure that a name always refers to the same object, use a reference.
 * If you want to use a user-defined (overloaded) operator on something that refers to an object, use a reference.
+
+___
+## 8. Structures, Unions, and Enumerations
