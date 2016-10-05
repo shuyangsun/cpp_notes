@@ -124,3 +124,6 @@ std::cout << "x is " << x << std::endl; // x is 6
 
 ___
 ## 8. Structures, Unions, and Enumerations
+
+### 8.2 Structures
+* There's a terminating **;** (semicolon) at the end of structure definition.
