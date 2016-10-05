@@ -74,6 +74,7 @@ ___
 ```c++
 int arr1[][]; // error: array has incomplete element type 'int []'
 int arr2[][5]; // error: definition of variable with array type needs an explicit size or an initializer
+int arr3[3][5]; // OK
 ```
 
 * When n-dimensional array is used as function argument, only the last n - 1 dimensions' sizes has to be known by the compiler.
