@@ -2,31 +2,65 @@
 
 ## 6. Types and Declarations
 
-* Initialize variables with **{}** (list initializer) instead of traditional **=** initializaer. List initializers check for precission lose and unsafe implicit type casts. They can also be customized for user defined objects.
+### 6.3.1 The Structure of Declarations
+
+* * is prefix, **[]** and **()** are postfix; the postfix declarator operators bind tighter than the prefix ones.
+
+```c++
+char *arr[]; // Array of pointers to char
+char( *arr)[]; // Pointer to an array of char
+```
+
+* When it comes to arrays and pointers, read from right to left.
+
+### 6.3.3 Names
+* Nonlocal names starting with an underscore are reserved for special facilities in the implementation and the run-time environtment, so such names should not be used in application programs. Similarly, names starting with a double underscore (__) or an underscore followed by an uppercase letter (e.g., _Foo) are reserved.
+* Use all capitals for macros and never for non-macros (not even for non-macro constants). Use underscores to separate words in an identifier.
+* Language and the standard library use lowercase for types; this can be seen as a standard.
+
+### 6.3.4 Scope
+* A hidden global name can be referred to using the scope resolution operator **::**.
+
+```c++
+int x = 6;
+
+void foo() {
+	int x = 1;
+	x = 2; // Local x := 2
+	::x = 8; // Global x := 8
+}
+```
+
+### 6.3.5 Initialization
+
+* Initialize variables with **{}** (list initializer) instead of traditional **=** initializaer.
+* List initializers does not allow narrowing (check for precission lose and unsafe implicit type casts). They can also be customized for user defined objects.
 * When no argument is supplied to a list initializer, an object is initialized with its default constructor or default value.
 
 ```c++
-class Person {
+class person {
 public:
-	Person(): ag(21) { } // Default age is 21
+	person(): ag(21) { } // Default age is 21
 	unsigned short age() { return this->ag; }
 private:
 	unsigned short ag;
 };
 
+// Initialize with empty list initializers
+int x {};
+person p {};
 
-Person p {}; // Initialize with an empty list initializer
+std::cout << "x is " << x << std::endl; // x is 0
 std::cout << "age is " << p.age() << std::endl; // age is 21
 
 ```
 
-* * is prefix, **[]** and **()** are postfix; the postfix declarator operators bind tighter than the prefix ones.
-* When it comes to arrays and pointers, read from right to left.
+* Local variables and objects created on the free store are not initialized by default unless they are of user-defined types with a default constructor.
+* Prefer **=** rather than **{}** when using **auto**.
 
-```c++
-char *arr[]; // array of pointers to **char**
-char( *arr)[]; // Pointer to an array of char
-```
+### 6.3.6 Deducing a Type: auto and decltype()
+* **auto** and **decltype()** simply report the type of an expression already known to the compiler.
+* **decltype(expr)** is the type of **expr**, return type of **expr** must can be known by the compiler.
 
 ## 7. Pointers, Arrays, and References
 
