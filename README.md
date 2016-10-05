@@ -69,7 +69,14 @@ ___
 ## 7. Pointers, Arrays, and References
 
 ### 7.4.2 Multidimensional Arrays
-* When n-dimensional array is used as function argument, the last n - 1 dimensions' sizes has to be known by the compiler.
+* Sizes of all dimensions for variables of n-dimensional array has to be known by the compiler
+
+```c++
+int arr1[][]; // error: array has incomplete element type 'int []'
+int arr2[][5]; // error: definition of variable with array type needs an explicit size or an initializer
+```
+
+* When n-dimensional array is used as function argument, only the last n - 1 dimensions' sizes has to be known by the compiler.
 
 ```c++
 void foo1(int arr[][]); // error: array has incomplete element type 'int []'
