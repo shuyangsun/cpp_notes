@@ -68,6 +68,16 @@ std::cout << "age is " << p.age() << std::endl; // age is 21
 ___
 ## 7. Pointers, Arrays, and References
 
+### 7.4.2 Multidimensional Arrays
+* When n-dimensional array is used as function argument, the last n - 1 dimensions' sizes has to be known by the compiler.
+```c++
+void foo1(int arr[][]); // error: array has incomplete element type 'int []'
+void foo2(int arr[][5]); // OK
+void foo3(int arr[5][]); // error: array has incomplete element type 'int []'
+void foo4(int arr[][][5]); // error: array has incomplete element type 'int [][5]'
+void foo5(int arr[][3][5]); // OK
+```
+
 ### 7.7 References
 * A reference is an alias for an object, and does not impose performance overhead compared to pointers.
 
