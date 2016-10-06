@@ -384,8 +384,8 @@ enum sorting_order {
 	ascending=9, descending // Can be accessed directly; converted to integers, 0 is default, and goes up.
 };
 
-sorting_order order1 = sorting_order::ascending; // OK
-sorting_order order2 = descending; // OK
+sorting_order order1 {sorting_order::ascending}; // OK
+sorting_order order2 {descending}; // OK
 std::cout << order1 << std::endl; // 9
 std::cout << order2 << std::endl; // 10
 ```
@@ -401,8 +401,62 @@ enum class color: char {
 	red='r', green='g', blue='b'
 };
 
-color light = color::red;
+color light {color::red};
 std::cout << light << std::endl;
 // error: invalid operands to binary expression ('ostream' (aka 'basic_ostream<char>') and 'color')
 std::cout << static_cast<char>(light) << std::endl; // r
 ```
+
+* Using bit-wise operators (e.g., **|**, **&**) needs explicit casting of **enum class**.
+
+```c++
+enum class options {
+	a = 1, b = 2, c = 4, d = 8
+};
+	
+options opt1 {options::a};
+options opt2 {options::c};
+std::cout << (opt1 | opt2) << std::endl;
+// error: invalid operands to binary expression ('options' and 'options')
+std::cout << (static_cast<int>(opt1) | static_cast<int>(opt2)) << std::endl; // 5
+```
+
+* Even if two enumerators of **enum class**es have the same underlying value, they cannot be compared with each other (which is not true for plain **enum**).
+
+```c++
+enum class light {
+	red, green, yellow
+};
+	
+enum class color {
+	red, green, blue
+};
+	
+light red_light {light::red};
+color red_color {color::red};
+bool same = red_light == red_color;
+// warning: comparison of two values with different enumeration types ('light' and 'color')
+
+
+enum state {
+	new_york, iowa, illinois
+};
+
+enum city {
+	new_york, // error: redefinition of enumerator 'new_york'
+	nyc, // OK
+	ames, chicago
+};
+
+state new_york_state {new_york};
+city new_york_city {nyc};
+bool same = new_york_city == new_york_state; // true (NOT GOOD!)
+```
+
+#### 8.4.3 Unnamed enums
+* A plain **enum** can be unnamed, we use that when all we need is a set of integer constants, rather than a type to use for variables.
+
+```c++
+enum { up=1, left, down, right };
+```
+
