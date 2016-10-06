@@ -1,7 +1,7 @@
 # C++ Notes
 
 ___
-___
+
 
 ## 6. Types and Declarations
 
@@ -126,4 +126,53 @@ ___
 ## 8. Structures, Unions, and Enumerations
 
 ### 8.2 Structures
-* There's a terminating **;** (semicolon) at the end of structure definition.
+* There's a terminating **;** (semicolon) at the end of structure definition, each member is also terminated by **;**.
+* Structs can be initialized using **{}** notation.
+
+```c++
+struct person {
+	const char *first_name;
+	const char *last_name;
+	unsigned short age;
+};
+
+person me {"Wolve", "Rine", 658};
+```
+
+#### 8.2.1 struct Layout
+* Members are allocated in memmory in declaration order.
+* The size of an object of a **struct** is not neccessarily the sum of the sizes of it's members, because they have to be properly *aligned* in the machine memory.
+* Can minimize wasted space by simply ordering members by size (largest member first).
+* Use of multiple access specifiers (i.e., **public**, **private**, or **protected**) can affect layout.
+
+```c++
+// Allocation 1 (on Intel based macOS, assuming word size is 8 bytes)
+struct product {
+	short year_released;
+	const char *name;
+	short month_released;
+};
+// Total: 3 words
+```
+
+| Member | Memmory Space | Number of Bytes |
+| --- | --- | --- |
+| year_released | == | 2 |
+| name | ======== | 8 |
+| month_released | == | 2 |
+
+```c++
+// Allocation 2 (on Intel based macOS, assuming word size is 8 bytes)
+struct product {
+	const char *name;
+	short year_released;
+	short month_released;
+};
+// Total: 2 words
+```
+
+| Member | Memmory Space | Number of Bytes |
+| --- | --- | --- |
+| name | ======== | 8 |
+| (year\_released, month\_released) | ==== | 4 |
+
