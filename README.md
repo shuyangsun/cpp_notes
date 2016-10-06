@@ -318,7 +318,7 @@ zip_code ames {50010}; // error: no matching constructor for initialization of '
 
 ```
 
-#### 8.3.2
+#### 8.3.2 Anonymous unions
 * An anonymous **union** is an object, not a type, and its members can be accessed without mentioning an object name.
 * We can use members of an anonymous **union** exactly as we use other members of a class - as long as we remember that **union** members really can be used only one at a time.
 
