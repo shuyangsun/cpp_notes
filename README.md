@@ -241,3 +241,26 @@ person::person(const char *f_name, const char *l_name, const unsigned short ag):
 person me {"Shuyang", "Sun", 23};
 person alien {"E", "T", 290};
 ```
+
+#### 8.2.5 Type Equivalence
+* Two structs are different even when they have the same members.
+
+#### 8.2.6 Plain Old Data
+* POD can be copied very efficiently by using block move machine instructions (e.g., **std::memcpy()**).
+* To be a POD, the object must:
+	* Not have a complicated layout (e.g., with a **vptr**).
+	* Not have nonstandard (user-defined) copy semantics.
+	* Have a trivial default constructor.
+* **is_pod** in standard-library defined in **\<type_traits\>** allows us to ask if a type is POD.
+
+```c++
+struct S1 { int x; };
+struct S2 { int x; S2(int num): x{num} {}; }; // Has customized constructor, no default constructor.
+struct S3 { int x; S3(int num): x{num} {}; S3() {}; }; // Has default constructor.
+	
+std::cout << std::is_pod<int>::value << std::endl; // 1
+	
+std::cout << std::is_pod<S1>::value << std::endl; // 1
+std::cout << std::is_pod<S2>::value << std::endl; // 0
+std::cout << std::is_pod<S3>::value << std::endl; // 0
+```
