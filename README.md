@@ -140,8 +140,8 @@ person me {"Wolve", "Rine", 658};
 ```
 
 #### 8.2.1 struct Layout
-* Members are allocated in memmory in declaration order.
-* The size of an object of a **struct** is not neccessarily the sum of the sizes of it's members, because they have to be properly *aligned* in the machine memory.
+* Members are allocated in memory in declaration order.
+* The size of an object of a **struct** is not necessarily the sum of the sizes of it's members, because they have to be properly *aligned* in the machine memory.
 * Can minimize wasted space by simply ordering members by size (largest member first).
 * Use of multiple access specifiers (i.e., **public**, **private**, or **protected**) can affect layout.
 
@@ -155,7 +155,7 @@ struct product {
 // Total: 3 words
 ```
 
-| Member | Memmory Space | Number of Bytes |
+| Member | Memory Space | Number of Bytes |
 | --- | --- | --- |
 | year_released | == | 2 |
 | name | ======== | 8 |
@@ -171,7 +171,7 @@ struct product {
 // Total: 2 words
 ```
 
-| Member | Memmory Space | Number of Bytes |
+| Member | Memory Space | Number of Bytes |
 | --- | --- | --- |
 | name | ======== | 8 |
 | (year\_released, month\_released) | ==== | 4 |
@@ -214,3 +214,30 @@ struct stat { /* ... */ }
 int stat(char *name, struct stat* buf);
 ```
 
+#### 8.2.3 Structures and Classes
+* A **struct** is simply a **class** where the members are public by default. So, a **struct** can have member functions. In particular, a **struct** can have constructors.
+* Use list initializer to initialize the structure with default values, even if no constructor is defined
+
+```c++
+struct person {
+	const char *first_name;
+	const char *last_name;
+	unsigned short age;
+	person(const char *f_name, const char *l_name, const unsigned short ag);
+};
+
+person::person(const char *f_name, const char *l_name, const unsigned short ag):
+	first_name{f_name},
+	last_name{l_name}
+{
+	if (ag < 150) {
+		age = ag;
+	} else {
+		std::cerr << "Trying to initialize an alien." << std::endl;
+		exit(1);
+	}
+}
+
+person me {"Shuyang", "Sun", 23};
+person alien {"E", "T", 290};
+```
