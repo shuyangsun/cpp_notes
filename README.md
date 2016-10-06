@@ -176,3 +176,41 @@ struct product {
 | name | ======== | 8 |
 | (year\_released, month\_released) | ==== | 4 |
 
+
+#### 8.2.2 struct Names
+* The name of a type becomes available for use immediately after it has been encountered and not just after the complete declaration has been seen.
+* It is not possible to declare new objects of a **struct** until its complete declaration has been seen, because the compiler is not able to determine the size of that **struct** object (but is able to for the pointer to that **struct** object).
+
+```c++
+struct node {
+	node* next; // OK, it's a pointer to node.
+};
+
+struct node_bad {
+	node_bad next; // NOT OK, it's an object of node_bad.
+};
+```
+
+* To allow multiple **struct**s to refer to each other, we can declare a name to be the name of a **struct**.
+
+```c++
+struct lion; // Declaration, will be defined later.
+
+struct deer {
+	lion* eaten_by;
+};
+
+struct lion {
+	deer* lunch;
+};
+```
+
+* It's possible to declare a **struct** and a non-**struct** with the same name in the same scope.
+* Use **struct** <*name*> to refer to the **struct** type, and plane <*name*> to refer to the other.
+* Avoid overloading names.
+
+```c++
+struct stat { /* ... */ }
+int stat(char *name, struct stat* buf);
+```
+
