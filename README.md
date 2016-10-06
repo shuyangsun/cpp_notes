@@ -356,9 +356,9 @@ public:
 	};
 };
 
-address home {"Mars", "10010"};
-address work {"Jupyter", 50010};
-std::cout << home.street_address() << ", " << home.zip_code() << std::endl; // Mars, 10010
-std::cout << work.street_address() << ", " << work.zip_code() << std::endl; // Jupyter, 50010
+address home {"Mars", "MRS-265128"};
+address work {"NYC", 10010};
+std::cout << home.street_address() << ", " << home.zip_code() << std::endl; // Mars, MRS-265128
+std::cout << work.street_address() << ", " << work.zip_code() << std::endl; // NYC, 10010
 ```
 
