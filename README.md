@@ -378,8 +378,8 @@ enum sorting_order {
 	ascending=9, descending // Can be accessed directly; converted to integers, 0 is default, and goes up.
 };
 
-color c1 = blue; // error: use of undeclared identifier 'blue'
-color c2 = color::blue; // OK
+color c1 {blue}; // error: use of undeclared identifier 'blue'
+color c2 {color::blue}; // OK
 
 std::cout << c2 << std::endl;
 // error: invalid operands to binary expression ('ostream' (aka 'basic_ostream<char>') and 'color')
