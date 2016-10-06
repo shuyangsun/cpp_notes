@@ -362,3 +362,31 @@ std::cout << home.street_address() << ", " << home.zip_code() << std::endl; // M
 std::cout << work.street_address() << ", " << work.zip_code() << std::endl; // NYC, 10010
 ```
 
+### 8.4 Enumerations
+* An *enumeration* is a type that can hold a set of integer values specified by the user.
+* Some of an enumeration's possible values are named and called *enumerators*.
+* There are two kinds of enumerations:
+	1. **enum class**es, for which the enumerator names are *local* to the **enum** and their values do *not* implicitly convert to integers.
+	2. "Plain **enum**s", for which the enumerator names are in the *same scope* as the **enum** and their values implicitly convert to integers.
+
+```c++
+enum class color {
+	red, green, blue // Must use "color::red" to access; NOT converted to integers.
+};
+
+enum sorting_order {
+	ascending=9, descending // Can be accessed directly; converted to integers, 0 is default, and goes up.
+};
+
+color c1 = blue; // error: use of undeclared identifier 'blue'
+color c2 = color::blue; // OK
+
+std::cout << c2 << std::endl;
+// error: invalid operands to binary expression ('ostream' (aka 'basic_ostream<char>') and 'color')
+
+sorting_order order1 = sorting_order::ascending; // OK
+sorting_order order2 = descending; // OK
+std::cout << order1 << std::endl; // 9
+std::cout << order2 << std::endl; // 10
+```
+
