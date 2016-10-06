@@ -264,3 +264,20 @@ std::cout << std::is_pod<S1>::value << std::endl; // 1
 std::cout << std::is_pod<S2>::value << std::endl; // 0
 std::cout << std::is_pod<S3>::value << std::endl; // 0
 ```
+
+#### 8.2.7 Fields
+* Fields (also called *bit-field*) are members of struct field by specified number of bits it is to occupy.
+
+```c++
+struct color_16 {
+	const char* name;
+	bool is_visible: 1; // Occupies 1 bit
+	unsigned short r: 4; // Occupies 4 bits
+	unsigned short g: 4; // Occupies 4 bits
+	unsigned short b: 4; // Occupies 4 bits
+};
+```
+
+* Using fields to pack several variables into a single byte does not necessarily save space. It saves data space, but the size of the code needed to manipulate these variables increases on most machines. Programs have been known to shrink significantly when binary variables were converted from bit-fields to characters! Furthermore, it is typically much faster to access a **char** or an **int** than to access a field.
+
+### 8.3 Unions
