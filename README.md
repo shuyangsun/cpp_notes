@@ -453,6 +453,8 @@ city new_york_city {nyc};
 bool same = new_york_city == new_york_state; // true (NOT GOOD!)
 ```
 
+* Bit-wise operations for plain **enum**s does not need explicit casting, since they are implicitly converted to their underlying types.
+
 #### 8.4.3 Unnamed enums
 * A plain **enum** can be unnamed, we use that when all we need is a set of integer constants, rather than a type to use for variables.
 
