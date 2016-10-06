@@ -331,12 +331,8 @@ private:
 		unsigned int zip_int;
 	};
 	bool zip_is_str;
+
 public:
-	address():
-		street_addr{""},
-		zip_str{""},
-		zip_is_str{true} { };
-	
 	address(const char* addr, const char* zip):
 		street_addr{addr},
 		zip_str{zip},
