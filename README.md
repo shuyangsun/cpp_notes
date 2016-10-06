@@ -374,15 +374,15 @@ enum class color {
 	red, green, blue // Must use "color::red" to access; NOT converted to integers.
 };
 
-enum sorting_order {
-	ascending=9, descending // Can be accessed directly; converted to integers, 0 is default, and goes up.
-};
-
 color c1 {blue}; // error: use of undeclared identifier 'blue'
 color c2 {color::blue}; // OK
 
 std::cout << c2 << std::endl;
 // error: invalid operands to binary expression ('ostream' (aka 'basic_ostream<char>') and 'color')
+
+enum sorting_order {
+	ascending=9, descending // Can be accessed directly; converted to integers, 0 is default, and goes up.
+};
 
 sorting_order order1 = sorting_order::ascending; // OK
 sorting_order order2 = descending; // OK
@@ -390,3 +390,19 @@ std::cout << order1 << std::endl; // 9
 std::cout << order2 << std::endl; // 10
 ```
 
+#### 8.4.1 enum classes
+* An enumeration is represented by some integer type and each enumerator by some integer value.
+* The type used to represent an enumeration is called its *underlying type*.
+* The underlying type must be one of the signed or unsigned integer types; the default is **int**.
+* Even if there is an underlying type, it will not be implicitly converted; to get the value of underlying type, use casting.
+
+```c++
+enum class color: char {
+	red='r', green='g', blue='b'
+};
+
+color light = color::red;
+std::cout << light << std::endl;
+// error: invalid operands to binary expression ('ostream' (aka 'basic_ostream<char>') and 'color')
+std::cout << static_cast<char>(light) << std::endl; // r
+```
