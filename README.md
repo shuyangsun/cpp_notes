@@ -462,3 +462,51 @@ bool same = new_york_city == new_york_state; // true (NOT GOOD!)
 enum { up=1, left, down, right };
 ```
 
+___
+
+## 9. Statements
+
+### 9.1 Introduction
+* Expressions have values, statements don't.
+
+### 9.2 Statements Summary
+* A (possibly empty) sequence of statements within "curly braces" (i.e., **{** and **}**) is called a *block* or a *compound statement*.
+* A name declared in a block goes out of scope at the end of its block.
+
+#### 9.4.2 switch Statements
+* No need for terminating semicolon at the end of **switch**-statement.
+* **switch**-statements needs **break** at the end of each **case**, otherwise it'll fall through like C (unlike Swift).
+
+##### 9.4.2.1 Declarations in Cases
+* It is possible, and common, to declare variables within the block of a **switch**-statement. However, it is not possible to bypass an initialization.
+
+```c++
+void foo(int x) {
+	switch (x) {
+		case 0:
+			int y = 9; // error: declaration can be bypassed
+			int y; // OK, but really bad
+			y = 9;
+			std::cout << y << std::endl;
+			break;
+		case 5:
+			++x;
+			++y; // Bad, accessing uninitialized variable
+			std::cout << x << " " << y << std::endl; // 
+			break;
+		default:
+			break;
+	}
+}
+
+// If executed in (5, 0) order:
+foo(0); // 9
+foo(5); // 6 10
+
+// If executed in (5, 0) order:
+foo(5); // 6 289686817
+foo(0); // 9
+```
+
+* If we need a variable within a **switch**-statement, we can limit its scope by enclosing its declaration and its use in a block.
+
