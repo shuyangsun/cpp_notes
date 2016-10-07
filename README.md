@@ -545,7 +545,7 @@ for (const T& x: v) {
 		for (/* and... one more */) {
 			// Find element...
 			if (found) {
-				goto found;
+				goto found; // Source of evil code!!!
 			}
 			// Some other stuff...
 		}
@@ -557,3 +557,12 @@ for (const T& x: v) {
 found:
 // Blah blah blah...
 ```
+
+### 9.7 Comments and Indentation
+* **/*** ***/** style comments do NOT nest (unlike Swift).
+
+
+___
+
+## 10. Expressions
+
