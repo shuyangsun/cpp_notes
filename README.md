@@ -566,3 +566,19 @@ ___
 
 ## 10. Expressions
 
+#### 10.3.1 Results
+* C++ follows "the usual arithmetic conversions": to produce a result of the "largest" operand type.
+* Assignment is an expression.
+* Underflow, overflow, and division by zero do not throw standard exceptions.
+
+#### 10.3.2 Order of Evaluation
+
+```c++
+int i = 1;
+v[i] = i++; // undefined result
+// May be evaluated as v[1] = 1 or v[2] = 1, or other undefined result
+```
+
+
+
+
