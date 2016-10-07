@@ -536,3 +536,24 @@ for (T& x: v) { /* Use reference to modify elements in the vector. */ }
 for (const T& x: v) { /* Use const reference for potentially large elements. */ }
 ```
 
+### 9.6 goto Statements
+* Use **goto** only to jump forward to exit complicated loops, otherwise it's too confusing (even better: not using **goto** at all).
+
+```c++
+for (const T& x: v) {
+	for (/* another for loop */) {
+		for (/* and... one more */) {
+			// Find element...
+			if (found) {
+				goto found;
+			}
+			// Some other stuff...
+		}
+		// Some other stuff...
+	}
+	// Some other stuff...
+}
+
+found:
+// Blah blah blah...
+```
