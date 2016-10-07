@@ -365,6 +365,7 @@ std::cout << work.street_address() << ", " << work.zip_code() << std::endl; // N
 ### 8.4 Enumerations
 * An *enumeration* is a type that can hold a set of integer values specified by the user.
 * Some of an enumeration's possible values are named and called *enumerators*.
+* Cannot initialize an *enumerator* with list initializer (but can with **enum**s).
 * There are two kinds of enumerations:
 	1. **enum class**es, for which the enumerator names are *local* to the **enum** and their values do *not* implicitly convert to integers.
 	2. "Plain **enum**s", for which the enumerator names are in the *same scope* as the **enum** and their values implicitly convert to integers.
@@ -484,7 +485,7 @@ ___
 void foo(int x) {
 	switch (x) {
 		case 0:
-			int y = 9; // error: declaration can be bypassed
+			int y {9}; // error: declaration can be bypassed
 			int y; // OK, but really bad
 			y = 9;
 			std::cout << y << std::endl;
@@ -509,4 +510,29 @@ foo(0); // 9
 ```
 
 * If we need a variable within a **switch**-statement, we can limit its scope by enclosing its declaration and its use in a block.
+
+#### 9.4.3 Declaration in Conditions
+
+* Purpose: limit the scope of that variable to only that block.
+* A declaration in a condition must declare and initialize a single variable or **const**.
+
+```c++
+int x {5};
+if (bool even = is_even(x)) {
+	std::cout << "x is even, is_even = " << even << std::endl;
+} else {
+	std::cout << "x is odd, is_even = " << even << std::endl;
+}
+// output: x is odd, is_even = 0
+```
+
+#### 9.5.1 Range-for Statements
+* For-each loop
+
+
+```c++
+for (T x: v) { /* ... */ }
+for (T& x: v) { /* Use reference to modify elements in the vector. */ }
+for (const T& x: v) { /* Use const reference for potentially large elements. */ }
+```
 
