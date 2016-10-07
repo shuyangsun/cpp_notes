@@ -559,7 +559,7 @@ found:
 ```
 
 ### 9.7 Comments and Indentation
-* **/*** ***/** style comments do NOT nest (unlike Swift).
+* **/\*** **\*/** style comments do NOT nest (unlike Swift).
 
 
 ___
