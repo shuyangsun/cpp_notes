@@ -579,6 +579,25 @@ v[i] = i++; // undefined result
 // May be evaluated as v[1] = 1 or v[2] = 1, or other undefined result
 ```
 
+#### 10.3.3 Operator Precedence
+* If you start feeling the need for parentheses, you might consider breaking up the expression by using an extra variable.
 
+#### 10.3.4 Temporary Objects
+* A temporary object is created by compiler to hold an intermediate result of an expression. (e.g., **val = x + y * z**, there is a temporary project to hold the value of **y * z**)
+* Unless bound to a reference or used to initialize a named object, a temporary object is destroyed at the end of the full expression in which is was created. (sometimes this does not work well with certain ways of writing code)
 
+```c++
+std::string str1 = "Hello, ";
+std::string str2 = "world!";
+// c_str() is holding a reference to (str1 + str2), which may be deleted at the end of expression.
+const char *c_str = (str1 + str2).c_str();
+std::cout << c_str << std::endl;
+```
+
+* Solution to this problem: bind the variables (in this case, **str1** and **str2**) to a **const** reference.
+
+### 10.4 Constant Expressions
+* C++ offers two related meanings of "constant":
+	* **constexpr**: Evaluate at compile time (enable and ensure compile-time evaluation).
+	* **const**: Do not modify in this scope (specify immutability in interfaces).
 
