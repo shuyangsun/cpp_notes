@@ -622,6 +622,6 @@ struct Point {
 constexpr Point a {1, 2, 3};
 constexpr Point b = a.move(9.63);
 
-a.print()
-b.print()
+a.print();
+b.print();
 ```
