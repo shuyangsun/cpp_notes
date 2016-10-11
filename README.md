@@ -652,11 +652,15 @@ ___
 ### 11.2 Free Store
 * **new** and **delete** are used to create/destroy objects on the *free store* respectively.
 * An object created by **new** exists until it is explicitly destroyed by **delete**.
-* The **delete** operator may be applied only to a pointer returned by **new** or to the **nullptr**. Applying **delete** to the **nullptr** has no effect.
+* The **delete** and **delete[]** operator may be applied only to a pointer returned by **new** or to the **nullptr**. Applying them to the **nullptr** has no effect.
 * If the deleted object is of a class with a destructor, that destructor is called by **delete** before the object's memory is released for reuse.
+* To deallocate space allocated by **new**, **delete** and **delete[]** must be able to determine the size of the object allocated (which requires extra space). This overhead is not significant when we allocate many objects or large objects, but it can matter if we allocate lots of small objects on the free store.
 
 #### 11.2.1 Memory Management
 * Main problems with free store: *leaked objects*, *premature deletion*, and *double deletion*.
 * Don't put objects on the free store if you don't have to; prefer scoped variables.
 * When you construct an object on the free store, place its pointer into a *manager object* (*handle*) with a destructor that will destroy it. (e.g., **string**, **vector**, all standard library containers, **unique_ptr**, and **shared_ptr**)
 * Rule of thumb: no naked **new**s. **new** belongs in constructors and similar operations, **delete** belongs in destructors.
+
+#### 11.2.2 Arrays
+* **delete[]** is used to delete arrays created by **new**.
