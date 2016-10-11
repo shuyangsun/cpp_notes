@@ -611,7 +611,7 @@ struct Point {
 	float x, y, z;
 	// The "const" in the next line is not required for C++11, but is required for C++14.
 	// C++11 implicitly implies the "const", so to be safe it should always be added.
-	constexpr Point move(float dist) const {
+	constexpr Point change(float dist) const {
 		return {x + dist, y + dist, z + dist};
 	}
 	void print() const {
@@ -620,8 +620,43 @@ struct Point {
 };
 
 constexpr Point a {1, 2, 3};
-constexpr Point b = a.move(9.63);
+constexpr Point b = a.change(9.63f);
 
-a.print();
-b.print();
+a.print(); // Point(1, 2, 3)
+b.print(); // Point(10.63, 11.63, 12.63)
 ```
+
+#### 10.4.5 Address Constant Expressions
+* The address of a statically allocated object, such as a global variable, is a constant.
+
+```c++
+constexpr const char *p1 = "asdf";
+```
+
+#### 10.5 Implicit Type Conversion
+* *promotions*: preserve value.
+* *narrowing*: not value preserving.
+* The **{}**-initializer syntax prevents narrowing.
+* **narrow_cast<>()** is a run-time checked conversion function. (use only if not avoidable or intended)
+* Any pointer to an object type can be implicitly converted to a **void\***
+* Pointers, integral, and floating-point values can be implicitly converted to **true**. A nonzero value is converted to **true**, a zero value is converted to **false**.
+* When a floating-point value is converted to an integer value (that's big enough to hold the integer part), the fractional part is discarded.
+
+___
+
+## 11. Select Operations
+
+#### 11.1.2 Bitwise Logical Operators
+* They can be used on integral types (signed or unsigned).
+
+### 11.2 Free Store
+* **new** and **delete** are used to create/destroy objects on the *free store* respectively.
+* An object created by **new** exists until it is explicitly destroyed by **delete**.
+* The **delete** operator may be applied only to a pointer returned by **new** or to the **nullptr**. Applying **delete** to the **nullptr** has no effect.
+* If the deleted object is of a class with a destructor, that destructor is called by **delete** before the object's memory is released for reuse.
+
+#### 11.2.1 Memory Management
+* Main problems with free store: *leaked objects*, *premature deletion*, and *double deletion*.
+* Don't put objects on the free store if you don't have to; prefer scoped variables.
+* When you construct an object on the free store, place its pointer into a *manager object* (*handle*) with a destructor that will destroy it. (e.g., **string**, **vector**, all standard library containers, **unique_ptr**, and **shared_ptr**)
+* Rule of thumb: no naked **new**s. **new** belongs in constructors and similar operations, **delete** belongs in destructors.
