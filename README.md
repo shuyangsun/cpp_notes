@@ -677,7 +677,7 @@ ___
 * **nothrow** version of **new** returns **nullptr**, rather than throwing **bad_alloc** if the object cannot be allocated.
 
 ```c++
-std::string* str_ptr {new(std::nothrow) std::string()};
+std::string* str_ptr {new(std::nothrow) std::string {}};
 operator delete(str_ptr, std::nothrow);
 ```
 
