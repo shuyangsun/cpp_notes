@@ -600,4 +600,5 @@ std::cout << c_str << std::endl;
 * C++ offers two related meanings of "constant":
 	* **constexpr**: Evaluate at compile time (enable and ensure compile-time evaluation).
 	* **const**: Do not modify in this scope (specify immutability in interfaces).
-
+* A constant expression must start out with an integral value, a floating point value, or an enumerator, and we can combine those using operators and **constexpr** functions that in turn produce values.
+* 
