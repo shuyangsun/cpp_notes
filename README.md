@@ -655,6 +655,7 @@ ___
 * The **delete** and **delete[]** operator may be applied only to a pointer returned by **new** or to the **nullptr**. Applying them to the **nullptr** has no effect.
 * If the deleted object is of a class with a destructor, that destructor is called by **delete** before the object's memory is released for reuse.
 * To deallocate space allocated by **new**, **delete** and **delete[]** must be able to determine the size of the object allocated (which requires extra space). This overhead is not significant when we allocate many objects or large objects, but it can matter if we allocate lots of small objects on the free store.
+* A **return** or an exception thrown before the **delete** will cause a memory leak (unless even more code is added).
 
 #### 11.2.1 Memory Management
 * Main problems with free store: *leaked objects*, *premature deletion*, and *double deletion*.
@@ -664,3 +665,19 @@ ___
 
 #### 11.2.2 Arrays
 * **delete[]** is used to delete arrays created by **new**.
+
+#### 11.2.3 Getting Memory Space
+* The standard implementations of **operator new()** and **operator new\[]()** do not initialize the memory returned. They take arguments or return values of type **void***.
+
+#### 11.2.4 Overloading new
+* Placing an object in an area that is not (directly) controlled by the standard free-store manager implies that some care is required when destroying the object.
+
+##### 11.2.4.1 nothrow new
+* Use **nothrow** version of **new** and **delete** if no exceptions must be avoided.
+* **nothrow** version of **new** returns **nullptr**, rather than throwing **bad_alloc** if the object cannot be allocated.
+
+```c++
+std::string* str_ptr {new(std::nothrow) std::string()};
+operator delete(str_ptr, std::nothrow);
+```
+
