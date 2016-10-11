@@ -681,3 +681,55 @@ std::string* str_ptr {new(std::nothrow) std::string {}};
 operator delete(str_ptr, std::nothrow);
 ```
 
+### 11.3 Lists
+* **{}**-list can be used as expressions in many (but not all) places:
+	* *Qualified* by a type **T{...}**, meaning "create an object of type **T** initialized by **T{...}**".
+	* *Unqualified* **{...}**, for which the type must be determined from the context of use.
+
+#### 11.3.1 Implementation Model
+* If the **{}**-list is used to construct an **initializer_list**, elements are typically copied from the **initializer_list** to wherever we use them. Not copied otherwise, except as by-value constructor arguments.
+
+#### 11.3.3 Unqualified Lists
+* When used as the initializer for a named object without the use of a **=**, an unqualified **{}**-list performs direct initialization. In all other cases, it performs copy initialization.
+
+```c++
+int x {8}; // initializer (direct initialization)
+int y = {9}; // initializer (copy initialization)
+```
+
+* Use **initializer_list\<T>** to allow initializer lists for built-in or user-defined containers.
+
+```c++
+struct my_float {
+    float val;
+    
+    my_float(const std::initializer_list<const std::string> init_lst) {
+        const std::string& first {*init_lst.begin()};
+        this->val = std::stof(first);
+    }
+    
+    void print_floating_point() {
+        std::cout << this->val - std::floor(this->val) << std::endl;
+    }
+};
+
+float max_ele(const std::initializer_list<const float> init_lst) {
+    float cur = std::numeric_limits<float>::min();
+    for (auto ele: init_lst) {
+        if (ele > cur) {
+            cur = ele;
+        }
+    }
+    return cur;
+}
+
+my_float f {"3.14159"};
+f.print_floating_point(); // 0.14159
+    
+const float max {max_ele({1, 2.5, - 1.0, -9.9, 3.14159})};
+std::cout << max << std::endl; // 3.14159
+```
+
+* The type of a **{}**-list can be deduced (only) if all elements are of the same type.
+* Unfortunately, C++ does NOT deduce the type of an unqualified list for a plain template argument.
+
