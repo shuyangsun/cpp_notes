@@ -601,4 +601,27 @@ std::cout << c_str << std::endl;
 	* **constexpr**: Evaluate at compile time (enable and ensure compile-time evaluation).
 	* **const**: Do not modify in this scope (specify immutability in interfaces).
 * A constant expression must start out with an integral value, a floating point value, or an enumerator, and we can combine those using operators and **constexpr** functions that in turn produce values.
-* 
+* **constexpr** is a better choice for defining simple constants.
+
+### 10.4.3 Literal Types
+* A class with a **constexpr** constructor is called a *literal type*. To be simple enough to be **constexpr**, a constructor must have an empty body and all members must be initialized by potentially constant expressions.
+
+```c++
+struct Point {
+	float x, y, z;
+	// The "const" in the next line is not required for C++11, but is required for C++14.
+	// C++11 implicitly implies the "const", so to be safe it should always be added.
+	constexpr Point move(float dist) const {
+		return {x + dist, y + dist, z + dist};
+	}
+	void print() const {
+		std::cout<< "Point(" << x << ", " << y << ", " << z << ")" << std::endl;
+	}
+};
+
+constexpr Point a {1, 2, 3};
+constexpr Point b = a.move(9.63);
+
+a.print()
+b.print()
+```
