@@ -742,3 +742,12 @@ std::cout << max << std::endl; // 3.14159
 	* An optional return type declaration of the form **->** type.
 	* A *body*, specifying the code to be executed.
 
+```c++
+// A lambda function that captures output stream and precision.
+// Then rounds the argument, prints it and returns it.
+[&output_stream, precision](double x) -> double {
+	double rounded = my_round(x, precision);
+	output_stream << rounded << " ";
+	return rounded;
+}
+```
