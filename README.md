@@ -778,3 +778,13 @@ std::cout << max << std::endl; // 3.14159
 ```c++
 [] mutable { /* lambda body */ }
 ```
+
+#### 11.4.5 The Type of a Lambda
+* *Closure type* is unique to lambda, so no two lambdas have the same type.
+* **std::function\<R(AL)>** where **R** is the lambda's return type and **AL** is its argument list of types.
+
+```c++
+// Example of a lambda function type (takes a double and an int, returns a boolean.)
+std::function<bool (double, int)>
+```
+* A lambda that captures nothing can be assigned to a pointer to function of an appropriate type.
