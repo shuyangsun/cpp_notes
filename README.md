@@ -752,10 +752,10 @@ std::cout << max << std::endl; // 3.14159
 }
 ```
 
-* lambda expressions typically do not yield performance overhead (e.g., identical to replacing the code).
+* Lambda expressions typically do not yield performance overhead (e.g., identical to replacing the code).
 
 #### 11.4.3 Capture
-* lambda introducers:
+* Lambda introducers:
 	* **[]**: an empty capture list.
 	* **[&]**: capture by reference.
 	* **[=]**: capture by value.
@@ -763,3 +763,18 @@ std::cout << max << std::endl; // 3.14159
 	* **[&,** *capture-list***]**: implicitly capture by reference all local variables with names NOT mentioned in the list.
 	* **[=,** *capture-list***]**: implicitly capture by value all local variables with names NOT mentioned in the list.
 * Local name preceded by **&** is always captured by reference and a local name not preceded by **&** is always captured by value.
+* Lambda might outlive its caller.
+* When passing a lambda to another thread, capturing by value (**[=]**) is typically best.
+
+##### 11.4.3.2 Namespace Names
+* Don't need to capture namespace variables (including global variables).
+
+##### 11.4.3.3 Lambda and this
+* Use **[this]** to capture member **this** from class.
+* Members are always captured by reference (i.e., **[this]** and **[=]** are incompatible).
+
+##### 11.4.3.4 mutable Lambdas
+
+```c++
+[] mutable { /* lambda body */ }
+```
