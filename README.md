@@ -745,9 +745,21 @@ std::cout << max << std::endl; // 3.14159
 ```c++
 // A lambda function that captures output stream and precision.
 // Then rounds the argument, prints it and returns it.
-[&output_stream, precision](double x) -> double {
+[&output_stream, precision](double x) -> double { // output_stream is stored as reference; precision is copy
 	double rounded = my_round(x, precision);
-	output_stream << rounded << " ";
+	output_stream << rounded << std::endl;
 	return rounded;
 }
 ```
+
+* lambda expressions typically do not yield performance overhead (e.g., identical to replacing the code).
+
+#### 11.4.3 Capture
+* lambda introducers:
+	* **[]**: an empty capture list.
+	* **[&]**: capture by reference.
+	* **[=]**: capture by value.
+	* **[***capture-list***]**: explicit capture; the *capture-list* is the list of names of local variables to be captured.
+	* **[&,** *capture-list***]**: implicitly capture by reference all local variables with names NOT mentioned in the list.
+	* **[=,** *capture-list***]**: implicitly capture by value all local variables with names NOT mentioned in the list.
+* Local name preceded by **&** is always captured by reference and a local name not preceded by **&** is always captured by value.
