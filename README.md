@@ -733,3 +733,12 @@ std::cout << max << std::endl; // 3.14159
 * The type of a **{}**-list can be deduced (only) if all elements are of the same type.
 * Unfortunately, C++ does NOT deduce the type of an unqualified list for a plain template argument.
 
+### 11.4 Lambda Expressions
+* A lambda expression consists of a sequence of parts:
+	* A possibly empty capture *list*.
+	* An optional *parameter list*.
+	* An optional **mutable** specifier.
+	* An optional **noexcept** specifier.
+	* An optional return type declaration of the form **->** type.
+	* A *body*, specifying the code to be executed.
+
