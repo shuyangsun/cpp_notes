@@ -974,10 +974,10 @@ int wrong(char*=nullptr); // syntax error: *= is an assignment operator
 ### 12.5 Pointer to Function
 
 ```c++
-double half(int x) {
+double half(const int x) {
 	return x / 2.0;
 }
-double (* calculate)(int x); // pointer to function taking an int argument and returning a double
+double (* calculate)(const int x); // pointer to function taking an int argument and returning a double
 
 calculate = &half;
 calculate(3); // 1.5
