@@ -886,3 +886,9 @@ inline auto fact(const unsigned int n) -> unsigned long long {
     exit(0);
 }
 ```
+
+#### 12.1.8 Local Variables
+* If a local variable is declared **static**, a single, statically allocated object will be used to represent that variable in all calls of the function.
+* Initialization of **static** local variable does not lead to a data race unless you enter the function containing it recursively or a deadlock occurs.
+* The effect of initializing a local **static** recursively is undefined.
+
