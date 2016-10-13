@@ -905,3 +905,61 @@ inline auto fact(const unsigned int n) -> unsigned long long {
 	5. Pass a pointer if "no object (**nullptr**)" is a valid alternative
 	6. Use pass-by-reference only if you have to
 
+#### 12.2.2 Array Arguments
+* If an array is used as a function argument, a pointer to its initial element is passed.
+
+```c++
+// Three identical function declarations
+void odd(int* p);
+void odd(int a[]);
+void odd(int buf[1024]);
+```
+* You can pass a reference to array, with number of elements as part of the type.
+
+```c++
+void foo(int(&arr)[1024]);
+```
+
+#### 12.2.3 List Arguments
+* A **{}**-delimited list can be used as an argument to a parameter of:
+	1. Type **std::initializer_list\<T>**, where the values of the list can be implicitly converted to **T**
+	2. A type that can be initialized with the values provided in the list
+	3. A reference to an array of **T**, where the values of the list can be implicitly converted to **T**
+
+#### 12.2.4 Unspecified Number of Arguments
+* Three ways to do it:
+	1. Use a variadic template
+	2. Use an **initializer_list**
+	3. Terminate the argument list with the ellipsis (**...**), and use some macros from **\<cstdarg>**
+
+```c++
+#include <cstdarg>
+
+void print_args(int first ...) {
+    va_list ap;
+    va_start(ap, first);
+    
+    for (;;) {
+        int val = va_arg(ap, int);
+        if (val == 0) break;
+        std::cout << val << ' ';
+    }
+    
+    va_end(ap);
+    std::cout << std::endl;
+}
+
+void print_args(const std::initializer_list<int> args) {
+    for (auto ele: args) {
+        std::cout << ele << ' ';
+    }
+    std::cout << std::endl;
+}
+
+// Use <cstdarg> (bad)
+print_args(5, 6, 9, -4, 0, 12); // 6 9 -4
+// Use initializer_list (good)
+print_args({5, 6, 9, -4, 0, 12}); // 5 6 9 -4 0 12
+
+```
+
