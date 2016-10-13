@@ -892,3 +892,16 @@ inline auto fact(const unsigned int n) -> unsigned long long {
 * Initialization of **static** local variable does not lead to a data race unless you enter the function containing it recursively or a deadlock occurs.
 * The effect of initializing a local **static** recursively is undefined.
 
+### 12.2 Argument Passing
+* Unless a formal argument is a reference, a copy of the actual argument is passed to the function.
+
+#### 12.2.1 Reference Arguments
+* The absence of **const** in the declaration of a reference argument is taken as a statement of intent to modify the variable.
+* Rule of thumb:
+	1. Use pass-by-value for small objects
+	2. Use pass-by-**const**-reference to pass large values that you don't need to modify
+	3. Return a result as a **return** value rather than modifying an object through an argument
+	4. Use rvalue references to implement move and forwarding
+	5. Pass a pointer if "no object (**nullptr**)" is a valid alternative
+	6. Use pass-by-reference only if you have to
+
