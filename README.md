@@ -940,7 +940,7 @@ void print_args(int first ...) {
     va_start(ap, first);
     
     for (;;) {
-        int val = va_arg(ap, int);
+        int val {va_arg(ap, int)};
         if (val == 0) break;
         std::cout << val << ' ';
     }
