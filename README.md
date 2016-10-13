@@ -805,3 +805,21 @@ ___
 
 ## 12. Functions
 
+* The semantics of argument passing are identical to the semantics of copy initialization.
+
+#### 12.1.2 Parts of a Function Declaration
+* Function specifiers and modifiers:
+	* The name of the function; required
+	* The argument list, which may be empty **()**; required
+	* The return type, which may be **void** and which may be prefix or suffix (using **auto**); required
+	* **inline**, indicating a desire to have function calls implemented by inlining the function body
+	* **constexpr**, indicating that it should be possible to evaluate the function at compile time if given constant expressions as arguments
+	* **noexcept**, indicating that the function may not throw an exception
+	* A linkage specification, for example, **static**
+	* **[[noreturn]]**, indicating that the function will not return using the normal call/return mechanism
+	* For member functions:
+		* **virtual**, indicating that it can be overridden in a derived class
+		* **override**, indicating that it must be overriding a virtual function from a base class
+		* **final**, indicating that it cannot be overridden in a derived class
+		* **static**, indicating that it is not associated with a particular object
+		* **const**, indicating that it may not modify its object
