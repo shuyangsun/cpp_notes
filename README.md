@@ -848,4 +848,34 @@ auto square(double x) -> double; // equivalent to above line declaration
 // Use for function template declaration, where the return type depends on the argument
 template<class T, class U>
 auto product(const vector<T>& x, const vector<U>& y) -> decltype(x * y);
+auto square(const T& x) -> decltype(x * x);
 ```
+* The semantics of function value return are identical to the semantics of copy initialization.
+* The store is reused after the function returns, so a pointer to a local non-**static** variable should never be returned.
+* Five ways to exit a function:
+	* Use **return**.
+	* Falling off the end in functions return **void** and **main()**.
+	* Throwing an exception that isn't caught locally.
+	* Terminating because an exception was thrown and not caught locally in a **noexcept** function.
+	* Directly or indirectly invoking a system function that doesn't return.
+
+#### 12.1.5 inline Functions
+* **inline** specifier tells the compiler it should attempt to generate code inline rather than actually calling the function.
+
+```c++
+inline auto fact(const unsigned int n) -> unsigned long long {
+    return (n < 2) ? 1 : n * fact(n - 1);
+}
+```
+* To make inlining possible in the absence of unusually clever compilation and linking facilities, the definition - and not just the declaration - of an inline function must be in scope.
+* An **inline** specifier does not affect the semantics of a function. In particular, an inline function still has a unique address, and so do **static** variables of an inline function.
+
+#### 12.1.6 constexpr Functions
+* When used in an object definition, it means "evaluate the initializer at compile time."
+* A **constexpr** function must consist of a single **return**-statement, no loops and no local variables are allowed, cannot have side effects.
+* Allows member initialization, recursion, and conditional expressions.
+* A **constexpr** function can refer to nonlocal objects as long as it does not write to them.
+
+#### 12.1.7 [[noreturn]] Functions
+* A construct **[[...]]** is called an *attribute* and can be placed just about anywhere in the C++ syntax.
+* 
