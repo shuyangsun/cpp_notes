@@ -877,5 +877,12 @@ inline auto fact(const unsigned int n) -> unsigned long long {
 * A **constexpr** function can refer to nonlocal objects as long as it does not write to them.
 
 #### 12.1.7 [[noreturn]] Functions
-* A construct **[[...]]** is called an *attribute* and can be placed just about anywhere in the C++ syntax.
-* 
+* A construct **[[...]]** is called an *attribute* and can be placed just about anywhere in the C++ syntax (e.g., in front of a declaration).
+* There are only two standard attributes: **[[noreturn]]** and **[[carries_dependency]]**.
+
+```c++
+[[noreturn]] inline auto terminate() -> void {
+    std::cout << "terminating program..." << std::endl;
+    exit(0);
+}
+```
