@@ -831,3 +831,21 @@ ___
 void foo(int); 			// type is void(int)
 void bar(const int); 	// type is void(int)
 ```
+
+* Other things can be called:
+	* *Constructors* are technically not functions; in particular, they don't return a value, can initialize bases and members, and can't have their address taken.
+	* *Destructors* can't  be overloaded and can't have their address taken.
+	* *Function objects* are not functions (they are objects) and can't be overloaded, but their **operator()**s are functions.
+	* *Lambda expressions* are basically a shorthand for defining function objects.
+
+#### 12.1.4 Returning Values
+* Can use suffix return type.
+
+```c++
+double square(double x);
+auto square(double x) -> double; // equivalent to above line declaration
+
+// Use for function template declaration, where the return type depends on the argument
+template<class T, class U>
+auto product(const vector<T>& x, const vector<U>& y) -> decltype(x * y);
+```
