@@ -960,6 +960,25 @@ void print_args(const std::initializer_list<int> args) {
 print_args(5, 6, 9, -4, 0, 12); // 6 9 -4
 // Use initializer_list (good)
 print_args({5, 6, 9, -4, 0, 12}); // 5 6 9 -4 0 12
-
 ```
 
+#### 12.2.5 Default Arguments
+* Default arguments may be provided for trailing arguments only.
+
+```c++
+int foo(int a, int b, int c =0, char *c =nullptr);
+int bar(int=3);
+int wrong(char*=nullptr); // syntax error: *= is an assignment operator
+```
+
+### 12.5 Pointer to Function
+
+```c++
+double half(int x) {
+	return x / 2.0;
+}
+double (* calculate)(int x); // pointer to function taking an int argument and returning a double
+
+calculate = &half;
+calculate(3); // 1.5
+```
