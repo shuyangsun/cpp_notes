@@ -823,3 +823,11 @@ ___
 		* **final**, indicating that it cannot be overridden in a derived class
 		* **static**, indicating that it is not associated with a particular object
 		* **const**, indicating that it may not modify its object
+
+#### 12.1.3 Function Definitions
+* A **const** is ignored at the highest level of an argument type.
+
+```c++
+void foo(int); 			// type is void(int)
+void bar(const int); 	// type is void(int)
+```
