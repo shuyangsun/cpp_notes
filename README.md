@@ -788,3 +788,20 @@ std::cout << max << std::endl; // 3.14159
 std::function<bool (double, int)>
 ```
 * A lambda that captures nothing can be assigned to a pointer to function of an appropriate type.
+
+### 11.5 Explicit Type Conversion
+* Named conversions:
+	* **const_cast** for getting write access to something declared **const**
+	* **static_cast** for reversing a well-defined implicit conversion
+	* **reinterpret_cast** for changing the meaning of bit patterns
+	* **dynamic_cast** for dynamically checked class hierarchy navigation
+* Prefer **T{v}** conversions for well-behaved construction and the named casts (e.g., **static_cast**) for other conversions.
+
+#### 11.5.1 Construction
+* The construction of a value of type **T** from a value **e** can be expressed by the notation **T(e)**.
+
+
+___
+
+## 12. Functions
+
