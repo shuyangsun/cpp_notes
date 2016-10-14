@@ -1053,21 +1053,21 @@ std::cout << __func__ << std::endl; // main
 * Behavior is not defined in C++ standard, but some compilers utilize it.
 
 ```c++
-// Syntax
 #pragma blah blah blah
+// Syntax
 
-// In CUDA, nvcc compiler will unroll this for-loop to:
-// arr[0] = 0;
-// arr[1] = 1;
-// arr[2] = 2;
 unsigned int arr[] {2, 9, 5};
 
 #pragma unroll
 for (unsigned int i = 0; i < 3; ++i) {
 	arr[i] = i;
 }
+// In CUDA, nvcc compiler will unroll above for-loop to:
+// arr[0] = 0;
+// arr[1] = 1;
+// arr[2] = 2;
 
-// In Xcode, this generates a separator can be accessed through IDE
 #pragma mark - Implementation
+// In Xcode, the above line generates a separator can be accessed through IDE
 ```
 
