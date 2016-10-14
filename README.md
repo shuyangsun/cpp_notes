@@ -1001,3 +1001,58 @@ auto comparator2(const int* a, const int* b) -> bool {
 ssort(arr, 10, 10, comparator1); // OK
 ssort(arr, 10, 10, comparator2); // Cannot, argument type doesn't match
 ```
+
+### 12.6 Macros
+* Don't use macro unless you have to!
+* Macro names cannot be overloaded, and the macro preprocessor cannot handle recursive calls.
+* Be careful with possible side effects.
+
+```c++
+#define MIN(a, b) (((a)<(b))?(a):(b))
+int x = 1;
+int y = 2;
+
+int c = MIN(x++, y++); // Side effect: x = 3, y = 4
+```
+* Can concatenating two strings using the **##** macro operator.
+* A single **#** before a parameter name in a replacement string means a string containing the macro argument.
+
+```c++
+#define NAME2(a,b) a##b
+int NAME2(hel,lo) = 3; // int hello = 3;
+
+#define printx(x) std::cout << #x " = " << x << std::endl
+int num = 3;
+print(num); // std::cout << "num" " = " << num << std::endl;
+```
+* Macros can be variadic.
+
+#### 12.6.1 Conditional Compilation
+* One of macros' best use case.
+
+```c++
+#ifdef SM_61
+// Use 8 bits int operations
+#endif
+```
+
+#### 12.6.2 Predefined Macros
+
+```c++
+// Some predefined macros
+std::cout << __cplusplus << std::endl; // 201103
+std::cout << __DATE__ << std::endl; // Oct 14 2016
+std::cout << __TIME__ << std::endl; // 12:30:05
+std::cout << __FILE__ << std::endl; // /path/to/main.cpp
+std::cout << __LINE__ << std::endl; // 96
+std::cout << __func__ << std::endl; // main
+```
+
+#### 12.6.3 Pragmas
+
+* Not defined
+
+```c++
+#pragma blah blah blah
+```
+
