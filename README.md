@@ -980,5 +980,24 @@ double half(const int x) {
 double (* calculate)(const int x); // pointer to function taking an int argument and returning a double
 
 calculate = &half;
+// No need to dereference calculate before calling
 calculate(3); // 1.5
+```
+
+* Need **reinterpret_cast** to convert pointer to function types. (So don't do it!)
+* There is no implicit conversion of argument or return types when pointers to functions are assigned or initialized.
+
+```c++
+void ssort(void *base, size_t n, size_t sz, bool(const void*, const void*) comparator);
+
+auto comparator1(const void* a, const void* b) -> bool {
+	return *static_cast<int*>(a) < *static_cast<int*>(b);
+}
+
+auto comparator2(const int* a, const int* b) -> bool {
+	return *a < *b;
+}
+
+ssort(arr, 10, 10, comparator1); // OK
+ssort(arr, 10, 10, comparator2); // Cannot, argument type doesn't match
 ```
