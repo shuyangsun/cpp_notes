@@ -1079,3 +1079,28 @@ ___
 	* The author of a library can detect a run-time error but does not in general have any idea what to do about it.
 	* The user of the library may know how to cope with a run-time error but cannot easily detect it (or else it would have been handled in the user's code and not left for the library to find).
 
+### 13.1.1 Exceptions
+
+* A function that cannot cope with a problem *throws* an exception, hoping that its (direct or indirect) caller can handle the problem.
+	* A calling component indicates the kinds of failures that it is willing to handle by specifying those exceptions in a **catch**-clause of a **try**-block.
+	* A called component that cannot complete its assigned task reports its failure to do so by throwing an exception using a **throw**-expression.
+
+```c++
+auto alloc_mem(size_t size) -> void {
+	// try to alloc...
+	if (/* succeed */) {
+		return result;
+	} else {
+		throw Some_error{};
+	}
+}
+
+void foo() {
+	try {
+		auto result = alloc_mem();
+		// use result
+	} catch (Some_error) {
+		// handles the error
+	}
+}
+```
