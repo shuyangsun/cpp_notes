@@ -1085,7 +1085,7 @@ ___
 	* A calling component indicates the kinds of failures that it is willing to handle by specifying those exceptions in a **catch**-clause of a **try**-block.
 	* A called component that cannot complete its assigned task reports its failure to do so by throwing an exception using a **throw**-expression.
 
-```c++11
+```c++
 auto alloc_mem(size_t size) -> void* {
 	// try to alloc...
 	if (/* succeed */) {
