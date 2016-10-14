@@ -1131,4 +1131,21 @@ void foo() {
 	* *basic guarantee*: the basic invariants of all objects are maintained, and no resources such as memory, are leaked.
 	* *strong guarantee*: *basic guarantee* + either the operation succeeds, or it has no effect.
 	* *nothrow guarantee*: *basic guarantee* + some operations are guaranteed not to throw an exception.
+* Violating a standard-library requirement, is logically equivalent to violating a fundamental language rule.
 
+### 13.3 Resource Management
+* Resources can be released by using destructor, instead of remembering to release them in every **try**/**catch** call.
+* RAII (Resource Acquisition Is Initialization): Managing resources using local objects.
+
+### 13.4 Enforcing Invariants
+* Three kinds of strategies to enforce invariants (preconditions):
+	* *Don't enforce it*: for performance purposes. Frequent condition checking for performance oriented program is expensive.
+	* *Terminate the program*: cannot proceed if preconditions are not met. Do this only if terminating is affordable.
+	* *Throw an exception*
+* Two standard ways for assertion:
+	* **assert(A)**: macro in **<cassert>**, run time check.
+	* **static_assert(A, message)**: compile time assert.
+* For general library code, reporting an error - preferably by throwing an exception - is essential.
+* Destructors should not throw, so don't use a throwing **Assert()** in a destructor.
+
+### 13. Throwing and Catching Exceptions
