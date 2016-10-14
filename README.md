@@ -1062,7 +1062,7 @@ unsigned int arr[] {2, 9, 5};
 for (unsigned int i = 0; i < 3; ++i) {
 	arr[i] = i;
 }
-// In CUDA, nvcc compiler will unroll above for-loop to:
+// In CUDA, nvcc compiler will unroll the above for-loop to:
 // arr[0] = 0;
 // arr[1] = 1;
 // arr[2] = 2;
@@ -1070,4 +1070,12 @@ for (unsigned int i = 0; i < 3; ++i) {
 #pragma mark - Implementation
 // In Xcode, the above line generates a separator can be accessed through IDE
 ```
+
+___
+
+## 13. Exception Handling
+
+* Idea: the library designer cannot even know what kind of program the library will become part of:
+	* The author of a library can detect a run-time error but does not in general have any idea what to do about it.
+	* The user of the library may know how to cope with a run-time error but cannot easily detect it (or else it would have been handled in the user's code and not left for the library to find).
 
