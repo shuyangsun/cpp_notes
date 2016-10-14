@@ -1086,7 +1086,7 @@ ___
 	* A called component that cannot complete its assigned task reports its failure to do so by throwing an exception using a **throw**-expression.
 
 ```c++
-auto alloc_mem(size_t size) -> void {
+auto alloc_mem(size_t size) -> void* {
 	// try to alloc...
 	if (/* succeed */) {
 		return result;
