@@ -1104,3 +1104,31 @@ void foo() {
 	}
 }
 ```
+
+* An exception is an object **throw**n to present the occurrence of an error. It can be of any type that can be copied, but it is strongly recommended to use only user-defined types specifically defined for that purpose.
+
+#### 13.1.2 Traditional Error Handling
+* *Terminate the program*
+	* A library that unconditionally terminates cannot be used in a program that cannot afford to crash.
+* *Return an error value*
+	* There is often no acceptable "error value". Some operations simply do not have return values (e.g., constructors).
+* *Return a legal value and leave the program in an "error state"*
+	* The calling function may not notice that the program has been put in an error state. Use of global error state variable is bad for concurrency.
+* *Call an error-handler function*
+	* Functions with error occurring usually have no idea what to do about the error; if it does, it should not be considered as an error.
+
+##### 13.1.4.2 Exceptions That Are Not Errors
+* Although an exception can be anything, but it's the best to think of exception handling as error handling.
+
+#### 13.1.6 Hierarchical Error Handling
+* In most systems, it is feasible to design every function to ensure that it always either completes successfully or fails in a well-defined manner.
+
+### 13.2 Exception Guarantees
+* We call an operation *exception-free* if that operation leaves the program in a valid state when the operation is terminated by throwing an exception.
+* If pieces of nonlocal data are assumed to have a specific relationship, we must consider that an invariant and our recovery action must preserve it.
+* Before a **throw**, a function must place all constructed objects in valid states.
+* Three types of guarantee:
+	* *basic guarantee*: the basic invariants of all objects are maintained, and no resources such as memory, are leaked.
+	* *strong guarantee*: *basic guarantee* + either the operation succeeds, or it has no effect.
+	* *nothrow guarantee*: *basic guarantee* + some operations are guaranteed not to throw an exception.
+
