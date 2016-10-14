@@ -1050,9 +1050,24 @@ std::cout << __func__ << std::endl; // main
 
 #### 12.6.3 Pragmas
 
-* Not defined
+* Behavior is not defined in C++ standard, but some compilers utilize it.
 
 ```c++
+// Syntax
 #pragma blah blah blah
+
+// In CUDA, nvcc compiler will unroll this for-loop to:
+// arr[0] = 0;
+// arr[1] = 1;
+// arr[2] = 2;
+unsigned int arr[] {2, 9, 5};
+
+#pragma unroll
+for (unsigned int i = 0; i < 3; ++i) {
+	arr[i] = i;
+}
+
+// In Xcode, this generates a separator can be accessed through IDE
+#pragma mark - Implementation
 ```
 
