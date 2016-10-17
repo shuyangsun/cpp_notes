@@ -1194,7 +1194,7 @@ void foo() throw(MyException1, MyException2); // may only throw MyException1 or 
 
 #### 13.5.2 Catching Exceptions
 
-* C++ does not support **finally** block in **try**/**catch** semantic, because RAII (Resource Allocation is Initialization) is a better solution than **finally** to release resources and do cleanups.
+* C++ does not support **finally** block in **try**/**catch** semantic, because RAII (Resource Allocation is Initialization) is a better solution than using **finally** block to release resources and do cleanups.
 
 ```c++
 try {
