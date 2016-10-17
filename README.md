@@ -1148,4 +1148,23 @@ void foo() {
 * For general library code, reporting an error - preferably by throwing an exception - is essential.
 * Destructors should not throw, so don't use a throwing **Assert()** in a destructor.
 
-### 13. Throwing and Catching Exceptions
+#### 13.5.1 Throwing Exceptions
+
+* We can **throw** exceptions of any type that can be copied or moved.
+* A **throw x** initializes a temporary variable of **x**'s type with **x**, which may be further copied several times before it is caught.
+* The process of passing the exception "up the stack" from the point of throw to a handler is called *stack unwinding*.
+* In each scope exited, the destructors are invoked so that every fully constructed object is properly destroyed.
+* Objects of types with move semantics are not expensive to throw.
+
+##### 13.5.1.1 noexcept Functions
+
+```c++
+void foo() noexcept;
+```
+
+* Declaring a function **noexcept** is for logical and compiler optimization reason.
+* If an exception is thrown in a **noexcept** function, the program terminates unconditionally by invoking **std::terminate()**.
+* It does not invoke destructors from calling functions.
+* It is implementation-defined whether destructors from scopes between **throw** and the **noexcept** are invoked.
+* By adding a **noexcept** specifier, we indicate that our code was not written to cope with a **throw**.
+
