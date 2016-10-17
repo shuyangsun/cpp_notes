@@ -1216,6 +1216,11 @@ try {
 * If no exception is to rethrow, the program terminates.
 * The type of exception to be thrown is the type of original exception, not just the type of exception in **catch**.
 
+##### 13.5.2.2 Catch Every Exception
+
+* **<stdexcept>** provides a small hierarchy of exception classes with a common base **std::exception**
+* Use **catch (...)** to catch all exceptions, including ones that are not derived from **std::exception**.
+
 ```c++
 try {
     throw std::runtime_error {"Keep going, don't mind me."};
@@ -1232,5 +1237,38 @@ try {
 } catch(...) {
 	// Catch everything
 }
+```
+
+##### 13.5.2.4 Function try-Blocks
+
+* The body of a function can be a **try**-block.
+
+```c++
+void foo()
+try {
+	// Do something...
+} catch (...) {
+	// Handle the exception...
+}
+```
+
+* Constructors can catch exceptions by enclosing the complete function body - including the member initializer list - in a **try**-block.
+
+```c++
+class my_class {
+public:
+	my_class(const unsigned int foo, const bool bar)
+	try
+		:foo_{foo},
+		bar_{bar}
+	{
+		// Initialize other stuff...
+	} catch (...) {
+		// Handle the exception...
+	}
+private:
+	unsigned int foo_;
+	bool bar_;
+};
 ```
 
