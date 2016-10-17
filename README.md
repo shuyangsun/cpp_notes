@@ -1196,7 +1196,7 @@ void foo() throw(MyException1, MyException2); // may only throw MyException1 or 
 
 ```c++
 try {
-	throw E{};
+	throw E {};
 } catch (H) {
 	// Is invoked if:
 	//		1. H is the same type as E
