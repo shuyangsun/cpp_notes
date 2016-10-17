@@ -1274,3 +1274,20 @@ private:
 };
 ```
 
+##### 13.5.2.5 Termination
+
+* Rules for calling **std::terminate()** are:
+	* When no suitable handler was found for a thrown exception
+	* When a **noexcept** function tries to exit with a **throw**
+	* When a destructor invoked during stack unwinding tries to exit with a **throw**
+	* When code invoked to propagate an exception (e.g., a copy constructor) tries to exit with a **throw**
+	* When someone tries to rethrow (**throw;**) when there is no current exception being handled
+	* When a destructor for a statically allocated or thread-local object tries to exit with a **throw**
+	* When an initializer for a statically allocated or thread-local object tries to exit with a **throw**
+	* When a function invoked as an **atexit()** function tries to exit with a **throw**
+* There is no way of catching exceptions thrown during initialization or destruction of namespace and thread-local variables.
+
+#### 13.5.3 Exceptions and Threads
+
+* If an exception is not caught on a **thread**, **std::terminate()** is called.
+
