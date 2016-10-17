@@ -1192,3 +1192,18 @@ void foo() throw(MyException1, MyException2); // may only throw MyException1 or 
 // If other types of exceptions are thrown, by default the program will be terminated.
 ```
 
+#### 13.5.2 Catching Exceptions
+
+```c++
+try {
+	throw E{};
+} catch (H) {
+	// Is invoked if:
+	//		1. If H is the same type as E
+	//		2. If H is an unambiguous public base of E
+	//		3. If H and E are pointer types and 1 or 2 holds for the types to which they refer
+	//		4. If H is a reference and 1 or 2 holds the type to which H refers
+}
+```
+
+* We can add **const** to the type used to catch an exception, so it won't be modified.
