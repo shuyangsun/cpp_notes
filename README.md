@@ -1291,3 +1291,11 @@ private:
 
 * If an exception is not caught on a **thread**, **std::terminate()** is called.
 
+### 13.6 A vector Implementation
+
+* The general principles to follow are to
+	* Never let go of a piece of information before its replacement is ready for use.
+	* Always leave objects in valid states when throwing or rethrowing an exception.
+* Throwing an exception from a destructor typically leads to resource leaks and unpredictable behavior of code relying on reasonable behavior of objects.
+* There is no really good way to protect against exceptions thrown from destructors, so the library makes no guarantees if an element destructor throws.
+
