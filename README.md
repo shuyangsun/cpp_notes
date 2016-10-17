@@ -1186,7 +1186,7 @@ void bar(T& x) noexcept(noexcept(foo(x))); // noexcept if foo(x) does not throw
 ##### 13.5.1.3 Exception Specifications
 * Deprecated, don't use. Expensive at run-time, hard to use correctly.
 
-```c++11
+```c++
 void foo() throw(MyException1, MyException2); // may only throw MyException1 or MyException2 exceptions
 // If other types of exceptions are thrown, by default the program will be terminated.
 ```
