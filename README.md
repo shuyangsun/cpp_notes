@@ -1207,3 +1207,13 @@ try {
 ```
 
 * We can add **const** to the type used to catch an exception, so it won't be modified.
+* Exceptions can be caught by reference.
+
+```c++
+try {
+    throw std::runtime_error {"Keep going, don't mind me."};
+} catch (const std::runtime_error& err) {
+    std::cerr << "Caught runtime error: " << err.what() << std::endl;
+}
+```
+
