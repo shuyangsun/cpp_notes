@@ -1148,6 +1148,8 @@ void foo() {
 * For general library code, reporting an error - preferably by throwing an exception - is essential.
 * Destructors should not throw, so don't use a throwing **Assert()** in a destructor.
 
+### 13.5 Throwing and Catching Exceptions
+
 #### 13.5.1 Throwing Exceptions
 
 * We can **throw** exceptions of any type that can be copied or moved.
@@ -1167,4 +1169,17 @@ void foo() noexcept;
 * It does not invoke destructors from calling functions.
 * It is implementation-defined whether destructors from scopes between **throw** and the **noexcept** are invoked.
 * By adding a **noexcept** specifier, we indicate that our code was not written to cope with a **throw**.
+
+##### 13.5.1.2 The noexcept Operator
+
+* It is possible to declare a function to be conditionally **noexcept**.
+
+```c++
+template<typename T>
+void foo(T& x) noexcept(std::is_pod<T>()); // noexcept if T is POD
+void bar(T& x) noexcept(noexcept(foo(x))); // noexcept if foo(x) does not throw
+```
+
+* The predicate in a **noexcept()** specification must be a constant expression. Plain **noexcept** means **noexcept(true)**.
+* **noexcept(expr)** does not go very deep to check whether **expr** throws, it simply look at all operations in **expr** and see if they *all* have **noexcept** evaluated to **true**.
 
