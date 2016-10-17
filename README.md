@@ -1258,8 +1258,8 @@ try {
 class my_class {
 public:
 	my_class(const unsigned int foo, const bool bar)
-	try
-		:foo_{foo},
+	try:
+		foo_{foo},
 		bar_{bar}
 	{
 		// Initialize other stuff...
