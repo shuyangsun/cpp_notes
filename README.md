@@ -1209,11 +1209,28 @@ try {
 * We can add **const** to the type used to catch an exception, so it won't be modified.
 * Exceptions can be caught by reference.
 
+##### 13.5.2.1 Rethrow
+
+* A rethrow is indicated by a **throw** without an operand.
+* A rethrow may occur in a **catch**-clause or in a function called from a **catch**-clause.
+* If no exception is to rethrow, the program terminates.
+* The type of exception to be thrown is the type of original exception, not just the type of exception in **catch**.
+
 ```c++
 try {
     throw std::runtime_error {"Keep going, don't mind me."};
 } catch (const std::runtime_error& err) {
     std::cerr << "Caught runtime error: " << err.what() << std::endl;
+} catch (const my_error& err) {
+	bool can_handle;
+	// Set can_handle with some conditions.
+	if (can_handle) {
+		// Handle it.
+	} else {
+		throw; // Rethrow the exception.
+	}
+} catch(...) {
+	// Catch everything
 }
 ```
 
