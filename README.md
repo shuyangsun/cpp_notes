@@ -1327,9 +1327,7 @@ using namespace std; // make every name from std accessible
 * **using** different namespaces with name clashes alone will not result in compile-time (or run-time) error. However, if ambiguous name is directly referenced, it will result in a compile-time error.
 
 ```c++
-namespace my_lib {
-	class string { public: string() {} };
-}
+namespace my_lib { class string { public: string() {} }; }
 
 using namespace std;
 using namespace my_lib;
