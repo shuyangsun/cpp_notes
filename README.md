@@ -1299,3 +1299,42 @@ private:
 * Throwing an exception from a destructor typically leads to resource leaks and unpredictable behavior of code relying on reasonable behavior of objects.
 * There is no really good way to protect against exceptions thrown from destructors, so the library makes no guarantees if an element destructor throws.
 
+___
+
+## 14. Namespaces
+
+### 14.2 Namespaces
+* The notion of a *namespace* is provided to directly represent the notion of a set of facilities that directly belong together, for example, the code of a library.
+* The entities declared in a namespace are referred to as the members of the namespace.
+* A namespace is a (named) scope.
+
+#### 14.2.1 Explicit Qualification
+* A member can be declared within a namespace definition and defined later using the *namespace-name::member-name* notation.
+* We cannot declare a new member of a namespace outside a namespace definition using the qualifier syntax.
+
+#### 14.2.2 using-Declarations
+
+```c++
+using std::string; // use "string" for "std::string"
+```
+
+#### 14.2.3 using-Directives
+
+```c++
+using namespace std; // make every name from std accessible
+```
+
+* **using** different namespaces with name clashes alone will not result in compile-time (or run-time) error. However, if ambiguous name is directly referenced, it will result in a compile-time error.
+
+```c++
+namespace my_lib {
+	class string { public: string() {} };
+}
+
+using namespace std;
+using namespace my_lib;
+
+// Fine until here, can use both names spaces.
+
+string str {}; // Error: Reference to 'string' is ambiguous
+```
