@@ -1311,6 +1311,17 @@ ___
 #### 14.2.1 Explicit Qualification
 * A member can be declared within a namespace definition and defined later using the *namespace-name::member-name* notation.
 * We cannot declare a new member of a namespace outside a namespace definition using the qualifier syntax.
+* Cannot redefine function in the namespace (not even with *namespace-name::member-name* notation).
+
+```c++
+namespace linalg {
+	inline auto matmul(const matrix& A, const matrix& B) -> matrix;
+}
+
+inline auto linalg::matmul(const matrix& A, const matrix& B) -> matrix {
+	// Multiply matrix and return it...
+}
+```
 
 #### 14.2.2 using-Declarations
 
