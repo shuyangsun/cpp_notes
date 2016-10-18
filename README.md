@@ -1347,3 +1347,18 @@ using namespace my_lib;
 
 string str {}; // Error: Reference to 'string' is ambiguous
 ```
+
+#### 14.2.4 Argument-Dependent Lookup (ADL)
+
+* If a function isn't found in the context of its use, we look in the namespaces of its arguments.
+
+```c++
+namespace linalg {
+	class matrix { /* ... */ };
+	inline void print(const matrix& mat) { /* ... */ }
+}
+
+void foo(const linalg::matrix& mat) {
+	print(mat); // no need to explicitly call "linalg::print(mat);"
+}
+```
