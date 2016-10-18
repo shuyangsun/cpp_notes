@@ -1362,3 +1362,27 @@ void foo(const linalg::matrix& mat) {
 	print(mat); // no need to explicitly call "linalg::print(mat);"
 }
 ```
+
+* General rule of ADL:
+	* If an argument is a class member, the associated namespaces are the class itself (including its base classes) and the class's enclosing namespaces.
+	* If an argument is a member of a namespace, the associated namespaces are the enclosing namespaces.
+	* If an argument is a built-in type, there are no associated namespaces.
+
+#### 14.2.5 Namespaces Are Open
+
+* You can have multiple namespace declarations.
+
+#### 14.4.1 Convenience vs. Safety
+
+* A **using**-declaration adds a name to a local scope (and hides the global one if there is one).
+* A **using**-directive does not.
+
+#### 14.4.2 Namespace Aliases
+
+* Long namespace names are okay, use aliases for long namespace names.
+* Can also use namespace aliases for versioning.
+
+```c++
+using linalg = linalg_v2r11;
+```
+
