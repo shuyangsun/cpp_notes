@@ -1421,10 +1421,36 @@ extern int x; // "extern" indicates it's just a declaration and not a definition
 * *internal linkage*: a name that can  be referred to only in the translation unit in which it is defined.
 * When used in namespace scope (including the global scope), the keyword **static** (somewhat illogically) means "not accessible from other source files".
 * The keyword **const** implies default internal linkage, precede definition with **extern** to make it external linkage.
+* Names that a linker does not see, such as the names of local variables, are said to have *no linkage*.
 
 ```c++
 int x {5}; // external linkage
 static int y {1}; // internal linkage
+
 const char z {'a'}; // internal linkage
 extern const char z1 {'b'}; // external linkage
+
+void foo() {
+	int num {5}; // no linkage
+}
 ```
+
+* An **inline** function must be defined identically in every translation unit in which it is used.
+* Use header files to keep **inline** function definitions consistent.
+
+```c++
+// Illegal:
+
+// file1.cpp
+	inline const int foo(int x) { return x; }
+
+// file2.cpp
+	inline const int foo(int x) { return x + 1; }
+```
+
+* By default, **const** objects, **constexpr** objects, type aliases, and anything declared **static** in a namespace scope have internal linkage.
+* To ensure consistency, place aliases, **const**s, **constexpr**s, and **inline**s in header files.
+
+#### 15.2.1 File-Local Names
+
+* 
