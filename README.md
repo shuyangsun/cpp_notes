@@ -1456,4 +1456,42 @@ void foo() {
 * An unnamed namespace can be used to make names local to a compilation unit. The effect of an unnamed namespace is very similar to that of internal linkage.
 * **static** means "use internal linkage", it's one of the confusing leftovers from earliest days of C.
 
+#### 15.2.2 Header Files
+
+* The **#include** mechanism is a text manipulation facility for gathering source program fragments together into a single unit (file) for compilation.
+* Unfortunately, spaces are significant within the **< >** or **" "** of an include directive.
+
+```c++
+#include < iostream > // will not find <iostream>
+```
+
+* A header file should never contain:
+	* Ordinary function definitions: **int foo() { return 1; }**
+	* Data definitions: **int x;**
+	* Aggregate definitions: **short arr[] = {1, 2, 3};**
+	* Unnamed namespaces: **namespace { /\* ... \*/ }**
+	* **using**-directives: **using namespace bar;**
+
+#### 15.2.3 The One-Definition Rule (the ODR)
+
+* A given class, enumeration, and template, etc., must be defined exactly once in a program.
+* Two definitions of a class, template, or inline function are accepted as examples of the same unique definition if and only if:
+	1. they appear in different translation units, and
+	2. they are token-for-token identical, and
+	3. the meaning of those tokens are the same in both translation units.
+
+#### 15.2.4 Standard-Library Headers
+
+* For each C standard-library header **<X.h>**, there is a corresponding standard C++ header **<cX>**.
+* The macro **__cplusplus** is defined by the C++ compiler and can be used to distinguish C++ code from code intended for a C compiler.
+
+```c++
+#ifdef __cplusplus
+namespace mylib {
+#endif
+	const int foo() { return 1; }
+#ifdef __cplusplus
+}
+#endif
+```
 
