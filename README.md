@@ -1495,3 +1495,72 @@ namespace mylib {
 #endif
 ```
 
+#### 15.2.5 Linkage to Non-C++ Code
+
+* Use **extern "C"** to specify something should be linked according to the (system-specific) C linkage conventions.
+* Use *linkage block* to perform group linkage specification.
+
+```c++
+extern "C" char* strcpy(char*, const char*);
+
+extern "C" {
+	#include <string.h>
+}
+
+// Used to produce a C++ header from a C header.
+#ifdef __cplusplus
+extern "C" {
+#endif
+	int foo();
+	bool bar(float);
+	// ... etc.
+#ifdef __cplusplus
+}
+#endif
+```
+
+#### 15.3.3 Include Guards
+
+* Headers should be included only when necessary.
+
+```c++
+#ifdef FILE_NAME_H
+#define FILE_NAME_H
+
+// Content...
+
+#endif
+```
+
+### 15.4 Programs
+
+* A program can only provide one of two **main()** declarations:
+
+```c++
+int main() { /* ... */ }
+int main(int argc, char* argv[]) { /* ... */ }
+```
+
+#### 15.4.1 Initialization of Nonlocal Variables
+
+* In principle, a variable defined outside any function (that is, global, namespace, and class **static** variables) is initialized before **main()** is invoked.
+* The default initializer value for built-in types and enumerations is **0**.
+* It is not possible to catch an exception thrown by the initializer of a global variable.
+* Often, a function returning a reference is a good alternative to a global variable.
+
+```c++
+unsigned int& use_count() {
+	static unsigned int uc {0};
+	return uc;
+}
+```
+
+#### 15.4.2 Initialization and Concurrency
+
+* If a program is terminated using the standard-library function **exit()**, the destructors for constructed static objects are called. However, if a program is terminated using standard-library function **abort()**, they are not.
+* Calling **exit()** in a destructor may cause an infinite recursion.
+
+___
+
+## 16. Classes
+
