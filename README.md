@@ -1386,3 +1386,45 @@ void foo(const linalg::matrix& mat) {
 using linalg = linalg_v2r11;
 ```
 
+#### 14.4.8 Unnamed Namespaces
+
+* For preventing name clashes
+
+```c++
+namespace {
+	const unsigned int a;
+}
+```
+___
+
+## 15. Source Files and Programs
+
+### 15.1 Separate Compilation
+
+* Where the unit of compilation is a file, all of the file must be recompiled whenever a change (however small) has been made to it or to something on which it depends.
+* The amount of time spent recompiling can be significantly reduced by partitioning the program into files of suitable size.
+* Compilation process:
+	1. *source file* presented to the compiler.
+	2. Preprocessed (macro processing is done and use **#inlude**s to bring in headers) into *translation unit*.
+* The *linker* (*loader*) is the program that binds together the separately compiled parts.
+* New code can be added to the running program ("dynamically linked") later.
+
+### 15.2 Linkage
+
+```c++
+extern int x; // "extern" indicates it's just a declaration and not a definition.
+```
+
+* An object must be defined exactly once in a program. It may be declared many times, but the types must agree exactly.
+* A variable defined without an initializer in the global or a namespace scope is initialized by default. This is *not* the case for non-**static** local variables or objects created on the free store.
+* *external linkage*: a name that can be used in translation units different from the one in which it was defined.
+* *internal linkage*: a name that can  be referred to only in the translation unit in which it is defined.
+* When used in namespace scope (including the global scope), the keyword **static** (somewhat illogically) means "not accessible from other source files".
+* The keyword **const** implies default internal linkage, precede definition with **extern** to make it external linkage.
+
+```c++
+int x {5}; // external linkage
+static int y {1}; // internal linkage
+const char z {'a'}; // internal linkage
+extern const char z1 {'b'}; // external linkage
+```
