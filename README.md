@@ -1453,4 +1453,7 @@ void foo() {
 
 #### 15.2.1 File-Local Names
 
-* 
+* An unnamed namespace can be used to make names local to a compilation unit. The effect of an unnamed namespace is very similar to that of internal linkage.
+* **static** means "use internal linkage", it's one of the confusing leftovers from earliest days of C.
+
+
