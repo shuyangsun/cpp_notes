@@ -1590,7 +1590,7 @@ date d2 {d1}; // initialized by copy
 
 ```c++
 class foo {
-	int a, b, c; // implicit private
+	int a, b, c; // private by default
 public:
 	inline const int get_product();
 };
@@ -1598,4 +1598,26 @@ public:
 
 * The protection of private data relies on restriction of the use of the class member names. It can therefore be circumvented by address manipulation and explicit type conversion.
 * Only hardware can offer perfect protection against malicious use of a general-purpose language, and even that is hard to do in realistic systems.
+
+#### 16.2.4 class and struct
+
+* By definition, a **struct** is a class in which members are by default public.
+
+```c++
+struct S { /* ... */ };
+// Equivalent to:
+class S { public: /* ... */ }
+```
+
+* Access specifiers can be used many times in a single class declaration.
+
+#### 16.2.5 Constructors
+
+* Use **{}** instead of **()** for initialization.
+
+#### 16.2.6 explicit Constructors
+
+* By default, a constructor invoked by a single argument acts as an implicit conversion from its argument type to its type.
+* We can specify that a constructor is not used as an *implicit* conversion.
+* A constructor declared with the keyword **explicit** can only be used for initialization and explicit conversions.
 
