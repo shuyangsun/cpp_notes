@@ -1660,7 +1660,7 @@ private:
 ```c++
 class person {
 public:
-    explicit person() { };
+    explicit person() { }
     void grow_up() { ++age_; } // inline
     auto age() -> const unsigned short; // inline
     void print_age(); // not inline
@@ -1695,3 +1695,88 @@ void person::print_age() const {
 * **const** is a part of the member function's type.
 * A **const** member function can be invoked for both **const** and non-**const** objects, whereas a non-**const** member function can be invoked only for non-**const** objects.
 
+##### 16.2.9.2 Physical and Logical Constness
+
+* Occasionally, a member function is logically **const**, but it still needs to change the value of a member.
+
+##### 16.2.9.3 mutable
+
+* We can define a member of a class to be **mutable**, meaning that it can be modified even in a **const** object.
+
+```c++
+class foo {
+public:
+    explicit foo() { }
+    void increase() const { ++a_; }
+    auto a() const -> const int { return a_; }
+private:
+    mutable int a_ {0};
+};
+
+foo obj {};
+obj.increase();
+obj.a(); // 1
+```
+
+##### 16.2.9.4 Mutability through Indirection
+
+* Declaring a member **mutable** is most appropriate when only a small part of a representation of a small object is allowed to change.
+* More complicated cases are often better handled by placing the changing data in a separate object and accessing it indirectly.
+
+#### 16.2.10 Self-Reference
+
+* In a non-**static** member function, the keyword **this** is pointer to the object for which the function was invoked.
+* In a non-**const** member function of class **X**, the type of **this** is **X\***.
+* In a **const** member function of class **X**, the type of **this** is **const X\*** to prevent modification of the object itself.
+* **this** is an rvalue.
+
+#### 16.2.11 Member Access
+
+* A member of a class **X** can be accessed by applying the **.** (dot) operator to an object of class **X** or by applying the **->** (arrow) operator to a pointer to an object of class **X**.
+* From inside a class no operator is needed.
+* A member function can refer to the name of a member before it has been declared.
+* If we want to refer to a member in general, rather than to a member of a particular object, we qualify by the class name followed by **::**.
+
+#### 16.2.12 [static] Members
+
+* There is exactly one copy of a **static** member for each class.
+* **static** must appear in member declaration, but not necessarily definition.
+
+#### 16.2.13 Member Types
+
+* A *member class* (often called a *nested class*) can refer to types and **static** members of its enclosing class.
+* A nested class has access to members of its enclosing class, even to **private** members (just as a member function has), but has no notion of a current object of the enclosing class.
+* A class does not have special access rights to the members of its nested class.
+
+```c++
+template<typename T>
+class Tree {
+	using value_type = T; // member alias
+	enum Policy { rb, splay, treeps }; // member enum
+	class Node { // member class
+		Node* right;
+		Node* left;
+		value_type value;
+	public:
+		void f(Tree*);
+	};
+	Node* top;
+public:
+	void g(const T&);
+	// ...
+}
+
+template<typename T>
+void Tree::Node::f(Tree* p) {
+	top = right; // error: no object of type Tree specified
+	p->top = right; // OK
+	value_type v = left->value; / OK: value_type is not associated with an object
+}
+
+template<typename T>
+void Tree::g(Tree::Node* p) {
+	value_type val = right->value; // error: no object of type Tree::Node
+	value_type v = p->right->value; // error: Node::right is private
+	p->f(this); // OK
+}
+```
