@@ -1621,3 +1621,58 @@ class S { public: /* ... */ }
 * We can specify that a constructor is not used as an *implicit* conversion.
 * A constructor declared with the keyword **explicit** can only be used for initialization and explicit conversions.
 
+```c++
+class person {
+public:
+    explicit person(unsigned short age);
+};
+
+person me {23}; // OK
+person another = person{21}; // OK
+person him = {25}; // Not OK (would be if constructor is not explicit)
+person her = 22; // Not OK (would be if constructor is not explicit)
+```
+
+* An initialization with an **=** is considered a *copy initialization*.
+* Leaving out the **=** makes the initialization explicit. Explicit initialization is known as *direct initialization*.
+* By default, declare a constructor that can be called with a single argument **explicit**. You need a good reason not to do so (e.g., **complex**).
+* **explicit** can also be used on constructors with zero or more than one arguments.
+
+#### 16.2.7 In-Class Initializers
+
+* You can specify default arguments for data members.
+
+```c++
+class person {
+public:
+	explicit person() { }
+	explicit person(const unsigned short age): age_{age} { }
+private:
+	unsigned short age_ {21};
+};
+```
+
+#### 16.2.8 In-Class Function Definitions
+
+* A member function *defined* within the class definition is taken to be an inline member function.
+* If a member function is only *declared* within the class definition, it is not inline by default. However, we can change it to an inline function by adding **inline** (only) to its definition (i.e., not declaration or both).
+
+```c++
+class person {
+public:
+    explicit person() { };
+    void grow_up() { ++age_; } // inline
+    const unsigned short age(); // inline
+    void print_age(); // not inline
+private:
+    unsigned short age_ {21};
+};
+
+inline const unsigned short person::age() {
+    return age_;
+}
+
+void person::print_age() {
+    std::cout << age_ << std::endl;
+}
+```
