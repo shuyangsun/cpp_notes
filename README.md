@@ -1672,4 +1672,26 @@ inline
 auto person::age() -> const unsigned short {
     return age_;
 }
+
+void person::print_age() {
+    std::cout << age_ << std::endl;
+}
 ```
+
+#### 16.2.9 Mutability
+
+* const: object that holds *immutable* value; variable: object that holds *mutable* value.
+* Immutability is a most useful property in a multi-threaded program.
+
+##### 16.2.9.1 Constant Member Functions
+
+```c++
+// The "const" suffix indicates this member function does not modify the state of this object
+void person::print_age() const {
+    std::cout << age_ << std::endl;
+}
+```
+
+* **const** is a part of the member function's type.
+* A **const** member function can be invoked for both **const** and non-**const** objects, whereas a non-**const** member function can be invoked only for non-**const** objects.
+
