@@ -1704,16 +1704,16 @@ void person::print_age() const {
 * We can define a member of a class to be **mutable**, meaning that it can be modified even in a **const** object.
 
 ```c++
-class foo {
+class Foo {
 public:
-    explicit foo() { }
+    explicit Foo() { }
     void increase() const { ++a_; }
     auto a() const -> const int { return a_; }
 private:
     mutable int a_ {0};
 };
 
-foo obj {};
+Foo obj {};
 obj.increase();
 obj.a(); // 1
 ```
@@ -1780,3 +1780,23 @@ void Tree::g(Tree::Node* p) {
 	p->f(this); // OK
 }
 ```
+
+#### 16.3.3 Overloaded Operators
+
+```c++
+template<typename T>
+inline bool operator==(const Date a, const Date b) {
+	return a.Day() == b.Day() && a.Month() == b.Month() && a.Year() == b.Year();
+}
+```
+
+* Overloaded operators in namespaces can benefit from argument-dependent lookup.
+
+#### 16.3.4 The Significance of Concrete Classes
+
+* Derivation from a concrete class should be done with care and only rarely.
+
+___
+
+## 17. Construction, Cleanup, Copy and Move
+
