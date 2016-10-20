@@ -1564,3 +1564,38 @@ ___
 
 ## 16. Classes
 
+### 16.2 Class Basics
+
+* Summary:
+	* A class is a user-defined type.
+	* A class consists of a set of members. The most common kinds of members are data members and member functions.
+	* Member functions can define the meaning of initialization (creation), copy, move and cleanup (destruction).
+	* Members are accessed using **.** (dot) for objects and **->** (arrow) for pointers.
+	* Operators, such as **+**, **!**, and **[]**, can be defined for a class.
+	* A class is a namespace containing its members.
+	* The **public** members provide the class's interface and the **private** members provide implementation details.
+	* A **struct** is a **class** where members are by default **public**.
+
+#### 16.2.2 Default Copying
+
+* By default, the copy of a class object is a copy of each member.
+* You can define an appropriate assignment operator for a class to provide custom behavior.
+
+```c++
+data d1 {date()};
+date d2 {d1}; // initialized by copy
+```
+
+#### 16.2.3 Access Control
+
+```c++
+class foo {
+	int a, b, c; // implicit private
+public:
+	inline const int get_product();
+};
+```
+
+* The protection of private data relies on restriction of the use of the class member names. It can therefore be circumvented by address manipulation and explicit type conversion.
+* Only hardware can offer perfect protection against malicious use of a general-purpose language, and even that is hard to do in realistic systems.
+
