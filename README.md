@@ -1770,7 +1770,7 @@ template<typename T>
 void Tree::Node::f(Tree* p) {
 	top = right; // error: no object of type Tree specified
 	p->top = right; // OK
-	value_type v = left->value; / OK: value_type is not associated with an object
+	value_type v = left->value; // OK: value_type is not associated with an object
 }
 
 template<typename T>
