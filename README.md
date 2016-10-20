@@ -1668,7 +1668,8 @@ private:
     unsigned short age_ {21};
 };
 
-inline auto person::age() -> const unsigned short {
+inline
+auto person::age() -> const unsigned short {
     return age_;
 }
 ```
