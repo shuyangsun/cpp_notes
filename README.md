@@ -1662,17 +1662,13 @@ class person {
 public:
     explicit person() { };
     void grow_up() { ++age_; } // inline
-    const unsigned short age(); // inline
+    auto age() -> const unsigned short; // inline
     void print_age(); // not inline
 private:
     unsigned short age_ {21};
 };
 
-inline const unsigned short person::age() {
+inline auto person::age() -> const unsigned short {
     return age_;
-}
-
-void person::print_age() {
-    std::cout << age_ << std::endl;
 }
 ```
