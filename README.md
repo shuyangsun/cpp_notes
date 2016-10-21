@@ -1800,3 +1800,7 @@ ___
 
 ## 17. Construction, Cleanup, Copy and Move
 
+### 17.1 Introduction
+
+* The difference between *move* and *copy* is that after a copy two objects must have the same value, whereas after a move the source of the move is not required to have its original value.
+* An object is considered an object of its type after its constructor completes, and it remains an object of its type until its destructor starts executing.
