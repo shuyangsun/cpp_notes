@@ -1804,3 +1804,78 @@ ___
 
 * The difference between *move* and *copy* is that after a copy two objects must have the same value, whereas after a move the source of the move is not required to have its original value.
 * An object is considered an object of its type after its constructor completes, and it remains an object of its type until its destructor starts executing.
+
+```c++
+class X {
+	X(Sometype); // "ordinary constructor": create an object
+	X(); // default constructor
+	X(const X&); // copy constructor
+	X(X&&); // move constructor
+	X& operator=(const X&); // copy assignment: clean up target and copy
+	X& operator=(X&&); // move assignment: clean up target and move
+	~X(); // destructor: clean up
+	// ...
+}
+```
+
+* There are five situations in which an object is copied or moved:
+	* As the source of an assignment
+	* As an object initializer
+	* As a function argument
+	* As a function return value
+	* As an exception
+
+### 17.2 Constructors and Destructors
+
+#### 17.2.1 Constructors and Invariants
+
+* Constructor's initialization for class must establish a *class invariant*, that is, something that must hold whenever a member function is called (from outside the class).
+* If the constructor cannot establish the invariant, no object is created and the constructor must ensure that no resources are leaked.
+
+#### 17.2.2 Destructors and Resources
+
+* The name of a destructor is **~** followed by the class name.
+* A destructor does not take an argument, and a class can have only one destructor.
+* Destructor are called implicitly when an automatic variable goes out of scope, an object on the free store is deleted, etc.
+* A type that has no destructor declared, such as a built-in type, is considered to have a destructor that does nothing.\
+
+#### 17.2.3 Base and Member Destructors
+
+* A constructor builds a class object "from the bottom up":
+	1. first, the constructor invokes its base class constructors,
+	2. then, it invokes the member constructors, and
+	3. finally, it executes its own body.
+* A destructor "tears down" an object in the reverse order:
+	1. first, the destructor executes its own body,
+	2. then, it invokes its member destructors, and
+	3. finally, it invokes its base class destructors.
+* A **virtual** base is constructed before any base that might use it and destroyed after all such bases.
+* Constructors execute member and base constructors in declaration order (not the order of initializers).
+
+#### 17.2.4 Calling Constructors and Destructors
+
+* A destructor is invoked implicitly upon exit from a scope or by **delete**.
+* It's dangerous to explicitly call a destructor.
+* We can prevent destruction of an **X** by declaring its destructor **=delete** or **private**.
+
+#### 17.2.5 virtual Destructors
+
+* A destructor can be declared to be **virtual**, and usually should be for a class with a virtual function (if not the wrong destructor may be called).
+
+```c++
+class A { public: ~A() { } }
+class B: public A { public: ~B() { } }
+
+void f(A* obj) {
+	delete obj; // A's destructor is called instead of B's
+}
+```
+
+### 17.3 Class Object Initialization
+
+#### 17.3.1 Initialization Without Constructors
+
+* We can initialize objects of a class for which we have not defined a constructor using:
+	* memberwise initialization
+	* copy initialization, or
+	* default initialization (without an initializer or with an empty initializer list).
