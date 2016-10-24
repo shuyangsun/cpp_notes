@@ -1936,3 +1936,48 @@ void foo(std::initializer_list<int> args) {
 
 ### 17.4 Member and Base Initialization
 
+#### 17.4.1 Member Initialization
+
+* Arguments for a member's constructor are specified in a *member initializer list* in the definition of the constructor of the containing class.
+
+```c++
+Matrix::Matrix(const unsigned int num_row, const unsigned int num_col, const float init_val)
+	: m{num_row}, n{num_col}
+{
+	// ...
+}
+```
+* The member's constructors are called before the body of the containing class's own constructor is executed.
+* The constructors are called in the order in which the members are declared in the class rather than the order in which the members appear in the initializer list.
+* The member destructors are called in the reverse order of construction after the body of the class's own destructor has been executed.
+* An "implicitly initialized" member of a built-in type is left uninitialized.
+* A constructor can initialize members and bases of its class, but not members or bases of its members or bases.
+
+##### 17.4.1.1 Member Initialization and Assignment
+
+* A reference member or a **const** member must be initialized.
+* Initializers have efficiency advantage over assignment operations (use member initializer list whenever you can).
+
+#### 17.4.2 Base Initializers
+
+* Bases of a derived class are initialized in the same way non-data members are. That is, if a base requires an initializer, it must be provided as a base initializer in a constructor.
+* Bases are initialized before members and destroyed after members.
+
+#### 17.4.3 Delegating Constructors
+
+* A member-style initializer using the class's own name (its constructor name) calls another constructor as part of the construction. Such a constructor is called a *delegating constructor* (and occasionally a *forward constructor*).
+* You cannot both delegate and explicitly initialize a member.
+
+```c++
+class Foo {
+public:
+	Foo(int x): a{x} { }
+	Foo(): Foo(3) { } // delegating Foo(int x)
+	Foo(float x): Foo(std::floor(x)), a{std::floor(x)} { } // error
+private:
+	int a;
+}
+```
+
+* Delegating by calling another constructor in a constructor's member and base initializer list is very different from explicitly calling a constructor in the body of a constructor. In the later case, the called constructor simply creates a new unnamed object (a temporary) and does nothing with it.
+* A destructor will not be called for an object unless its original constructor completed.
