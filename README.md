@@ -1976,8 +1976,29 @@ public:
 	Foo(float x): Foo(std::floor(x)), a{std::floor(x)} { } // error
 private:
 	int a;
-}
+};
 ```
 
 * Delegating by calling another constructor in a constructor's member and base initializer list is very different from explicitly calling a constructor in the body of a constructor. In the later case, the called constructor simply creates a new unnamed object (a temporary) and does nothing with it.
 * A destructor will not be called for an object unless its original constructor completed.
+
+#### 17.4.4 In-Class Initializers
+
+* We can specify an initializer for a non-**static** data member in the class declaration.
+* Both **{}** and **=** initializer notions can be used for in-class member initializers, but the **()** notion cannot.
+* The value of the global variable is obtained at the point where the constructor for a new **S** object is run (bad idea to use global variable to initialize a data member).
+
+#### 17.4.5 static Member Initialization
+
+* Generally, the **static** member declaration acts as a declaration for a definition outside the class.
+
+```c++
+class Foo {
+	static int x;
+};
+
+int Foo::x = 3;
+```
+
+* To initialize a **static** member in the class declaration, it must be a **const** of an integral or enumeration type, or a **constexpr** of a literal type, and the initializer must be a *const-expression*.
+* You have to define a member somewhere before use it in a way that requires it to be stored as an object in memory.
