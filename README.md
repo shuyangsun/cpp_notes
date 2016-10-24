@@ -1879,3 +1879,13 @@ void f(A* obj) {
 	* memberwise initialization
 	* copy initialization, or
 	* default initialization (without an initializer or with an empty initializer list).
+* Where no constructor requiring argument is declared, it is also possible to leave out the initializer completely.
+	* For statically allocated objects, the rules are exactly as if you had used **{}**.
+	* For local variables and free-store objects, the default initialization is done only for members of class type, and members of built-in type are left uninitialized.
+* Naturally, memberwise initialization works only if we can access the members. If a class has a private non-**static** data member, it needs a constructor to initialize it.
+
+#### 17.3.2 Initialization Using Constructors
+
+* If a constructor is declared for a class, some constructor will be used for every object.
+* The usual overload resolution rules apply for constructors.
+* The **{}** initializer notion does not allow narrowing.
