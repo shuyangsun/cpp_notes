@@ -2002,3 +2002,15 @@ int Foo::x = 3;
 
 * To initialize a **static** member in the class declaration, it must be a **const** of an integral or enumeration type, or a **constexpr** of a literal type, and the initializer must be a *const-expression*.
 * You have to define a member somewhere before use it in a way that requires it to be stored as an object in memory.
+
+### 17.5 Copy and Move
+
+* Typically, a move cannot throw, whereas a copy might.
+* When you write a move operation, you should leave the source object in a valid but unspecified state because it will eventually be destroyed and the destructor cannot destroy an object left in an invalid state.
+* Design your moves not to throw, and to leave their source objects in a state that allows destruction and assignment.
+
+#### 17.5.1 Copy
+
+* Copy for a class **X** is defined by two operations:
+	* Copy constructor: **X(const X&)**
+	* Copy assignment: **X& operator=(const X&)**
