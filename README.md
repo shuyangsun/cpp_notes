@@ -1889,3 +1889,50 @@ void f(A* obj) {
 * If a constructor is declared for a class, some constructor will be used for every object.
 * The usual overload resolution rules apply for constructors.
 * The **{}** initializer notion does not allow narrowing.
+
+##### 17.3.2.1 Initialization by Constructors
+
+* **()** request to use a constructor in an initialization, whereas **{}** also offers memberwise initialization.
+* Prefer **{}** instead of **()**, unless it's necessary to explicitly use constructor.
+
+```c++
+std::vector<int> v1 {7}; // one element with value 7
+std::vector<int> v2(7); // 7 elements with value 0
+```
+
+#### 17.3.3 Default Constructors
+
+* A default argument can make a constructor that takes arguments into a default constructor.
+* References and **const**s must be initialized. Therefore, a class containing such member cannot be default constructed unless the programmer supplies in-class member initializers or defines a default constructor that initializes them.
+
+#### 17.3.4 Initializer-List Constructors
+
+* A constructor that takes a single argument of type **std::initializer_list** is called an *initializer-list constructor*.
+* The mechanism for accepting a **{}**-list is a function (often a constructor) taking an argument of type **std::initializer_list<T>**.
+* The initializer list can be of arbitrary length but must be homogeneous. That is, all elements must be of the template argument type, **T**, or implicitly convertible to **T**.
+
+##### 17.3.4.1 initializer_list Constructor Disambiguation
+
+* Initializer list and other types of constructors' overloading rules:
+	* If either a default constructor or an initializer-list constructor could be invoked, prefer the default constructor.
+	* If both an initializer-list constructor and an "ordinary constructor" could be invoked, prefer the initializer-list constructor.
+* Use **()** notion to explicitly request for non-initializer-constructor.
+
+#### 17.3.4.2 Use of initializer_lists
+
+* A function with an **initializer_list<T>** argument can access it as a sequence using the member functions **begin()**, **end()**, and **size()**.
+* **initializer_list** does not provide subscripting.
+* An **initializer_list<T>** is passed by value. That is required by the overload resolution rules and does not impose overhead because an **initializer_list<T>** object is just a small handle (typically two words) to an array of **T**s.
+
+```c++
+void foo(std::initializer_list<int> args) {
+	for (unsigned int i {0}; i < args.size(); ++i) {
+		std::cout << args.begin()[i] << std::endl;
+	}
+}
+```
+
+* The elements of an **initializer_list** are immutable.
+
+### 17.4 Member and Base Initialization
+
