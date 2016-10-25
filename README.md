@@ -2036,3 +2036,30 @@ public:
 * Copy operation must meet two criteria:
 	* *Equivalence*: after **x = y**, **x == y** should be true.
 	* *Independence*: changes on one of them should not have influence on the other.
+* Sometimes it makes sense not copying everything (e.g., counters, allocators, etc.), but that should not affect the result or comparison operators. (i.e., if you don't copy it, don't compare it)
+* Most of the problems related to (lack of) independence have to do with objects that contain pointers.
+* Immutable shared data is not a problem for independency.
+* *copy-on-write*: The idea is that a copy doesn't actually need independence until a shared state is written to, so we can delay the copying of the shared state until just before the first write to it.
+
+##### 17.5.1.4 Slicing
+
+* A pointer to derived class implicitly converts to a pointer to its public base class.
+
+```c++
+class Base { public: Base(const Base& obj); };
+class Derived: public Base { public: Derived(const Derived& obj); };
+
+void foo(Base* pt) {
+	Base b = *pt; // may slice
+}
+
+void bar() {
+	Derived d;
+	foo(&d);
+	Base bb = d; // slices: invokes Base::Base(const Base&), not Derived::Derived(const Derived&)
+}
+
+// Making the inheritance private ("class Derived: private Base") will prevent slicing by making initialization of b and bb errors.
+// Or prevent conversion from instances of Derived to Base.
+```
+
