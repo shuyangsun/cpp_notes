@@ -2014,3 +2014,25 @@ int Foo::x = 3;
 * Copy for a class **X** is defined by two operations:
 	* Copy constructor: **X(const X&)**
 	* Copy assignment: **X& operator=(const X&)**
+* Watch out for self-assignment.
+
+##### 17.5.1.1 Beware of Default Constructors
+
+* Copy constructor may leave out some members but the compiler won't warn about it, because of those members' default constructors.
+
+##### 17.5.1.2 Copy of Bases
+
+* Use base copy to avoid redundancy.
+
+```c++
+class Foo: Bar1, Bar2 {
+public:
+	Foo(const Foo& obj): Bar1{obj}, Bar2{obj} { }
+};
+```
+
+##### 17.5.1.3 The Meaning of Copy
+
+* Copy operation must meet two criteria:
+	* *Equivalence*: after **x = y**, **x == y** should be true.
+	* *Independence*: changes on one of them should not have influence on the other.
