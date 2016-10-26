@@ -2010,9 +2010,9 @@ class Matrix {
 public:
 
 	Matrix(const Matrix&); // copy constructor
-	Matrix(Matrix&&); // move constructor
-
 	Matrix& operator=(const Matrix&); // copy assignment
+
+	Matrix(Matrix&&); // move constructor
 	Matrix& operator=(Matrix&&); // move assignment
 
 	// ...
@@ -2078,3 +2078,12 @@ void bar() {
 ```
 
 #### 17.5.2 Move
+
+* We can define **Matrix**'s move constructor to simply take the representation from its source and replace it with an empty **Matrix** (which is cheap to destroy).
+* For the move assignment, we can simply do a swap.
+* The argument of a move operation must always be left in a state that the destructor can cope with (and preferably deal with very cheaply and easily).
+* **std::move()** is a standard-library function returning an rvalue reference to its argument, it does not move anything (a better name would be **std::rval()**).
+
+### 17.6 Generating Default Operations
+
+* 
