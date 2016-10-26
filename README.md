@@ -2005,6 +2005,20 @@ int Foo::x = 3;
 
 ### 17.5 Copy and Move
 
+```c++
+class Matrix {
+public:
+
+	Matrix(const Matrix&); // copy constructor
+	Matrix(Matrix&&); // move constructor
+
+	Matrix& operator=(const Matrix&); // copy assignment
+	Matrix& operator=(Matrix&&); // move assignment
+
+	// ...
+}
+```
+
 * Typically, a move cannot throw, whereas a copy might.
 * When you write a move operation, you should leave the source object in a valid but unspecified state because it will eventually be destroyed and the destructor cannot destroy an object left in an invalid state.
 * Design your moves not to throw, and to leave their source objects in a state that allows destruction and assignment.
@@ -2064,4 +2078,3 @@ void bar() {
 ```
 
 #### 17.5.2 Move
-
