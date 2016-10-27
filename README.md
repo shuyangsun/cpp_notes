@@ -2165,3 +2165,25 @@ ___
 
 ## 18. Operator Overloading
 
+### 18.1 Introduction
+
+* The usual precedence rules for operators hold (**a + b * c** is evaluated as **a + (b * c)**).
+
+### 18.2 Operator Functions
+
+* List of operator functions can be declared:
+
+| Arithmetic | Logical | Bitwise |  Others  |
+|:----------:|:-------:|:-------:|:--------:|
+|      +     |    ==   |    ^    |    ->*   |
+|      -     |    !    |    &    |     ,    |
+|      *     |    <    |    \|   |    ->    |
+|      /     |    >    |    ~    |    []    |
+|      %     |    !=   |    ^=   |    ()    |
+|     ++     |    <=   |    &=   |    new   |
+|     --     |    >=   |   \|=   |   new[]  |
+|     +=     |    &&   |    <<   |  delete  |
+|     *=     |   \|\|  |    >>   | delete[] |
+|     /=     |         |   <<=   |          |
+|     %=     |         |   >>=   |          |
+|      =     |         |         |          |
