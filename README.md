@@ -2171,7 +2171,7 @@ ___
 
 ### 18.2 Operator Functions
 
-* List of operator functions can be declared:
+* Table of operator functions can be declared:
 
 | Arithmetic | Logical | Bitwise |  Others  |
 |:----------:|:-------:|:-------:|:--------:|
@@ -2187,3 +2187,44 @@ ___
 |     /=     |         |   <<=   |          |
 |     %=     |         |   >>=   |          |
 |      =     |         |         |          |
+
+* It is not possible to define new operator tokens.
+* The name of an operator function is the keyword **operator** followed by the operator itself.
+
+```c++
+complex a {1};
+complex b {2};
+complex c {a + b}; // implicit call
+complex d {a.operator+(b)}; // explicit call
+```
+
+#### 18.2.1 Binary and Unary Operators
+
+* A binary operator can be defined by either a non-**static** member function taking one argument or a nonmember function taking two arguments.
+* A unary operator, whether prefix or postfix, can be defined by either a non-**static** member function taking no arguments or a nonmember function taking one argument.
+* The operators **operator=**, **operator[]**, **operator()**, **operator->** must be non-**static** member functions.
+* User-defined **&&** and **||** does not have lazy evaluation by default (also the first operand may not get evaluated first), they behave the same as other user defined operators.
+
+```c++
+class X {
+public:
+	X operator+(X) const; // binary
+	void operator++(); // unary
+};
+
+X operator+(X, X); // binary
+void operator++(X); // unary
+```
+
+#### 18.2.2 Predefined Meanings for Operators
+
+* The compiler will *not* generate **operator++** based on a user-defined **operator+** and **operator=**.
+* Operators **=**, **&**, and **,** have predefined meanings when applied to class objects, they can be eliminated by using **=delete**.
+
+#### 18.2.3 Operators and User-Defined Types
+
+* A user cannot change the meaning of an expression unless the expression contains an object of a user-defined type.
+* It is not possible to define an operator function that operates exclusively on pointers.
+* An operator function intended to accept a built-in type as its first operand cannot be a member function.
+* Enumerations are user-defined types so that we can define operators for them.
+
