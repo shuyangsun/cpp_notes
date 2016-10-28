@@ -2302,3 +2302,33 @@ void bar(const Foo obj, int i) {
 	obj + i; // error, ambiguous: "operator+(obj, Foo(i))" or "int(obj) + i"?
 }
 ```
+
+#### 18.4.2 explicit Conversion Operators
+
+```c++
+class Foo {
+public:
+	explicit operator int() const;
+};
+```
+
+#### 18.4.3 Ambiguities
+
+* An assignment of a value type **V** to an object of class **X** is legal if there is an assignment operator **X::operator=(Z)** so that **V** is **Z** or there is a unique conversion of **V** to **Z**. Initialization is treated equivalently.
+* User-defined conversions are considered only if a call cannot be resolved without them (i.e., using only built-in conversions).
+* The return type is not used in overloading resolution.
+
+
+___
+
+## 19. Special Operators
+
+### 19.2 Special Operators
+
+* The operators: **[]** **()** **->** **++** **--** **new** **delete**
+
+#### 19.2.1 Subscripting
+
+* Return a reference so it can be modified (if in a container).
+* An **operator\[]()** must be a non-**static** member function.
+
