@@ -2332,3 +2332,90 @@ ___
 * Return a reference so it can be modified (if in a container).
 * An **operator\[]()** must be a non-**static** member function.
 
+#### 19.2.2 Function Call
+
+* The call operator, **()**, can be overloaded in the same way other operators can.
+* An object that acts like a function is often called a *function-like object* or simply a *function object*.
+* An **operator\()()** must be a non-**static** member function.
+* Function call operators are often templates.
+
+#### 19.2.3 Dereferencing
+
+* **->**: unary postfix operator.
+
+```c++
+class Foo {
+public:
+	Bar* operator->(); // access member of class Bar
+}
+
+void f(Foo obj) {
+	Bar* a = obj->; // syntax error
+	Bar* b = obj.operator->(); // OK
+}
+```
+
+#### 19.2.4 Increment and Decrement
+
+```c++
+class Foo {
+public:
+	Foo& operator++(); // prefix
+	Foo operator++(int); // postfix
+};
+```
+
+* The **int** argument in postfix operator is just a dummy argument to distinguish prefix and postfix application, it's never used.
+* The prefix operators can return a reference to its object, but postfix operators must make a new object to return.
+
+#### 19.2.5 Allocation and Deallocation
+
+```c++
+// Declared on global version:
+void* operator new(size_t);
+void* operator new[](size_t);
+void operator delete(void*, size_t);
+void operator delete[](void*, size_t);
+```
+
+* Member **operator new()**s and **operator delete()**s are implicitly **static** members.
+* If we **delete** an object through a pointer to a base class, that base class must have a **virtual** destructor for the correct size to be given.
+
+#### 19.2.6 User-defined Literals
+
+* *User-defined literals* are supported through the notion of *literal operators* that map literals with a given suffix into a desired type.
+
+```c++
+constexpr complex<double> operator""i(long double d);
+Matrix operator"" _m(const char*);
+```
+
+* The declaration of a literal operator shall have a parameter-declaration-clause equivalent to one of the following:
+
+```c++
+const char*
+unsigned long long int
+long double
+char
+wchar_t
+char16_t
+char32_t
+const char*, std::size_t
+const wchar_t*, std::size_t
+const char16_t*, std::size_t
+const char32_t*, std::size_t
+```
+
+* A *template literal operator* is a literal operator that takes its argument as a template parameter pack, rather than as a function argument.
+
+```c++
+template<char...>
+constexpr int operator"" _b3();
+
+201_b3; // means operator"" b3<'2', '0', '1'>(); // 3 based number 201
+241_b3; // means operator"" b3<'2', '4', '1'>(); error: 4 cannot be in base 3 number
+```
+
+* The variadic template can be disconcerting, but it is the only way of assigning nonstandard meanings to digits at compile time.
+* The standard library reserves all suffixes not starting with an initial underscore, so define your suffixes with an underscore.
+
