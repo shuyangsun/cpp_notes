@@ -2228,3 +2228,25 @@ void operator++(X); // unary
 * An operator function intended to accept a built-in type as its first operand cannot be a member function.
 * Enumerations are user-defined types so that we can define operators for them.
 
+#### 18.2.4 Passing Objects
+
+* Two choices for arguments:
+	* Pass-by-value
+	* Pass-by-reference
+* It almost always is faster to access an argument passed by value than one passed by reference.
+* Return objects by value.
+* For large objects, define move operations to make such transfers of values efficient.
+* Operators that return one of their argument objects can - and usually do - return a reference.
+
+```c++
+Matrix& Matrix::operator+=(const Matrix& a) {
+	// ...
+	return *this;
+}
+```
+
+#### 18.2.5 Operators in Namespaces
+
+* An operator is either a member of a class or defined in some namespace (possibly the global namespace, but bad practice; use argument lookup instead).
+* For binary operation **x @ y**, **x**'s name space will be looked up first.
+* In operator lookup no preference is given to members over nonmembers.
