@@ -2250,3 +2250,55 @@ Matrix& Matrix::operator+=(const Matrix& a) {
 * An operator is either a member of a class or defined in some namespace (possibly the global namespace, but bad practice; use argument lookup instead).
 * For binary operation **x @ y**, **x**'s name space will be looked up first.
 * In operator lookup no preference is given to members over nonmembers.
+
+### 18.3 A Complex Number Tye
+
+#### 18.3.1 Member and Nonmember Operators
+
+* A good practice:
+	* Defining only operators that inherently modify the value of their first argument, such as **+=**, in the class itself.
+	* Operators that simply produce a new value based on the values of their arguments, such as **+**, are then defined outside the class.
+
+##### 18.3.1.1 Conversions of Operands
+
+* Use implicit argument type conversion and overloading rules to cope with different types of arguments, if no or little performance overhead will be imposed.
+
+#### 18.3.4 Literals
+
+* When constructors are simple and inline, and especially when they are **constexpr**, it is quit reasonable to think of constructor invocations with literal arguments as literals.
+
+### 18.4 Type Conversion
+
+* Type conversion can be accomplished by:
+	* A constructor taking a single argument.
+	* A conversion operator.
+* In either case the conversion can be explicit or implicit.
+
+#### 18.4.1 Conversion Operators
+
+* Constructor has limitations.
+	* An implicit conversion from a user-defined type to a built-in type.
+	* A conversion from a new class to a previously defined class.
+
+* *conversion operator*: a member function **X::operator T()**, where **T** is a type name, defines a conversion from **X** to **T**.
+
+```c++
+class Foo {
+public:
+	operator int() const; // coverts Foo to int
+};
+
+Foo::operator int() const { /* ... */ } // definition
+int Foo::operator int() const { /* ... */ } // error
+```
+
+* If both user-defined conversions and user-defined operators are defined, it is possible to get ambiguities between the user-defined operators and the built-in operators.
+
+```c++
+class Foo { public: operator int() const; };
+int operator+(Foo, Foo);
+
+void bar(const Foo obj, int i) {
+	obj + i; // error, ambiguous: "operator+(obj, Foo(i))" or "int(obj) + i"?
+}
+```
