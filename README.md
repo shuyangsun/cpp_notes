@@ -2419,3 +2419,7 @@ constexpr int operator"" _b3();
 * The variadic template can be disconcerting, but it is the only way of assigning nonstandard meanings to digits at compile time.
 * The standard library reserves all suffixes not starting with an initial underscore, so define your suffixes with an underscore.
 
+### 19.3 A String Class
+
+* *Short string optimization*: string with only a few characters stores those characters in the class object itself, rather than on the free store. This optimization is important in multi-threaded systems where sharing through pointers is infeasible and free-store allocation and deallocation are relatively expensive.
+
