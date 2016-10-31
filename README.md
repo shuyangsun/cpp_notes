@@ -2423,3 +2423,24 @@ constexpr int operator"" _b3();
 
 * *Short string optimization*: string with only a few characters stores those characters in the class object itself, rather than on the free store. This optimization is important in multi-threaded systems where sharing through pointers is infeasible and free-store allocation and deallocation are relatively expensive.
 
+#### 19.3.3 Representation
+
+```c++
+class String {
+public:
+	// ....
+private:
+	static const int short_max {15};
+	int sz;
+	char* ptr;
+	union {
+		int space; // unused allocated space
+		char ch[short_max + 1]; // leave space for terminating 0
+	};
+	
+	// ...
+};
+```
+
+* Using **union** to implement *short string optimization* is a good practice (either on stack memory or free store).
+* In both cases, **ptr** points to the elements. This is essential for performance: the access functions do not need to test which representation is used; they simply use **ptr**. Only the constructors, assignments, moves, and the destructor must care about the two alternatives.
