@@ -2430,10 +2430,10 @@ class String {
 public:
 	// ....
 private:
-	static const int short_max {15};
+	static short const short_max {15};
 	int sz;
 	char* ptr;
-	union {
+	union { // anonymous union
 		int space; // unused allocated space
 		char ch[short_max + 1]; // leave space for terminating 0
 	};
@@ -2442,5 +2442,51 @@ private:
 };
 ```
 
-* Using **union** to implement *short string optimization* is a good practice (either on stack memory or free store).
+* Using *anonymous* **union** to implement *short string optimization* can avoid wasting of space (either on stack memory or free store).
 * In both cases, **ptr** points to the elements. This is essential for performance: the access functions do not need to test which representation is used; they simply use **ptr**. Only the constructors, assignments, moves, and the destructor must care about the two alternatives.
+
+#### 19.3.4 Member Functions
+
+* Use **if (this == &x) return \*this;** to deal with self-assignment.
+
+### 19.4 Friends
+
+* Ordinary member function declaration specifies:
+	* The function can access the private part of the class declaration.
+	* The function is in the scope of the class.
+	* The function must be invoked on an object (has a **this** pointer).
+
+* By declaring a member function **static**, we can give it the first two properties only.
+* By declaring a nonmember function a **friend**, we can give it the first properties only.
+* A **friend** declaration can be placed in either the private or the public part of a class declaration, it does not matter where.
+* A **friend** function is explicitly declared in the declaration of the class of which it is a friend.
+
+```c++
+class Foo {
+public:
+    explicit Foo(int a): a_{a} { }
+    friend int MyFunc(const Foo&, const Bar&);  // as public
+private:
+    int a_ {};
+};
+
+class Bar {
+public:
+    explicit Bar(int b): b_{b} { }
+private:
+    friend int MyFunc(const Foo&, const Bar&);  // as private
+    int b_ {};
+};
+
+// Still works even if it's private in Bar.
+int MyFunc(const Foo& obj1, const Bar& obj2) {  // not a member function
+    return obj1.a_ + obj2.b_;
+}
+
+void f() {
+	const Foo foo {2};
+	const Bar bar {3};
+	const int result {MyFunc(foo, bar)}; // result = 5
+}
+```
+
