@@ -2490,3 +2490,5 @@ void f() {
 }
 ```
 
+* A member function of one class can be the friend of another.
+* There is a shorthand for making all functions of one class friends of another.
