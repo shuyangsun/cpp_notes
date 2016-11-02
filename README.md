@@ -2491,4 +2491,40 @@ void f() {
 ```
 
 * A member function of one class can be the friend of another.
+
+```c++
+class Bar;
+
+class Foo {
+public:
+	int WhatIsA(const Bar& obj);
+};
+
+class Bar {
+private:
+	friend int Foo::WhatIsA(const Bar& obj);
+private:
+	int a_ {9};
+};
+
+int Foo::WhatIsA(const Bar& obj) {
+	return obj.a_;
+}
+```
+
 * There is a shorthand for making all functions of one class friends of another.
+
+```C++
+class Foo {
+	friend class Bar; // Bar's members functions are friends of Foo
+};
+```
+
+* It is possible to make a template argument a **friend**.
+
+```c++
+template<typename T>
+class X {
+	friend T;
+};
+```
