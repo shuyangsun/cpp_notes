@@ -4,6 +4,7 @@ ___
 
 ___
 
+
 # The C++ Programming Language (Fourth Edition) - Bjarne Stroustrup
 
 ___
@@ -2559,4 +2560,4 @@ ___
 
 * Interface inheritance is often referred to as *run-time polymorphism* (or *dynamic polymorphism*).
 * The uniform use of classes not related by inheritance provided by template is often referred to as *compile-time polymorphism* (or *static polymorphism*).
-* 
+
