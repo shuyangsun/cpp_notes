@@ -7,8 +7,6 @@ ___
 
 # The C++ Programming Language (Fourth Edition) - Bjarne Stroustrup
 
-___
-
 ## 6. Types and Declarations
 
 #### 6.3.1 The Structure of Declarations
@@ -2560,4 +2558,44 @@ ___
 
 * Interface inheritance is often referred to as *run-time polymorphism* (or *dynamic polymorphism*).
 * The uniform use of classes not related by inheritance provided by template is often referred to as *compile-time polymorphism* (or *static polymorphism*).
+
+### 20.2 Derived Classes
+
+* No memory overhead is implied by deriving a class. The space required is just the space required by the members.
+* A class must be defined in order to be used as a base.
+
+```c++
+class Bar { }; // must be defined, not just declared (as "class Bar;").
+class Foo: public Bar { // Bar is Foo's public base class
+	// ...
+};
+```
+
+#### 20.2.1 Member Functions
+
+* A member of a derived class can use the public - and protected - members of a base class as if they were declared in the derived class itself.
+
+```c++
+class Foo {
+public:
+    void f_pub() const { std::cout << "f_pub in Foo" << std::endl; }
+protected:
+    void f_prot() const { std::cout << "f_prot in Foo" << std::endl; }
+private:
+    void p_() const { std::cout << "p_ in Foo" << std::endl; }
+};
+
+class Bar1: public Foo { };
+class Bar2: protected Foo { };
+
+void g(const Bar1& b1, const Bar2& b2) {
+	b1.f_pub(); // OK
+	b1.f_prot(); // error: 'f_prot' is a protected member of 'Foo'
+	b1.p_(); // error: 'p_' is a private member of 'Foo'
+	    
+	b2.f_pub(); // OK
+	b2.f_prot(); // OK
+	b2.p_(); // error: 'p_' is a private member of 'Foo'
+}
+```
 
