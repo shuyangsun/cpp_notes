@@ -2528,3 +2528,25 @@ class X {
 	friend T;
 };
 ```
+
+* Often, there is a choice between making a class a member (a nested class) or a nonmember friend.
+
+#### 19.4.1 Finding Friends
+
+* A friend must be previously declared in an enclosing scope or defined in the non-class scope immediately enclosing the class that is declaring it to be a **friend**.
+* Scopes outside the innermost enclosing namespace scope are not considered for a name first declared as a **friend**.
+* A friend function can be found through its arguments even if it was not declared in the immediately enclosing scope.
+* A friend function should be explicitly declared in an enclosing scope or taken an argument of its class or a class derived from that. If not, the friend cannot be called.
+
+#### 19.4.2 Friends and Members
+
+* Functions that are not a member of a class should avoid accessing the class' private members.
+* If implicit type conversion is desired for all operands of an operation, the function implementing it must be a nonmember function taking a **const** reference argument or a non-reference argument.
+* Binary operators are the most common source of friend function.
+* Operations that do not need direct access to a representation are often best represented as nonmember functions, possibly in a namespace that makes their relationship with the class explicit.
+
+
+___
+
+## 20. Derived Classes
+
