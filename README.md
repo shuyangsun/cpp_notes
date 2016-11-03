@@ -2619,7 +2619,7 @@ public:
 
 class Bar: public Foo {
 public:
-    void Print() const override; // must be defined here
+    void Print() const override; // must be defined here, "override" is optional
 };
 
 void Bar::Print() const {
