@@ -2585,7 +2585,7 @@ private:
     void p_() const { std::cout << "p_ in Foo" << std::endl; }
 };
 
-class Bar: public Foo { }; // must declare a method if want to override it
+class Bar: public Foo { };
 
 void Bar::f_pub() const { // error: Out-of-line definition of 'f_pub' does not match any declaration in 'Bar'
 	std::cout << "f_pub in Bar" << std::endl;
@@ -2597,4 +2597,38 @@ void g(const Bar& b) {
 	b.p_(); // error: 'p_' is a private member of 'Foo'
 }
 ```
+
+#### 20.2.2 Constructors and Destructors
+
+* Rules:
+	* Objects are constructed from the bottom up (base before member and member before derived) and destroyed top-down (derived before member and member before base).
+	* Each class can initialize its members and bases (but not directly members or bases of its bases).
+	* Typically, destructors in a hierarchy need to be **virtual**.
+	* Copy constructors of classes in a hierarchy should be used with care (if at all) to avoid slicing.
+	* The resolution of a virtual function call, a **dynamic_cast**, or a **typeid()** in a constructor or destructor reflects the stage of construction and destruction (rather than the type of the yet-to-be-completed object).
+
+### 20.3 Class Hierarchies
+
+#### 20.3.2 Virtual Functions
+
+```c++
+class Foo {
+public:
+	virtual void Print() const;
+};
+
+class Bar: public Foo {
+public:
+    void Print() const; // must be defined here
+};
+
+void Bar::Print() const {
+    std::cout << "Print() in Bar" << std::endl;
+}
+```
+
+* The keyword **virtual** indicates that **print()** can act as an interface to the **print()** function defined in this class and **print()** functions defined in classes derived from it. When they are also defined in the derived classes, the compiler ensures that the right method is called.
+* A virtual member function is sometimes called a *method*.
+* A virtual function *must* be defined for the class in which it is first declared (unless it is declared to be a pure virtual function).
+* A virtual function can be **inline**, but cannot be **constexpr** (in any base or derived classes).
 
