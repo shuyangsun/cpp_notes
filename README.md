@@ -2585,17 +2585,16 @@ private:
     void p_() const { std::cout << "p_ in Foo" << std::endl; }
 };
 
-class Bar1: public Foo { };
-class Bar2: protected Foo { };
+class Bar: public Foo { }; // must declare a method if want to override it
 
-void g(const Bar1& b1, const Bar2& b2) {
-	b1.f_pub(); // OK
-	b1.f_prot(); // error: 'f_prot' is a protected member of 'Foo'
-	b1.p_(); // error: 'p_' is a private member of 'Foo'
-	    
-	b2.f_pub(); // OK
-	b2.f_prot(); // OK
-	b2.p_(); // error: 'p_' is a private member of 'Foo'
+void Bar::f_pub() const { // error: Out-of-line definition of 'f_pub' does not match any declaration in 'Bar'
+	std::cout << "f_pub in Bar" << std::endl;
+}
+
+void g(const Bar& b) {
+	b.f_pub(); // OK
+	b.f_prot(); // error: 'f_prot' is a protected member of 'Foo'
+	b.p_(); // error: 'p_' is a private member of 'Foo'
 }
 ```
 
