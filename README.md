@@ -2768,6 +2768,27 @@ void use2(D2 d) {
 * Also called *covariant return rule*: if the original return type was **B*** (or **B&**), then the return type of the overriding function may be **D*** (or **D&**), provided **B** is a public base of **D**.
 * This relaxation applies only to return types that are pointers or references, and not to "smart pointers" such as **unique_ptr**.
 * There is not a similar relaxation of the rules for argument types because that would lead to type violations.
+* Functions like **new_expr()** and **clone()** are **virtual** and they (indirectly) construct objects, they are often called *virtual constructors*. They simply use a constructor to create a suitable object.
+* A constructor cannot be **virtual** (because it needs to know the exact type of the object it is to create).
 
 ### 20.4 Abstract Classes
+
+* *Pseudo initializer* **= 0**: makes a virtual function *pure virtual function*.
+* A class with one or more pure virtual functions is an *abstract class*, and no objects of that abstract class can be created.
+
+```c++
+class Foo {
+public:
+	virtual void f() const = 0; // pure virtual function
+};
+```
+
+* It is usually important for an abstract class to have a virtual destructor.
+* Abstract classes don't usually have constructors.
+* An abstract class can be used only as an interface to other classes.
+* A pure virtual function that is not defined in a derived class remains a pure virtual function, so the derived class is also an abstract class. This allows us to build implementations in stages.
+* The design style supported by abstract classes is called *interface inheritance* in contrast to the *implementation inheritance* supported by base classes wth state and/or defined member functions.
+* It is possible to mix *interface inheritance* and *implementation inheritance*, but such mixtures can be confusing and require extra care.
+
+### 20.5 Access Control
 
