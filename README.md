@@ -2769,3 +2769,5 @@ void use2(D2 d) {
 * This relaxation applies only to return types that are pointers or references, and not to "smart pointers" such as **unique_ptr**.
 * There is not a similar relaxation of the rules for argument types because that would lead to type violations.
 
+### 20.4 Abstract Classes
+
