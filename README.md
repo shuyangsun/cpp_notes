@@ -2765,7 +2765,7 @@ void use2(D2 d) {
 
 #### 20.3.6 Return Type Relaxation
 
-* Also called *covariant return rule*: if the original return type was **B\*** (or **B&**), then the return type of the overriding function may be **D\*** (or **D&**), provided **B** is a public base of **D**.
+* Also called *covariant return rule*: if the original return type was **B*** (or **B&**), then the return type of the overriding function may be **D*** (or **D&**), provided **B** is a public base of **D**.
 * This relaxation applies only to return types that are pointers or references, and not to "smart pointers" such as **unique_ptr**.
 * There is not a similar relaxation of the rules for argument types because that would lead to type violations.
 
