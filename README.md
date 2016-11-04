@@ -642,7 +642,7 @@ constexpr const char *p1 = "asdf";
 * *narrowing*: not value preserving.
 * The **{}**-initializer syntax prevents narrowing.
 * **narrow_cast<>()** is a run-time checked conversion function. (use only if not avoidable or intended)
-* Any pointer to an object type can be implicitly converted to a **void\***
+* Any pointer to an object type can be implicitly converted to a **void***
 * Pointers, integral, and floating-point values can be implicitly converted to **true**. A nonzero value is converted to **true**, a zero value is converted to **false**.
 * When a floating-point value is converted to an integer value (that's big enough to hold the integer part), the fractional part is discarded.
 
@@ -1730,8 +1730,8 @@ obj.a(); // 1
 #### 16.2.10 Self-Reference
 
 * In a non-**static** member function, the keyword **this** is pointer to the object for which the function was invoked.
-* In a non-**const** member function of class **X**, the type of **this** is **X\***.
-* In a **const** member function of class **X**, the type of **this** is **const X\*** to prevent modification of the object itself.
+* In a non-**const** member function of class **X**, the type of **this** is **X***.
+* In a **const** member function of class **X**, the type of **this** is **const X*** to prevent modification of the object itself.
 * **this** is an rvalue.
 
 #### 16.2.11 Member Access
