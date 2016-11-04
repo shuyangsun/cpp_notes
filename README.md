@@ -2685,3 +2685,33 @@ void g(const Bar& obj) {
 }
 ```
 
+#### 20.3.4 Override Control
+
+* If you declare a function in a derived class that has exactly the same name and type as a virtual function in a base class, then the function in the derived class overrides the one in the base class.
+* Function hierarchy controls:
+	* **virtual**: The function may be overridden.
+	* **=0**: The function must be **virtual** and must be overridden.
+	* **override**: The function is meant to override a virtual function in a base class.
+	* **final**: The function is not meant to be overridden.
+* In the absence of any of these controls, a non-**static** member function is virtual if an only if it overrides a **virtual** function in a base class.
+
+##### 20.3.4.1 override
+
+* The **override** specifier comes last in a declaration, after all other parts.
+* An **override** specifier is not part of the type of a function and cannot be repeated in an out-of-class definition.
+* **override** is not a keyword, it is called a *contextual keyword*.
+
+##### 20.3.4.2 final
+
+```c++
+class Foo {
+public:
+	virtual void Print() const = 0;
+};
+
+class Bar: public Foo {
+public:
+	void Print() const override final; // override and prevent further overriding
+}
+```
+
