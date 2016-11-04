@@ -2699,7 +2699,7 @@ void g(const Bar& obj) {
 
 * The **override** specifier comes last in a declaration, after all other parts.
 * An **override** specifier is not part of the type of a function and cannot be repeated in an out-of-class definition.
-* **override** is not a keyword, it is called a *contextual keyword*.
+* **override** and **final** are not keywords, they are called *contextual keyword*s.
 
 ##### 20.3.4.2 final
 
@@ -2712,6 +2712,60 @@ public:
 class Bar: public Foo {
 public:
 	void Print() const override final; // override and prevent further overriding
+};
+```
+
+* We can make every **virtual** member function of a class **final** by adding **final** after the class name.
+* Adding **final** to the class not only prevents overriding, it also prevents further derivation from a class.
+* A **final** specifier is not part of the type of a function and cannot be repeated in an out-of-class definition.
+
+```c++
+class Foo final {
+	// A final class, none of its virtual functions can be overridden.
+};
+```
+
+#### 20.3.5 using Base Members
+
+* Functions do not overload across scopes.
+* **using**-declarations can be used to add a function to a scope.
+* Cannot use **using**-directives to bring all members of a base class into a derived class.
+
+```c++
+struct Base {
+	void f(int);
+};
+
+struct Derived: Base {
+	void f(double);
+};
+
+struct D2: Base {
+	using Base::f; // brings all fs from Base into D2
+	void f(double);
+};
+
+void use(Derived d) {
+	d.f(1); // calls Derived::f(double)
+	Base& br {d};
+	br.f(1); // calls Base::f(int)
+}
+
+void use2(D2 d) {
+	d.f(1); // calls D2::f(int), that is, Base::f(int)
+	Base& br {d};
+	br.f(1); // calls Base::f(int)
 }
 ```
+
+##### 20.3.5.1 Inheriting Constructors
+
+* By default, constructors are not inherited into the derived class.
+* Use **using**-declaration to bring the constructor into derived class.
+
+#### 20.3.6 Return Type Relaxation
+
+* Also called *covariant return rule*: if the original return type was **B\*** (or **B&**), then the return type of the overriding function may be **D\*** (or **D&**), provided **B** is a public base of **D**.
+* This relaxation applies only to return types that are pointers or references, and not to "smart pointers" such as **unique_ptr**.
+* There is not a similar relaxation of the rules for argument types because that would lead to type violations.
 
