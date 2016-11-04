@@ -2621,7 +2621,7 @@ public:
 
 class Bar: public Foo {
 public:
-    virtual void Print() const override; // must be defined here, "override" is optional
+    void Print() const override; // must be defined here, "override" is optional
 };
 
 void Bar::Print() const {
@@ -2632,10 +2632,12 @@ void Bar::Print() const {
 * The keyword **virtual** indicates that **print()** can act as an interface to the **print()** function defined in this class and **print()** functions defined in classes derived from it. When they are also defined in the derived classes, the compiler ensures that the right method is called.
 * A virtual member function is sometimes called a *method*.
 * A virtual function *must* be defined for the class in which it is first declared (unless it is declared to be a pure virtual function).
+* A virtual function can be **inline**, but cannot be **constexpr** (in any base or derived classes).
 * No matter what type of pointer is used to access the object, same virtual function will always be called.
 * A type with virtual functions is called a *polymorphic type* or (more precisely) *run-time polymorphic type*.
 * To get runtime polymorphic behavior in C++, the member functions called must be **virtual** and objects must be manipulated through pointers or references.
 * When manipulating an object directly (rather than through a pointer or reference), its exact type is known by the compiler so that run-time polymorphism is not needed.
+* By default, a function that overrides a virtual function itself becomes **virtual**. We can, but do not have to, repeat **virtual** in a derived class. Using **override** is better than repeating **virtual**.
 
 ```c++
 // Using classes Foo and Bar from the last code snippet
@@ -2660,5 +2662,26 @@ void g() {
 }
 ```
 
-* A virtual function can be **inline**, but cannot be **constexpr** (in any base or derived classes).
+* In a usual implementation, the compiler converts the name of a virtual function into an index into a table of pointers to functions. The table is usually called *the virtual function table* or simply the **vtbl**.
+* Virtual function calls can be made almost as efficient as the "normal function call" mechanism (within 25%).
+* Space overhead is one pointer in each object of a class with virtual functions plus one **vtbl** for each such class.
+* It is a bad idea to call a virtual function from a constructor or a destructor.
+
+#### 20.3.3 Explicit Qualification
+
+* Calling a function using the scope resolution operator, **::**, as is done in **Manager::print()** ensures that the **virtual** mechanism is not used.
+* If a **virtual** function is also **inline**, then inline substitution can be used for calls specified using **::**.
+
+```c++
+void Bar::Print() const {
+	Foo::Print(); // not a virtual call
+}
+
+inline void Bar::InlineFunc() const { /* ... */ }
+
+void g(const Bar& obj) {
+	obj.InlineFunc(); // a virtual call, not inline
+	obj.Bar::InlineFunc(); // inline, not a virtual call
+}
+```
 
