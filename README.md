@@ -2822,7 +2822,7 @@ auto Foo<T>::next() -> Foo* { /* ... */ }
 #### 20.5.2 Access to Base Classes
 
 * Like a member, a base class can be declared **private**, **protected**, or **public**.
-* They serve different design needs (assume **D** is a derived from **B**):
+* They serve different design needs (assume **D** is derived from **B**):
 	* **public** derivation makes the derived class a subtype of its base.
 		* **B**'s public members can be used by any function. In addition, its protected members can be used by members and friends of **D** and members and friends of classes derived from **D**. Any function can convert a **D*** to **B***.
 	* **private** bases are most useful when defining a class by restricting the interface to a base so that stronger guarantees can be provided.
