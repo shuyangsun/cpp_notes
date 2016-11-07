@@ -2792,3 +2792,38 @@ public:
 
 ### 20.5 Access Control
 
+* A member of a class can be **private**, **protected**, or **public**.
+
+```c++
+template<class T>
+class Foo {
+private:
+	Foo* next();
+};
+
+template<class T>
+typename Foo<T>::Foo* Foo<T>::next() { /* ... */ }
+// or
+template<class T>
+auto Foo<T>::next() -> Foo* { /* ... */ }
+```
+
+* In a **class**, members are by default **private**; in a **struct**, members are by default **public**.
+* Don't use multiple access specifiers for data members without good reason.
+
+#### 20.5.1 protected Members
+
+* e.g., provide an (efficient) unchecked access function for derived class implementers and (safe) checked access for others.
+
+##### 20.5.1.1 Use of protected Members
+
+* Declaring data members **protected** is usually a design error.
+
+#### 20.5.2 Access to Base Classes
+
+* Like a member, a base class can be declared **private**, **protected**, or **public**.
+* They serve different design needs:
+	* **public** derivation makes the derived class a subtype of its base.
+	* **private** bases are most useful when defining a class by restricting the interface to a base so that stronger guarantees can be provided.
+	* **protected** bases are useful in class hierarchies in which further derivation is the norm.
+* The access specifier for a base class can be left out. In that case, the base defaults to a private base for a **class** and a public base for a **struct**.
