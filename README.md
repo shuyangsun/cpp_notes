@@ -2830,3 +2830,82 @@ auto Foo<T>::next() -> Foo* { /* ... */ }
 	* **protected** bases are useful in class hierarchies in which further derivation is the norm.
 		* **B**'s public and protected members can be used only by member functions and friends of **D** and by member functions and friends of classes derived from **D**. Only friends and members of **D** and friends and members of classes derived from **D** can convert a **D*** to **B***.
 * The access specifier for a base class can be left out. In that case, the base defaults to a private base for a **class** and a public base for a **struct**.
+* These rules basically resets (narrowing) the rules for member access (for members that are derived from base class).
+
+##### 20.5.2.1 Multiple Inheritance and Access Control
+
+* If the name of a base class can be reached through multiple paths in a multiple-inheritance lattice, it is accessible if it is accessible through any path.
+* If a single entity is reachable through several paths, we can still refer to it without ambiguity.
+
+```c++
+struct B {
+    int m;
+    static int sm;
+};
+
+class D1: public B { };
+class D2: public B { };
+class DD: public D1, public D2 { };
+
+void g(const DD& obj) {
+    obj.m; // error: ambiguous, DD::D1::B::m or DD::D2::B::m?
+    obj.sm; // OK
+}
+```
+
+#### 20.5.3 using-Declarations and Access Control
+
+* A **using**-declaration cannot be used to gain access to additional information.
+
+### 20.6 Pointers to Members
+
+* Using **->*** (or **.***), we can access a member that (conceptually) has its name stored in a pointer to member.
+
+#### 20.6.1 Pointers to Function Members
+
+* A *pointer to member* can be obtained by applying the address-of operator, **&**, to a fully qualified class member name.
+* The function invoked through the pointer to function can be **virtual**.
+
+```c++
+class Foo {
+public:
+	virtual void Print() const;
+};
+
+using FooMem = void (Foo::*)(); // pointer-to-member type
+
+void f(const Foo* obj) {
+	FooMem operation{&Foo::Print}; // pointer to Print()
+	obj->Print(); // direct call
+	obj->*operation(); // call through pointer to member
+}
+
+void g(const Foo& obj) {
+	FooMem operation{&Foo::Print};
+	obj.*operation();
+};
+```
+
+* Pointers to a **static** member is simply an ordinary pointer.
+
+#### 20.6.2 Pointers to Data Members
+
+```c++
+struct Foo {
+	int x;
+	void Square(int num) const;
+};
+
+using Pmfi = void (Foo::*)(int); // pointer to member function of Foo taking an int
+using Pm = int C::*; // pointer to int data member of C
+```
+
+#### 20.6.3 Base and Derived Members
+
+* We can safely assign a pointer to a member of a base class to a pointer to a member of a derived class, but not the other way around. This property is often called *contravariance*.
+
+
+___
+
+## 21. Class Hierarchies
+
