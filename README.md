@@ -2843,8 +2843,7 @@ struct B {
     static int sm;
 };
 
-class D1: public B { };
-class D2: public B { };
+class D1: public B { }; class D2: public B { };
 class DD: public D1, public D2 { };
 
 void g(const DD& obj) {
@@ -2909,3 +2908,12 @@ ___
 
 ## 21. Class Hierarchies
 
+##### 21.2.1.1 Critique
+
+* Data members are better kept private so that writers of derived classes cannot mess with them.
+* In almost all cases, a protected interface should contain only functions, types, and constants.
+
+#### 21.2.2 Interface Inheritance
+
+* Deriving directly from more than one class is usually called *multiple inheritance*.
+* 
