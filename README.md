@@ -2916,4 +2916,23 @@ ___
 #### 21.2.2 Interface Inheritance
 
 * Deriving directly from more than one class is usually called *multiple inheritance*.
-* 
+* Since the abstract class cannot know if a derived class requires such cleanup, it must assume that it does require some.
+* Ensure proper cleanup by defining a virtual destructor.
+
+#### 21.2.3 Alternative Implementations
+
+##### 21.2.3.1 Critique
+
+* Use abstract classes to support interface inheritance.
+* Use base classes with implementations of virtual functions to support implementation inheritance.
+
+### 21.3 Multiple Interfaces
+
+* Inheritance aims to provide one of two benefits:
+	* *Shared interfaces*: leading to less replication of code using classes and making such code more uniform. This is often called *run-time polymorphism* or *interface inheritance*.
+	* *Shared implementation*: leading to less code and more uniform implementation code. This is often called *implementation inheritance*.
+
+#### 21.3.1 Multiple Interfaces
+
+* Any class without mutable state can be used as an interface in a multiple-inheritance lattice without significant complications and overhead.
+
