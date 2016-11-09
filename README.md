@@ -2908,6 +2908,8 @@ ___
 
 ## 21. Class Hierarchies
 
+### 21.2 Design of Class Hierarchies
+
 ##### 21.2.1.1 Critique
 
 * Data members are better kept private so that writers of derived classes cannot mess with them.
