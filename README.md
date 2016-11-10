@@ -2950,23 +2950,23 @@ class Bar { public: virtual void Print() const; };
 class D: public Foo, public Bar { };
 
 void f(const D& obj) {
-	obj.Print(); // error: ambiguous
-	obj.Foo::Print();
-	obj.Bar::Print();
+  obj.Print(); // error: ambiguous
+  obj.Foo::Print();
+  obj.Bar::Print();
 }
 
 // Better solution (overriding)
 
 class D: public Foo, public Bar {
 public:
-	virtual void Print() const override {
-		Foo::Print();
-		Bar::Print();
-	}
+  virtual void Print() const override {
+    Foo::Print();
+    Bar::Print();
+  }
 };
 
 void g(const D& obj) {
-	obj.Print();
+  obj.Print();
 }
 ```
 
