@@ -1147,7 +1147,7 @@ void foo() {
 	* *Terminate the program*: cannot proceed if preconditions are not met. Do this only if terminating is affordable.
 	* *Throw an exception*
 * Two standard ways for assertion:
-	* **assert(A)**: macro in **<cassert>**, run time check.
+	* **assert(A)**: macro in **\<cassert>**, run time check.
 	* **static_assert(A, message)**: compile time assert.
 * For general library code, reporting an error - preferably by throwing an exception - is essential.
 * Destructors should not throw, so don't use a throwing **Assert()** in a destructor.
@@ -2970,3 +2970,9 @@ void g(const D& obj) {
 }
 ```
 
+* It is generally better to refer to a direct base class than to an indirect base class.
+
+#### 21.3.5 Virtual Base Classes
+
+* We avoid replication by declaring a base **virtual**: every **virtual** base of a derived class is represented by the same (shared) object.
+* 
