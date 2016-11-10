@@ -2938,3 +2938,35 @@ ___
 
 * Any class without mutable state can be used as an interface in a multiple-inheritance lattice without significant complications and overhead.
 
+#### 21.3.3 Ambiguity Resolution
+
+
+```c++
+class Foo { public: virtual void Print() const; };
+class Bar { public: virtual void Print() const; };
+
+// Explicit disambiguation
+
+class D: public Foo, public Bar { };
+
+void f(const D& obj) {
+	obj.Print(); // error: ambiguous
+	obj.Foo::Print();
+	obj.Bar::Print();
+}
+
+// Better solution (overriding)
+
+class D: public Foo, public Bar {
+public:
+	virtual void Print() const override {
+		Foo::Print();
+		Bar::Print();
+	}
+};
+
+void g(const D& obj) {
+	obj.Print();
+}
+```
+
