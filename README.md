@@ -2975,4 +2975,29 @@ void g(const D& obj) {
 #### 21.3.5 Virtual Base Classes
 
 * We avoid replication by declaring a base **virtual**: every **virtual** base of a derived class is represented by the same (shared) object.
-* 
+
+```c++
+class Foo {
+public:
+  virtual void Print() const {
+    std::cout << "Foo" << std::endl;
+  }
+  virtual void IncreaseX() { ++x_; }
+  virtual int X() const { return x_; }
+protected:
+  int x_;
+};
+
+class A: public virtual Foo { };
+class B: public virtual Foo { };
+class D: public A, public B { };
+
+void f() {
+  D d1{};
+  D d2{};
+  d1.IncreaseX();  // compile-time error without "virtual" in declaration of A and B
+  d2.IncreaseX();  // compile-time error without "virtual" in declaration of A and B
+  std::cout << d1.X() << std::endl; // 1
+  std::cout << d2.X() << std::endl; // 1
+}
+```
