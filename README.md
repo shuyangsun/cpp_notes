@@ -3010,7 +3010,7 @@ ___
 
 * *RTTI*: Run-Time Type Information
 * Three types of casts:
-	* *Downcast*: casting from base class to derived class.
+ 	* *Downcast*: casting from base class to derived class.
 	* *Upcast*: casting from derived class to base class.
 	* *Crosscast*: casting from base class to sibling class.
 
@@ -3019,4 +3019,24 @@ ___
 * **dynamic_cast** takes a pointer or reference.
 * **nullptr** is returned by **dynamic_cast<T*>(ptr)** if **ptr** is not of class **T** and does not have a unique base class of type **T** or **ptr** is a **nullptr**.
 * Returning pointers or references makes **dynamic_cast** able to do downcast or crosscast.
+* The target type of **dynamic_cast** need not be polymorphic.
+* A **dynamic_cast** to **void*** can be used to determine the address of the beginning of an object of polymorphic type.
+* There is no **dynamic_cast** from **void***s (because there would be no way of knowing where to find **vptr**).
+
+```c++
+class Foo1 { };  // not polymorphic
+class Bar1: public Foo1 { }; // not polymorphic
+
+class Foo2 { public: virtual void SomeMethod() const { } };  // polymorphic
+class Bar2: public Foo2 { }; // polymorphic
+
+void f(Foo1* f1, Bar1* b1, Foo2* f2, Bar2* b2) {
+  void *f1v{dynamic_cast<void*>(f1)}; // compile-time error: Foo1 is not a polymorphic type
+  void *b1v{dynamic_cast<void*>(b1)}; // compile-time error: Bar1 is not a polymorphic type
+  void *f2v{dynamic_cast<void*>(f2)}; // OK
+  void *b2v{dynamic_cast<void*>(b2)}; // OK
+}
+```
+
+##### 22.2.1.1 dynamic_cast to Reference
 
