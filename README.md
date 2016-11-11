@@ -3039,7 +3039,7 @@ ___
 #### 22.2.1 dynamic_cast
 
 * **dynamic_cast** takes a pointer or reference.
-* **nullptr** is returned by **dynamic_cast<T*>(ptr)** if **ptr** is not of class **T** and does not have a unique base class of type **T** or **ptr** is a **nullptr**.
+* **nullptr** is returned by **dynamic_cast\<T*>(ptr)** if **ptr** is not of class **T** and does not have a unique base class of type **T** or **ptr** is a **nullptr**.
 * Returning pointers or references makes **dynamic_cast** able to do downcast or crosscast.
 * The target type of **dynamic_cast** need not be polymorphic.
 * A **dynamic_cast** to **void*** can be used to determine the address of the beginning of an object of polymorphic type.
