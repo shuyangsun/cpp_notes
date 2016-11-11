@@ -3001,3 +3001,22 @@ void f() {
   std::cout << d2.X() << std::endl; // 1
 }
 ```
+
+___
+
+## 22. Run-Time Type Information
+
+### 22.2 Class Hierarchy Navigation
+
+* *RTTI*: Run-Time Type Information
+* Three types of casts:
+	* *Downcast*: casting from base class to derived class.
+	* *Upcast*: casting from derived class to base class.
+	* *Crosscast*: casting from base class to sibling class.
+
+#### 22.2.1 dynamic_cast
+
+* **dynamic_cast** takes a pointer or reference.
+* **nullptr** is returned by **dynamic_cast<T*>(ptr)** if **ptr** is not of class **T** and does not have a unique base class of type **T** or **ptr** is a **nullptr**.
+* Returning pointers or references makes **dynamic_cast** able to do downcast or crosscast.
+
