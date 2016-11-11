@@ -3062,4 +3062,7 @@ void f(Foo1* f1, Bar1* b1, Foo2* f2, Bar2* b2) {
 
 ##### 22.2.1.1 dynamic_cast to Reference
 
+* **dynamic_cast\<T&>(r)** of a reference **r** is not a question but an assertion.
+* If the operand of a **dynamic_cast** to a reference isn't of the expected type, a **bad_cast** exception is thrown.
+
 
