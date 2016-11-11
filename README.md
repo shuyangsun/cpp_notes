@@ -2974,7 +2974,7 @@ void g(const D& obj) {
 
 #### 21.3.5 Virtual Base Classes
 
-* We avoid replication by declaring a base **virtual**: every **virtual** base of a derived class is represented by the same (shared) object.
+* We avoid replication (of grandfather-class members) by declaring a base **virtual**: every **virtual** base of a derived class is represented by the same (shared) object (not globally).
 
 ```c++
 class Foo {
@@ -3001,3 +3001,29 @@ void f() {
   std::cout << d2.X() << std::endl; // 1
 }
 ```
+
+##### 21.3.5.1 Constructing Virtual Bases
+
+* The constructor of a base (whether virtual or not) is called before its derived classes.
+* The constructor of every virtual base is invoked (implicitly or explicitly) from the constructor for the complete object (the constructor for the most derived class).
+* If default constructor is not available for a **virtual** base class, the most derived class has to initialize it.
+* A virtual base is always considered a direct base of its most derived class; only the initializer provided by the most derived class of this virtual base is used.
+* The constructor for a virtual base is called before the constructors for its derived classes.
+* Do not overuse virtual base classes.
+
+#### 21.3.6 Replicated vs. Virtual Bases
+
+* There are no fundamental run-time or space advantages to one design over the other, although there are logical differences.
+* Without virtual base, derived class cannot be implicitly converted to replicated base class.
+* The replicated base solution tends to lead to slightly smaller objects.
+* We often get our interface objects from "virtual constructors" or "factory functions".
+
+##### 21.3.6.1 Overriding Virtual Base Functions
+
+* If different derived classes override the same function, one function must override all others for further deriving.
+* A class that provides some - but not all - of the implementation for a virtual base class is often called a *mixin*.
+
+___
+
+## 22. Run-Time Type Information
+
