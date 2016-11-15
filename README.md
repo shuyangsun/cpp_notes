@@ -3178,15 +3178,15 @@ public:
 class Circle: public Shape {
 public:
   bool intersect(const Shape& s) const override { return s.intersect(*this); }
-  bool intersect(const Circle&) const override { /* a lot of work ... */ }
-  bool intersect(const Triangle&) const override { /* a lot of work ... */ }
+  bool intersect(const Circle&) const override { /* ... */ }
+  bool intersect(const Triangle&) const override { /* ... */ }
 };
 
 class Triangle: public Shape {
 public:
   bool intersect(const Shape& s) const override { return s.intersect(*this); }
-  bool intersect(const Circle&) const override { /* a lot of work ... */ }
-  bool intersect(const Triangle&) const override { /* a lot of work ... */ }
+  bool intersect(const Circle&) const override { /* ... */ }
+  bool intersect(const Triangle&) const override { /* ... */ }
 };
 ```
 
