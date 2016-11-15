@@ -3104,11 +3104,54 @@ void g(A* const a) {
 D obj{};
 g(&obj); // a is not B; Print() in D
 
-// --- Case 1: B is virtual base ---
+// --- Case 2: B is virtual base ---
 class C1: public virtual B { };
 class C2: public virtual B { };
 // ---------------------------------
 
 D obj{};
 g(&obj); // a is B; Print() in D
+```
+
+#### 22.2.3 static\_cast and dynamic\_cast
+
+* A **dynamic_cast** can cast from a polymorphic virtual base class to a derived class or a sibling class. A **static_cast** does not examine the object it casts from, so it cannot do polymorphic casting.
+* The **dynamic_cast** requires a polymorphic operand.
+* **dynamic_cast** has performance overhead comparing to **static_cast**, but it's a lot safer, so prefer **dynamic_cast** where possible.
+* The compiler cannot assume anything about the memory pointed to by a **void***, so **dynamic_cast** cannot cast from a **void***, but **static_cast** can.
+* Both **dynamic_cast** and **static_cast** respect **const** and access controls.
+* It is not possible to cast to a private base class using **static_cast** or **reinterpret_cast**, and "casting away **const**" (or **volatile**) requires a **const_cast**. Even then, using the result is only safe only provided the object wasn't originally declared **const** (or **volatile**).
+
+#### 22.2.4 Recovering an Interface
+
+* From a design perspective, **dynamic_cast** can be seen as a mechanism for asking for an object if it provides a given interface.
+
+```c++
+void UseIOObject(IOObject* const obj) {
+  if (auto matrix = dynamic_cast<IOMatrix*>(obj)) {
+    const auto inv = matrix->PInv();
+    // do something with inv...
+  } else if (auto cnn = dynamic_cast<IOConvNN*>(obj)) {
+    const auto result = cnn->Predict("1 2 3");
+    // do seomthing with result...
+  }
+}
+```
+
+* Use abstract class for additional feature:
+
+```c++
+class IOObj {
+public:
+  virtual IOObj* clone() const = 0;
+  virtual ~IOObj() { }
+};
+
+template<class T>
+class IO: T, IOObj {
+public:
+  IO(std::istream&);
+  IO* clone() const override { return new IO{*this}; }
+  static IO* NewIO(std::istream& is) { return new IO{is}; };
+};
 ```
