@@ -3193,6 +3193,6 @@ public:
 * For double dispatch, as the class hierarchy grows, the need for virtual functions grows exponentially.
 * Each new operation and each new derived class require a modification to every class in the hierarchy, which makes double dispatch approach highly intrusive.
 
-### 22.3.2 Visitors
+#### 22.3.2 Visitors
 
 
