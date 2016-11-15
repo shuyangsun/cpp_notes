@@ -3128,10 +3128,10 @@ g(&obj); // a is B; Print() in D
 
 ```c++
 void Use(IOObject* const obj) {
-  if (auto matrix = dynamic_cast<IOMatrix*>(obj)) {
+  if (auto matrix = dynamic_cast<IO<Matrix>*>(obj)) {
     const auto inv = matrix->PInv();
     // do something with inv...
-  } else if (auto cnn = dynamic_cast<IOConvNN*>(obj)) {
+  } else if (auto cnn = dynamic_cast<IO<ConvNN>*>(obj)) {
     const auto result = cnn->Predict("1 2 3");
     // do seomthing with result...
   }
