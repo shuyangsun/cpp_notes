@@ -3152,7 +3152,7 @@ class IO: T, IOObj {
 public:
   IO(std::istream&);
   IO* clone() const override { return new IO{*this}; }
-  static IO* NewIO(std::istream& is) { return new IO{is}; };
+  static IO* NewIO(std::istream& in_stream) { return new IO{in_stream}; };
 };
 ```
 
