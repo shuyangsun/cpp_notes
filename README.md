@@ -3127,7 +3127,7 @@ g(&obj); // a is B; Print() in D
 * From a design perspective, **dynamic_cast** can be seen as a mechanism for asking for an object if it provides a given interface.
 
 ```c++
-void UseIOObject(IOObject* const obj) {
+void Use(IOObject* const obj) {
   if (auto matrix = dynamic_cast<IOMatrix*>(obj)) {
     const auto inv = matrix->PInv();
     // do something with inv...
