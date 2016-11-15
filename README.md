@@ -3158,3 +3158,8 @@ public:
 
 ### 22.3 Double Dispatch and Visitors
 
+* We cannot add a **virtual** function to a class hierarchy without modifying the base class(es) that provides the interface and all derived classes that should be affected.
+* Workarounds:
+	*  *Double Dispatch* shows how to select a virtual function based on two types.
+	*  *Visitors* shows how to use double dispatch to add multiple functions to a class hierarchy with only a single additional virtual function in the hierarchy.
+
