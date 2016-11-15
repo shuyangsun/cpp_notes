@@ -3163,3 +3163,36 @@ public:
 	*  *Double Dispatch* shows how to select a virtual function based on two types.
 	*  *Visitors* shows how to use double dispatch to add multiple functions to a class hierarchy with only a single additional virtual function in the hierarchy.
 
+#### 22.3.1 Double Dispatch
+
+* Choose the correct **virtual** method based on both argument types.
+
+```c++
+class Shape {
+public:
+  virtual bool intersect(const Shape&) const = 0;
+  virtual bool intersect(const Circle&) const = 0;
+  virtual bool intersect(const Triangle&) const = 0;
+};
+
+class Circle: public Shape {
+public:
+  bool intersect(const Shape& s) const override { return s.intersect(*this); }
+  bool intersect(const Circle&) const override;
+  bool intersect(const Triangle&) const override; 
+};
+
+class Triangle: public Shape {
+public:
+  bool intersect(const Shape& s) const override { return s.intersect(*this); }
+  bool intersect(const Circle&) const override;
+  bool intersect(const Triangle&) const override;
+};
+```
+
+* For double dispatch, as the class hierarchy grows, the need for virtual functions grows exponentially.
+* Each new operation and each new derived class require a modification to every class in the hierarchy, which makes double dispatch approach highly intrusive.
+
+### 22.3.2 Visitors
+
+
