@@ -3067,4 +3067,48 @@ void f(Foo1* f1, Bar1* b1, Foo2* f2, Bar2* b2) {
 
 #### 22.2.2 Multiple Inheritance
 
+* Multiple inheritance **dynamic_cast**ing sometimes results in ambiguity, and it's not detectable at compile time, instead it results in a **nullptr** at runtime.
 
+```c++
+class A { public: virtual void Print() const = 0; };
+
+class B: public virtual A {
+public:
+  void Print() const override {
+    std::cout << "Print() in B" << std::endl;
+  }
+};
+
+// --- Case 1: B is not virtual base ---
+class C1: public B { };
+class C2: public B { };
+// -------------------------------------
+
+class D: public C1, public C2 {
+public:
+  void Print() const override {
+    std::cout << "Print() in D" << std::endl;
+  }
+};
+
+void g(A* const a) {
+  if (B* b = dynamic_cast<B*>(a)) {
+    std::cout << "a is B" << std::endl;
+    b->Print();
+  } else {
+    std::cout << "a is not B" << std::endl;
+    a->Print();
+  }
+}
+
+D obj{};
+g(&obj); // a is not B; Print() in D
+
+// --- Case 1: B is virtual base ---
+class C1: public virtual B { };
+class C2: public virtual B { };
+// ---------------------------------
+
+D obj{};
+g(&obj); // a is B; Print() in D
+```
