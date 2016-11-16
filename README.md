@@ -3195,4 +3195,69 @@ public:
 
 #### 22.3.2 Visitors
 
+```c++
+class Matrix;
+class NDArray;
+class Visitor;
 
+// --------------------- Visitor Interfaces ---------------------
+
+class Visitable {
+public:
+    virtual void Accept(Visitor& visitor) = 0;
+};
+
+class Visitor {
+public:
+    virtual void Visit(Matrix&) = 0;
+    virtual void Visit(NDArray&) = 0;
+};
+
+// --------------------------- Classes --------------------------
+
+class NDArray: public virtual Visitable {
+public:
+    NDArray() = default;
+    NDArray(std::initializer_list<std::size_t> shape):
+        shape_{shape.begin(), shape.end()} { }
+    void Accept(Visitor& visitor) override { visitor.Visit(*this); }
+    
+    std::vector<std::size_t> GetShape() const {
+        return std::vector<std::size_t>{shape_.begin(), shape_.end()};
+    }
+private:
+    std::vector<std::size_t> shape_{};
+};
+
+class Matrix: public NDArray, public virtual Visitable {
+public:
+    void Accept(Visitor& visitor) override { visitor.Visit(*this); }
+};
+
+// ------------------- Visitor Implementation -------------------
+
+class DimVisitor: public Visitor {
+public:
+    virtual void Visit(Matrix& mat) override { n_dim_ = 2; }
+    virtual void Visit(NDArray& ndarr) override { n_dim_ = ndarr.GetShape().size(); }
+    
+    virtual std::size_t GetNDim() const { return n_dim_; }
+private:
+    std::size_t n_dim_{};
+};
+
+void g() {
+    Matrix mat{};
+    NDArray arr{100, 20, 300};
+    
+    DimVisitor dim_visitor{};
+    
+    mat.Accept(dim_visitor);
+    std::cout << dim_visitor.GetNDim() << std::endl; // 2
+    arr.Accept(dim_visitor);
+    std::cout << dim_visitor.GetNDim() << std::endl; // 3
+    
+    return 0;
+}
+
+```
