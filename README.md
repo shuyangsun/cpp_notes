@@ -3225,6 +3225,7 @@ public:
     NDArray() = default;
     NDArray(std::initializer_list<std::size_t> shape):
         shape_{shape.begin(), shape.end()} { }
+	// Must override in each derived class!
     void Accept(Visitor& visitor) override { visitor.Visit(*this); }
     
     std::vector<std::size_t> GetShape() const {
@@ -3236,6 +3237,7 @@ private:
 
 class Matrix: public NDArray, public virtual Visitable {
 public:
+	// Must override in each derived class!
     void Accept(Visitor& visitor) override { visitor.Visit(*this); }
 };
 
@@ -3250,6 +3252,8 @@ public:
 private:
     std::size_t n_dim_{};
 };
+
+// ------------------------ Test Function -----------------------
 
 void g() {
     Matrix mat{};
