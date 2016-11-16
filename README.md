@@ -3195,6 +3195,8 @@ public:
 
 #### 22.3.2 Visitors
 
+* Enables the ability to add functions without changing the class' interface.
+
 ```c++
 class Matrix;
 class NDArray;
@@ -3214,6 +3216,9 @@ public:
 };
 
 // --------------------------- Classes --------------------------
+
+// Nothing need to be changed for NDArray or Matrix to add an
+// "NDim()" function using visitor's pattern.
 
 class NDArray: public virtual Visitable {
 public:
