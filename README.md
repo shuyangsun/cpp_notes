@@ -3302,3 +3302,19 @@ public:
 };
 ```
 
+* It is *not* guaranteed that there is only one **type_info** object for each type in the system.
+* The character representation of a class' name is implementation-defined. If it's C-style string, it resides in memory owned by the system, so the programmer should not attempt to **delete[]** it.
+
+#### 22.5.1 Extended Type Information
+
+* The **type_index** is a standard-library type for comparing and hashing **type_info** objects.
+
+```c++
+type_index{typeid(*p)};
+```
+
+___
+
+## 23. Templates
+
+
