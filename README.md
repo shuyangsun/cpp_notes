@@ -3270,3 +3270,35 @@ void g() {
 }
 
 ```
+
+### 22.4 Construction and Destruction
+
+* It is unwise to rely on details of the order of construction and destruction, but you can observe that order by calling virtual functions, **dynamic_cast**, or **typeid** at a point where the object isn't complete.
+* Calling virtual functions from constructors or destructors is a bad idea.
+
+### 22.5 Type Identification
+
+* **typeid()** returns a reference to a standard-library type called **type_info** defined in **\<typeinfo>**.
+* **typeid(expr)** takes an *expression* as its operand, and **expr** must refer to a completely defined type.
+* If the value of **expr** is **nullptr**, **typeid(expr)** throws a **std::bad_typeid**.
+* If the operand of **typeid()** has a nonpolymorphic type or is not an lvalue, the result is determined at compile time without evaluating the operand expression.
+* If the object denoted by a dereferenced pointer or a reference to a polymorphic type, the **type_info** returned is that of the most derived class for the object, that is, the type used when the object was defined.
+
+```c++
+// Declaration for type_info
+class type_info {
+public:
+  virtual ~type_info();
+  
+  bool operator==(const type_info&) const noexcept;
+  bool operator!=(const type_info&) const noexcept;
+  
+  bool before(const type_info&) const noexcept; // ordering
+  size_t hash_code() const noexcept; // for use by unordered_map and the like
+  const char* name() const noexcept;
+  
+  type_info(const type_info&) = delete;
+  type_info& operator=(const type_info&) = delete;
+};
+```
+
