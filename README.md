@@ -3368,4 +3368,26 @@ T Foo<T>::GetX() const {
 
 * The fundamental weakness of the template mechanism is that it is not possible to directly express requirements on a template argument.
 * In C++14, [**concept**](http://en.cppreference.com/w/cpp/language/constraints) is to solve this problem.
-* 
+
+#### 23.3.1 Type Equivalence
+
+* Types generated from a single template by different template arguments are different types.
+* Generated types from related arguments are not automatically related.
+
+```c++
+template<typename T, int N>
+class Buffer;
+
+using Ch = char;
+typeid(Buffer<char, 10>{}) == typeid(Buffer<Ch, 20 - 10>{});  // true
+typeid(Buffer<int, 64>{}) == typeid(Buffer<float, 64>{});  // false
+
+class Shape { /* ... */ };
+class Circle: public Shape { /* ... */ };
+
+template<typename T>
+class Display { /* ... */ };
+
+typeid(Display<Shape>{}) == typeid(Display<Circle>{});  // false
+std::vector<Display<Shape>> v = std::vector<Display<Circle>>{};  // compile-time error
+```
