@@ -3346,7 +3346,7 @@ private:
 };
 
 template<typename T>
-Foo<T>::Foo(T x):
+Foo<T>::Foo(T x):  // within the scope of Foo<T>, qualification with <T> is redundant
   x_{x} { }
 
 template<typename T>
