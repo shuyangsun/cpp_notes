@@ -3317,7 +3317,7 @@ ___
 
 ## 23. Templates
 
-### Introduction and Overview
+### 23.1 Introduction and Overview
 
 * Templates can match handwritten, less general code in run-time and space efficiency.
 * The argument types used for a template need not to be part of an inheritance hierarchy. Built-in types are acceptable and very common as template arguments.
@@ -3355,3 +3355,17 @@ T Foo<T>::GetX() const {
 }
 ```
 
+* It is not possible to overload a class template name.
+
+#### 23.3.3 Template Instantiation
+
+* The process of generating a class or a function from a template plus a template argument list is often called *template instantiation*.
+* A version of a template for a specific template argument list is called a *specialization*.
+* Composition using templates combined with simple inlining can be used to eliminate many direct and indirect function calls.
+* Incautious use of templates leading to the generation of very similar large functions can cause code bloat, whereas use of templates to enable inlining of tiny functions can lead to significant code shrinkage (and speedup) compared to alternatives.
+
+### 23.3 Type Checking
+
+* The fundamental weakness of the template mechanism is that it is not possible to directly express requirements on a template argument.
+* In C++14, [**concept**](http://en.cppreference.com/w/cpp/language/constraints) is to solve this problem.
+* 
