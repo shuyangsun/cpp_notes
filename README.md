@@ -3443,3 +3443,10 @@ void g() {
 }
 ```
 
+#### 23.4.5 Member Types
+
+* The out-of-class definition of a member enumeration is only allowed for an enumeration for which we know the underlying type.
+
+#### 23.4.6 Member Templates
+
+* A class or a class template can have members that are themselves templates.
