@@ -3317,4 +3317,36 @@ ___
 
 ## 23. Templates
 
+### Introduction and Overview
 
+* Templates can match handwritten, less general code in run-time and space efficiency.
+* The argument types used for a template need not to be part of an inheritance hierarchy. Built-in types are acceptable and very common as template arguments.
+* Unfortunately, a template's requirements on its arguments cannot be simply and directly stated in code.
+
+### 23.2 A Simple String Template
+
+* The scope of template arguments extends to the end of the declaration prefixed by **template\< /* ... */ >**.
+* Type aliases are useful for shortening the long names of classes generated from templates.
+
+#### 23.2.1 Defining a Template
+
+* A class generated from a class template is a perfectly ordinary class. Thus, use of a template does not imply any run-time mechanisms beyond what is used for an equivalent "handwritten" class.
+* Using a template can lead to a decrease of code generated because code for a member function of a class template is only generated if that member is used.
+* Members of a class template are declared and defined exactly as they would have been for a non-template class.
+* Members of a template class are themselves templates parameterized by the parameters of their template class. When such a member is defined outside its class, it must explicitly be declared a template.
+
+```c++
+template<typename T>
+class Foo {
+public:
+  Foo(T x): x_{x} { }
+  T GetX() const;
+private:
+  const T x_{};
+};
+
+template<typename T>
+T Foo::GetX() const {
+  return x_;
+}
+```
