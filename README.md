@@ -3422,3 +3422,24 @@ public:
   // ...
 };
 ```
+
+#### 23.4.4 static Members
+
+* A **static** data or function that is not defined in-class must have a unique definition in a program.
+* As for non-template classes, a **const** or **constexpr** data member of literal type can be initialized in-class and need not be defined outside the class.
+* A **static** member need only be defined if it is used.
+
+```c++
+class Foo {
+public:
+  static int a = 5;  // error: non-const static data member must be initialized out of line
+  static int const b = 6;  // OK
+  static int c;  // error: not defined (because it's mentioned later)
+  static int d;  // OK
+};
+
+void g() {
+  int const x{Foo<int>::c};  // mention static data member c
+}
+```
+
