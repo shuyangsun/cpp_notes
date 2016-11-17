@@ -3389,5 +3389,5 @@ template<typename T>
 class Display { /* ... */ };
 
 typeid(Display<Shape>{}) == typeid(Display<Circle>{});  // false
-std::vector<Display<Shape>> v = std::vector<Display<Circle>>{};  // compile-time error
+std::vector<Display<Shape>> v = std::vector<Display<Circle>>{};  // compile-time error: no visible conversion from vector<Display<Circle>> to vector<Display<Shape>>
 ```
