@@ -3346,7 +3346,8 @@ private:
 };
 
 template<typename T>
-T Foo::GetX() const {
+T Foo<T>::GetX() const {
   return x_;
 }
 ```
+
