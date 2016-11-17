@@ -3339,11 +3339,15 @@ ___
 template<typename T>
 class Foo {
 public:
-  Foo(T x): x_{x} { }
+  Foo(T x);
   T GetX() const;
 private:
   const T x_{};
 };
+
+template<typename T>
+Foo<T>::Foo(T x):
+  x_{x} { }
 
 template<typename T>
 T Foo<T>::GetX() const {
