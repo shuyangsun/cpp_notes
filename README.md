@@ -3450,3 +3450,19 @@ void g() {
 #### 23.4.6 Member Templates
 
 * A class or a class template can have members that are themselves templates.
+
+```c++
+template<typename T>
+class NDArray {
+public:
+  using DType = T;
+  
+  template<typename U>
+  NDArray(const NDArray<U>& source);
+  
+  template<typename U>
+  NDArray<U> AsType() const;
+  
+  // ...
+};
+```
