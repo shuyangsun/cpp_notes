@@ -3392,3 +3392,12 @@ typeid(Display<Shape>{}) == typeid(Display<Circle>{});  // false
 std::vector<Display<Shape>> v = std::vector<Display<Circle>>{}; // compile-time error:
 // no visible conversion from vector<Display<Circle>> to vector<Display<Shape>>
 ```
+
+#### 23.3.2 Error Detection
+
+* Errors that related to the use of template parameters cannot be detected until the template is used.
+* The earliest that errors relating to a template parameter can be detected is at the first point of use of the template for a particular template argument. That point is called the first *point of instantiation*.
+* The implementation is allowed to postpone essentially all checking until the program is linked, and for some errors link time is also the earliest point when complete checking is possible.
+
+### 23.4 Class Template Members
+
