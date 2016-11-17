@@ -3401,3 +3401,24 @@ std::vector<Display<Shape>> v = std::vector<Display<Circle>>{}; // compile-time 
 
 ### 23.4 Class Template Members
 
+#### 23.4.1 Data Members
+
+* Non-**static** data members can be **const**, but unfortunately not **constexpr**.
+
+#### 23.4.2 Member Functions
+
+* A virtual member function cannot also be a member function template.
+
+#### 23.4.3 Member Type Aliases
+
+* Type names as member aliases are often referred to as *associated types*.
+* If a class is missing a desired member alias, a trait can be used to compensate.
+
+```c++
+template<typename T>
+class NDArray {
+public:
+  using DType = T;  // associated type
+  // ...
+};
+```
