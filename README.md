@@ -3480,8 +3480,6 @@ public:
 
 * Avoid nested types in templates unless they genuinely rely on every template parameter.
 
-#### 23.4.7 Friends
-
 ```c++
 // --------------------- Implementation 1 ---------------------
 
@@ -3519,3 +3517,6 @@ class List {
   // ...
 };
 ```
+
+#### 23.4.7 Friends
+
