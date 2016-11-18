@@ -3467,3 +3467,14 @@ public:
 };
 ```
 
+##### 23.4.6.1 Templates and Constructors
+
+* For technical reasons, a template constructor is never used to generate a copy constructor, so without the explicitly declared copy constructor, a default copy constructor would have been generated.
+* Copy constructors, copy assignments, move constructors, and move assignments, must be defined as non-template operators or the default version will be generated.
+
+##### 23.4.6.2 Templates and virtual
+
+* A member template cannot be **virtual**.
+
+##### 23.4.6.3 Use of Nesting
+
