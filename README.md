@@ -3478,3 +3478,44 @@ public:
 
 ##### 23.4.6.3 Use of Nesting
 
+* Avoid nested types in templates unless they genuinely rely on every template parameter.
+
+#### 23.4.7 Friends
+
+```c++
+// --------------------- Implementation 1 ---------------------
+
+// Link dependends on Allocator although it doesn't need it,
+// only List needs it.
+template<typename T, typename Allocator>
+class List {
+private:
+  struct Link {
+    T val;
+    Link* succ;
+    Link* prev;
+  };
+  // ...
+};
+
+// --------------------- Implementation 2 ---------------------
+
+// Move Link out of List, so Link doesn't depend on allocator.
+template<typename T, typename Allocator>
+class List;
+
+template<typename T>
+class Link {
+  template<typename U, typename A>
+    friend class List;
+
+  T val;
+  Link* succ;
+  Link* prev;
+};
+
+template<typename T, typename Allocator>
+class List {
+  // ...
+};
+```
