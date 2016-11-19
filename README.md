@@ -2255,7 +2255,7 @@ Matrix& Matrix::operator+=(const Matrix& a) {
 * For binary operation **x @ y**, **x**'s name space will be looked up first.
 * In operator lookup no preference is given to members over nonmembers.
 
-### 18.3 A Complex Number Tye
+### 18.3 A Complex Number Type
 
 #### 18.3.1 Member and Nonmember Operators
 
@@ -3520,3 +3520,15 @@ class List {
 
 #### 23.4.7 Friends
 
+```c++
+template<typename T>
+class Foo {
+public:
+  friend Bar<T> operator*<>(const Foo&, const Bar<T>&);
+  // ...
+};
+```
+
+* The **\<>** after the name of the friend function is needed to make clear that the friend is a template function. Without the **\<>**, a non-template function would have been assumed.
+* Like a member function, a friend function is instantiated only if it is used.
+* As ever, friendship is neither inherited nor transitive.
