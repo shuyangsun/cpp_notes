@@ -3546,8 +3546,23 @@ class Bar {
 };
 ```
 
-* Unfortunately, there is no way of saying that **Foo\<X>** should only be a friend of **Bar\<X>**.
+* Unfortunately, there is no way of saying that **Bar\<X>** should only be a friend of **Foo\<X>**.
 
 ### 23.5 Function Templates
+
+* When a function template is called, the types of the function arguments determine which version of the template is used; that is, the template arguments are deduced from the function arguments.
+* Only tailing template arguments can be specified.
+
+```c++
+template<typename T, typename Compare = std::less<T>>
+void sort(std::vector<T>& v) { /* ... */ }
+
+void g() {
+  std::vector<int> v{1, 3, 2, 9, 5};
+  sort<int, std::greater<int>>(v);
+}
+```
+
+#### 23.5.1 Function Template Arguments
 
 
