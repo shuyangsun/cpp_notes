@@ -3532,3 +3532,22 @@ public:
 * The **\<>** after the name of the friend function is needed to make clear that the friend is a template function. Without the **\<>**, a non-template function would have been assumed.
 * Like a member function, a friend function is instantiated only if it is used.
 * As ever, friendship is neither inherited nor transitive.
+* We cannot directly make a template a friend of a class, but we can make a friend declaration a template.
+
+```c++
+template<typename T>
+class Foo;
+
+template<typename T>
+class Bar {
+  template<typename T>
+    friend class Foo;
+  // ...
+};
+```
+
+* Unfortunately, there is no way of saying that **Foo\<X>** should only be a friend of **Bar\<X>**.
+
+### 23.5 Function Templates
+
+
