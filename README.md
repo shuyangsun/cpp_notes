@@ -3588,15 +3588,15 @@ complex<T> sqrt(complex<T>);
 double sqrt(double);
 
 void g() {
-  // will call "double sqrt(double)", because it's more specialized than
-  // the other two.
+  // Will call "double sqrt(double)", because
+  // it's more specialized than the others.
   sqrt(2);
 }
 ```
 
 ##### 23.5.3.1 Ambiguity Resolution
 
-* Resolve function template overloading ambiguity by explicit qualification.
+* Resolve function template overloading ambiguity by explicit qualification or other declarations.
 
 ```c++
 template<typename T>
@@ -3606,6 +3606,12 @@ void g() {
   max(2.7, 1);  // error: ambigous: max<int> or max<double>?
   max<double>(2.7 1);  // OK
 }
+
+// More declarations
+inline double max(double a, int b) { return max<double>(a, b); }
+inline double max(int a, double b) { return max<double>(a, b); }
+// etc. ...
+
 ```
 
 
