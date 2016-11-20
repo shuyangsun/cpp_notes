@@ -3572,3 +3572,40 @@ void g() {
 #### 23.5.2 Function Template Argument Deduction
 
 * If a template parameter can be deduced from more than one function argument, the same type must be the result of each deduction. Otherwise, the call is an error.
+
+##### 23.5.3 Function Template Overloading
+
+* We can declare several function templates with the same name and even declare a combination of function tempaltes and ordinary functions with the same name.
+* If two function templates can be called and one is more specialized than the other, consider only the most specialized template function.
+
+```c++
+template<typename T>
+T sqrt(T);
+
+template<typename T>
+complex<T> sqrt(complex<T>);
+
+double sqrt(double);
+
+void g() {
+  // will call "double sqrt(double)", because it's more specialized than
+  // the other two.
+  sqrt(2);
+}
+```
+
+##### 23.5.3.1 Ambiguity Resolution
+
+* Resolve function template overloading ambiguity by explicit qualification.
+
+```c++
+template<typename T>
+max(T, T);
+
+void g() {
+  max(2.7, 1);  // error: ambigous: max<int> or max<double>?
+  max<double>(2.7 1);  // OK
+}
+```
+
+
