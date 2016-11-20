@@ -3602,7 +3602,7 @@ void g() {
 template<typename T>
 max(T, T);
 
-void g() {
+void f() {
   max(2.7, 1);  // error: ambigous: max<int> or max<double>?
   max<double>(2.7 1);  // OK
 }
@@ -3612,6 +3612,29 @@ inline double max(double a, int b) { return max<double>(a, b); }
 inline double max(int a, double b) { return max<double>(a, b); }
 // etc. ...
 
+max(2.7, 1);  // OK
+```
+
+##### 23.5.3.2 Argument Substitution Failure
+
+* When looking for a best match for a set of arguments for a function template, the compiler considers whether the argument can be used in the way required by the complete function template declaration (*including the return type*).
+
+```c++
+template<typename Iter>
+typename Iter::value_type mean(Iter first, Iter last);
+
+void f(std::vector<int>& v, int* p, int n) {
+  auto x{mean(v.begin(), v.end())};  // OK
+  auto y{mean(p, p + n)};  // error
+}
+
+// Add another definition
+template<typename T>
+T mean(T*, T*);
+
+void f(int* p, int n) {
+  auto z{mean(p, p + n)};  // OK
+}
 ```
 
 
