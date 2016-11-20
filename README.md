@@ -3565,4 +3565,10 @@ void g() {
 
 #### 23.5.1 Function Template Arguments
 
+* A compiler can deduce type and non-type arguments from a call, provided the function argument list uniquely identifies the set of template arguments.
+* Class template parameters are never reduced.
+* The syntax for **static_cast**, **dynamic_cast**, etc., matches the explicitly qualified function template syntax.
 
+#### 23.5.2 Function Template Argument Deduction
+
+* If a template parameter can be deduced from more than one function argument, the same type must be the result of each deduction. Otherwise, the call is an error.
