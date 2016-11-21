@@ -3458,7 +3458,9 @@ public:
   using DType = T;
   
   template<typename U>
-  NDArray(const NDArray<U>& source);
+  NDArray(const NDArray<U>& source);  // ordinary constructor
+
+  NDArray(const NDArray& source);  // copy constructor
   
   template<typename U>
   NDArray<U> AsType() const;
