@@ -3692,7 +3692,7 @@ int main(int argc, const char* argv[]) {
 
 * If a class template should be copyable/movable, give it a non-template copy/move constructor and a non-template copy/move assignment.
 * Use function templates to deduce class template argument types.
-* There is no separate compilation of templates: **#include** template definitions in every translation unit that uses them.
+* *There is no separate compilation of templates: **#include** template definitions in every translation unit that uses them.*
 
 ___
 
