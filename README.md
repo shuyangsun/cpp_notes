@@ -3700,4 +3700,8 @@ ___
 
 ## 24. Generic Programming
 
+### 24.2 Algorithms and Lifting
+
+* *Lifting*: lifting a general algorithm from specific functions.
+
 
