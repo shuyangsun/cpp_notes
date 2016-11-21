@@ -3637,3 +3637,65 @@ void f(int* p, int n) {
 }
 ```
 
+### 23.6 Template Aliases
+
+* In general, if we bind all arguments of a template, we get a type, but if we bind only some, we get a template.
+* You cannot define a specialization of an alias.
+
+```c++
+template<typename T, typename U>
+class Foo { /* ... */ };
+
+template<typename T>
+using FooD = Foo<T, double>;  // only U is bound, still a template
+
+using FooFI = Foo<float, int>;  // both arguments are bound, a complete type
+
+FooD<char> foo1{};
+FooFI foo2{};
+```
+
+### 23.7 Source Code Organization
+
+* Two ways of organizing code using templates:
+  * Include template defnitions before their use in a translation unit.
+  * Include template declarations (only) before their use in a translation unit. Include definitions of templates later in the translation unit (potentially after their use).
+
+```c++
+// foo.hpp:
+template<typename T>
+class Foo {
+public:
+  virtual void Print() const;
+};
+
+// foo.cpp:
+template<typename T>
+void Foo<T>::Print() const {
+  std::cout << "Print() in Foo template." << std::endl
+}
+
+// main.cpp:
+#include "foo.hpp"
+
+int main(int argc, const char* argv[]) {
+  Foo<int> f{};
+  f.Print();
+  return 0;
+}
+
+// Must include foo.cpp!!! There is no seperate compilation for tempaltes!!!
+#include "foo.cpp"
+```
+
+### 23.8 Advice
+
+* If a class template should be copyable/movable, give it a non-template copy/move constructor and a non-template copy/move assignment.
+* Use function templates to deduce class template argument types.
+* There is no separate compilation of templates: **#include** template definitions in every translation unit that uses them.
+
+___
+
+## 24. Generic Programming
+
+
