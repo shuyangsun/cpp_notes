@@ -3718,3 +3718,50 @@ ___
 	* You can default construct.
 	* Doesn't have problems with various minor technical requirements (such as taking the address of a variable).
 	* You can compare for equality (using **==** and **!=**).
+
+#### 24.3.2 Concepts and Constraints
+
+* To be useful as a concept, a list of requirements has to reflect the needs of a set of algorithms or a set of operations of a template class.
+* Bar for being a concept: generality, some stability, usability across many algorithms, semantic consistency, and more.
+
+### 24.4 Making Concepts Concrete
+
+* In C++11, we can implement a concept as a **constexpr** function.
+
+```c++
+TMPL_DEF_PQ
+NDArray<bool> operator<(const NDArray<P>& lhs, const NDArray<Q>& rhs) {
+    return lhs.x_ < rhs.x_;
+}
+
+template<typename P, typename Q>
+NDArray<bool> operator<(const NDArray<P>& lhs, const Q& val) {
+  static_assert(std::is_scalar<Q>::value, "Cannot compare NDArray with non-scalar type.");
+  // ...
+}
+```
+
+* Weaknesses about this kind of constraint-check:
+	* Constraints checks are placed in definitions, but they really belong in declarations.
+	* It happens too late, we would like it to happen when we do the first call.
+
+#### 24.4.3 Value Concepts
+
+```c++
+constexpr int stack_limit{2048};
+
+template<typename T, int N>
+constexpr bool Stackable() {
+  return IsRegular<T>() && sizeof(T) * N <= stack_limit;
+}
+```
+
+#### 24.4.5 Template Definition Checking
+
+* The implementation should use no property of an argument that isn't specified by the concepts, so we should test the implementation with arguments that provide the properties specified by the implementation's concepts, and only those. Such a type is sometimes called an *archetype*.
+
+
+___
+
+## 25. Specialization
+
