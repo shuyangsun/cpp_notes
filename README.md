@@ -3704,4 +3704,17 @@ ___
 
 * *Lifting*: lifting a general algorithm from specific functions.
 
+### 24.3 Concepts
 
+#### 24.3.1 Discovering a Concept
+
+* Three stages of analysis of concept:
+	1. Look at our (initial) implementation and determine which properties (operations, functions, member types, etc.) it uses from its parameter types (and the meaning of the operations). The resulting list is the minimal requirements for that particular template implementation.
+	2. Look at plausible alternative template implementations and list their requirements on their template arguments. Doing so, we may decide that we should place more or stricter requirements on the template arguments to allow for alternative implementations. Alternatively, we might decide to prefer an implementation that makes fewer and/or simpler requirements.
+	3. Look at the resulting list (or lists) of required properties and compare it to lists of requirements (concepts) that we have used for other templates. We try to find simple, preferably common, concepts that can express what would otherwise be many long lists of requirements. The aim here is to make our design benefit from general work on classification. The resulting concepts are easier to give meaningful names and easier to remember. They should also maximize the degree of interoperability of templates and types by limiting variations in concepts to what is essential.
+
+* A *regular type* is a type that:
+	* You can copy (using assignment or initialization) with the proper copy semantics.
+	* You can default construct.
+	* Doesn't have problems with various minor technical requirements (such as taking the address of a variable).
+	* You can compare for equality (using **==** and **!=**).
