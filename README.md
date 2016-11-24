@@ -3776,3 +3776,27 @@ ___
 #### 25.3.1 Types as Arguments
 
 * A template argument is defined to be a *type parameter* by prefixing it with **typename** or **class**. The result of using either is completely equivalent.
+* Every type (built-in or user-defined) is syntactically acceptable to a template declared to take a type parameter.
+* A type argument is unconstrained (without implementation of *concepts*).
+* There is no space or time overhead implied by using either built-in or user-defined types.
+
+#### 25.2.2 Values as Arguments
+
+* A template parameter that is not a type or a template is called a *value parameter* and an argument passed to it is a *value argument*.
+* An argument for a template value parameter can be:
+  * An integral constant expression
+  * A pointer or a reference to an object or a function with external linkage.
+  * A nonoverloaded pointer to member.
+  * A null pointer.
+* A pointer used as a template argument must be of the form **&of**, where **of** is the name of an object or a function, or of the form **f**, where **f** is the name of a function.
+* A pointer to member must be of the form **&X::of**, where **of** is the name of a member.
+* A string literal is *not* acceptable as a template argument.
+
+```c++
+template<char* label>
+class Foo { };
+
+void g() {
+  const Foo<"hello"> a{};  // error: ‘"hello"’ is not a valid template argument for type ‘char*’
+}
+```
