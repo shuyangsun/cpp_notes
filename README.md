@@ -261,9 +261,9 @@ person alien {"E", "T", 290};
 struct S1 { int x; };
 struct S2 { int x; S2(int num): x{num} {}; }; // Has customized constructor, no default constructor.
 struct S3 { int x; S3(int num): x{num} {}; S3() {}; }; // Has default constructor.
-	
+
 std::cout << std::is_pod<int>::value << std::endl; // 1
-	
+
 std::cout << std::is_pod<S1>::value << std::endl; // 1
 std::cout << std::is_pod<S2>::value << std::endl; // 0
 std::cout << std::is_pod<S3>::value << std::endl; // 0
@@ -317,7 +317,7 @@ zip_code nyc; // Default initialized to str_val == ""
 std::cout << "nyc zip code is: " << nyc.str_val << std::endl; // nyc zip code is:
 nyc.int_val = 10010;
 std::cout << "nyc zip code is: " << nyc.int_val << std::endl; // nyc zip code is: 10010
-	
+
 zip_code ames {50010}; // error: no matching constructor for initialization of 'zip_code'
 
 ```
@@ -341,16 +341,16 @@ public:
 		street_addr{addr},
 		zip_str{zip},
 		zip_is_str{true} { };
-	
+
 	address(const char* addr, const unsigned int zip):
 		street_addr{addr},
 		zip_int{zip},
 		zip_is_str{false} { };
-	
+
 	std::string street_address() {
 		return std::string(street_addr);
 	};
-	
+
 	std::string zip_code() {
 		if (zip_is_str) {
 			return std::string(zip_str);
@@ -418,7 +418,7 @@ std::cout << static_cast<char>(light) << std::endl; // r
 enum class options {
 	a = 1, b = 2, c = 4, d = 8
 };
-	
+
 options opt1 {options::a};
 options opt2 {options::c};
 std::cout << (opt1 | opt2) << std::endl;
@@ -432,11 +432,11 @@ std::cout << (static_cast<int>(opt1) | static_cast<int>(opt2)) << std::endl; // 
 enum class light {
 	red, green, yellow
 };
-	
+
 enum class color {
 	red, green, blue
 };
-	
+
 light red_light {light::red};
 color red_color {color::red};
 bool same = red_light == red_color;
@@ -497,7 +497,7 @@ void foo(int x) {
 		case 5:
 			++x;
 			++y; // Bad, accessing uninitialized variable
-			std::cout << x << " " << y << std::endl; // 
+			std::cout << x << " " << y << std::endl; //
 			break;
 		default:
 			break;
@@ -706,12 +706,12 @@ int y = {9}; // initializer (copy initialization)
 ```c++
 struct my_float {
     float val;
-    
+
     my_float(const std::initializer_list<const std::string> init_lst) {
         const std::string& first {*init_lst.begin()};
         this->val = std::stof(first);
     }
-    
+
     void print_floating_point() {
         std::cout << this->val - std::floor(this->val) << std::endl;
     }
@@ -729,7 +729,7 @@ float max_ele(const std::initializer_list<const float> init_lst) {
 
 my_float f {"3.14159"};
 f.print_floating_point(); // 0.14159
-    
+
 const float max {max_ele({1, 2.5, - 1.0, -9.9, 3.14159})};
 std::cout << max << std::endl; // 3.14159
 ```
@@ -942,13 +942,13 @@ void foo(int(&arr)[1024]);
 void print_args(int first ...) {
     va_list ap;
     va_start(ap, first);
-    
+
     for (;;) {
         int val {va_arg(ap, int)};
         if (val == 0) break;
         std::cout << val << ' ';
     }
-    
+
     va_end(ap);
     std::cout << std::endl;
 }
@@ -2120,7 +2120,7 @@ void foo() {
 }
 ```
 
-* Move operation is destructive. It is not guaranteed (or required) that an arbitrary operation on a move-from object will work correctly. 
+* Move operation is destructive. It is not guaranteed (or required) that an arbitrary operation on a move-from object will work correctly.
 
 #### 17.6.3 Using Default Operations
 
@@ -2441,7 +2441,7 @@ private:
 		int space; // unused allocated space
 		char ch[short_max + 1]; // leave space for terminating 0
 	};
-	
+
 	// ...
 };
 ```
@@ -2649,14 +2649,14 @@ void Print(const Foo& obj) {
 void g() {
 	Foo foo {};
 	Bar bar {};
-	
+
 	foo.Print(); // "Print() in Foo"
 	bar.Print(); // "Print() in Bar"
 	Print(foo); // "Print() in Foo"
 	Print(bar); // "Print() in Bar"
-	
+
 	Foo bar_casted {static_cast<Foo>(bar)};
-	
+
 	bar_casted.Print(); // "Print() in Foo"
 	Print(bar_casted); // "Print() in Foo"
 }
@@ -3227,7 +3227,7 @@ public:
         shape_{shape.begin(), shape.end()} { }
 	// Must override in each derived class!
     void Accept(Visitor& visitor) override { visitor.Visit(*this); }
-    
+
     std::vector<std::size_t> GetShape() const {
         return std::vector<std::size_t>{shape_.begin(), shape_.end()};
     }
@@ -3247,7 +3247,7 @@ class DimVisitor: public Visitor {
 public:
     virtual void Visit(Matrix& mat) override { n_dim_ = 2; }
     virtual void Visit(NDArray& ndarr) override { n_dim_ = ndarr.GetShape().size(); }
-    
+
     virtual std::size_t GetNDim() const { return n_dim_; }
 private:
     std::size_t n_dim_{};
@@ -3258,14 +3258,14 @@ private:
 void g() {
     Matrix mat{};
     NDArray arr{100, 20, 300};
-    
+
     DimVisitor dim_visitor{};
-    
+
     mat.Accept(dim_visitor);
     std::cout << dim_visitor.GetNDim() << std::endl; // 2
     arr.Accept(dim_visitor);
     std::cout << dim_visitor.GetNDim() << std::endl; // 3
-    
+
     return 0;
 }
 
@@ -3289,14 +3289,14 @@ void g() {
 class type_info {
 public:
   virtual ~type_info();
-  
+
   bool operator==(const type_info&) const noexcept;
   bool operator!=(const type_info&) const noexcept;
-  
+
   bool before(const type_info&) const noexcept; // ordering
   size_t hash_code() const noexcept; // for use by unordered_map and the like
   const char* name() const noexcept;
-  
+
   type_info(const type_info&) = delete;
   type_info& operator=(const type_info&) = delete;
 };
@@ -3456,15 +3456,15 @@ template<typename T>
 class NDArray {
 public:
   using DType = T;
-  
+
   template<typename U>
   NDArray(const NDArray<U>& source);  // ordinary constructor
 
   NDArray(const NDArray& source);  // copy constructor
-  
+
   template<typename U>
   NDArray<U> AsType() const;
-  
+
   // ...
 };
 ```
@@ -3765,3 +3765,14 @@ ___
 
 ## 25. Specialization
 
+### 25.2 Template parameters and Arguments
+
+* A template can take arguments:
+  * *Type parameters* of "type type".
+  * *Value parameteres* of built-in types such as **int**s and pointers to functions.
+  * *Template parameters* of "type template".
+* It is common to use short names with initial uppercase letters as names of template type arguments.
+
+#### 25.3.1 Types as Arguments
+
+* A template argument is defined to be a *type parameter* by prefixing it with **typename** or **class**. The result of using either is completely equivalent.
