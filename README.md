@@ -3800,3 +3800,37 @@ void g() {
   const Foo<"hello"> a{};  // error: ‘"hello"’ is not a valid template argument for type ‘char*’
 }
 ```
+
+* Literal types cannot be used as template value parameters.
+* An integer template argument must be a constant.
+
+```c++
+template<int K>
+class Foo { /* ... */ };
+
+void g() {
+  int const a{1};
+  int b{2};
+
+  Foo<a> f1{};  // OK
+  Foo<b> f2{};  // error: a variable with non-static storage duration cannot be used as a non-type argument cpp_practice
+}
+```
+
+* A value template parameter is a constant within the template so that an attempt to change the value of a parameter is an error.
+* A type template parameter can be used as a type later in a template parameter list. This becomes particularly useful when combined with a default template argument.
+
+```c++
+template<typename T, T default_value = T{}>
+class Matrix { /* ... */ };
+
+void g() {
+  Matrix<float, 0> mat1{3, 4};
+  Matrix<char, 'A'> mat2{10, 10};
+  Matrix<int> mat3{2, 2};  // Matrix<int, 0>
+}
+```
+
+#### 25.2.3 Operations as Arguments
+
+
