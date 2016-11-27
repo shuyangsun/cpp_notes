@@ -4014,3 +4014,13 @@ bool less(const char* a, const char* b) {
 
 * Above code does not improve the algorithm itself, but it allows improvements to its implementation.
 * Because the template argument can be deduced from the function argument list, we need not specify it explicitly.
+
+##### 25.3.4.2 Specialization That Is Not Overloading
+
+* Individual functions take part in overloading whereas only the primary template takes part in specialization. However, there is not really a practical difference.
+
+___
+
+## Instantiation
+
+
