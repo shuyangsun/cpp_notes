@@ -3881,3 +3881,50 @@ void g() {
   Bar();    // OK
 }
 ```
+
+### 25.3 Specialization
+
+* *User-defined specialization* (also called *user specialization*): alternative definitions of the template and having the compiler choose between them based on the template arguments provided when they are used.
+
+```c++
+template<typename T>
+class Matrix {
+public:
+  virtual void Print() const { std::cout << "Print() in Matrix<T>." << std::endl; }
+};
+
+template<>
+class Matrix<float> {
+public:
+  virtual void Print() const { std::cout << "Print() in Matrix<float>." << std::endl; }
+};
+
+template<>
+class Matrix<void*> {  // complete specialization
+public:
+  virtual void Print() const { std::cout << "Print() in Matrix<void*>." << std::endl; }
+};
+
+template<typename T>
+class Matrix<T*>: private Matrix<void*> {  // partial specialization`
+public:
+  virtual void Print() const { std::cout << "Print() in Matrix<T*>." << std::endl; }
+};
+
+void g(
+  const Matrix<int>& mat1,
+  const Matrix<float>& mat2,
+  const Matrix<void*>& mat3,
+  const Matrix<double*>& mat4
+) {
+  mat1.Print();  // Print() in Matrix<T>.
+  mat2.Print();  // Print() in Matrix<float>.
+  mat3.Print();  // Print() in Matrix<void*>.
+  mat4.Print();  // Print() in Matrix<T*>.
+}
+```
+
+* The **template\<>** prefix says that this is a specialization that can be specified without a template parameter.
+* The **Matrix\<void*>** is a *complete specialization*. That is, there is no template parameter to specify or deduce when we use the specialization.
+
+
