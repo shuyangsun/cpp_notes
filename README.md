@@ -3928,4 +3928,5 @@ void g(
 * The **Matrix\<void*>** is a *complete specialization*. That is, there is no template parameter to specify or deduce when we use the specialization.
 * The specialization pattern **\<T*>** after the name says that this specialization is to be used for every pointer type; that is, this definition is to be used for every **Matrix** with a template argument that can be expressed as **T***.
 * A specialization with a pattern containing a template parameter is called a *partial specialization*.
+* When a partial specialization is used, a template parameter is deduced from the specialization pattern; the template parameter is not simply the actual template argument. (i.e., in **Matrix\<float*>**, **T** is **float** and not **float***)
 
