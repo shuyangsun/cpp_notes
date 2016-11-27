@@ -3932,6 +3932,8 @@ void g(
 
 #### 25.3.1 Interface Specialization
 
+* Sometimes, a specialization is not a algorithmic optimization, but an modification of an interface (or even a representation).
+
 ```c++
 tempalte<typename T>
 class Complex {
@@ -3946,3 +3948,41 @@ class Complex<float> {
   // ...
 };
 ```
+
+##### 25.3.1.1 Implementation Specialization
+
+* Specialization can be used to provide alternative implementations of a class template for a specific set of template parameters.
+
+```c++
+template<typename T, int N>
+class NDArray;
+
+template<typename T, 0>
+class NDArray {
+  T val_;
+  // ...
+};
+
+template<typename T, 1>
+class NDArray {
+  T* data_;
+  std::size_t size_;
+};
+
+template<typename T, 2>
+class NDArray {
+  T* data_;
+  std::size_t m_;
+  std::size_t n_;
+};
+```
+
+#### 25.3.2 The Primary Template
+
+* We refer to the most general template as the *primary template*.
+The primary template defines the interface for all specializations. That is, the promary template is the one used to determine if a use is valid and takes part in overload resolution. Only after a promary template has been chosen are specializations condsidered.
+* The primary template must be declared before any specialization.
+* A declaration of the primary template is sufficient to allow the definition of a specialization.
+* If the primary template is never instantiated, it need not be defined. This can be used to define a template for which only a fixed set of alternative arguments are accepted.
+* If a user specializes a template, that specialization must be in scope for every use of the template with the type for which it was specialized.
+
