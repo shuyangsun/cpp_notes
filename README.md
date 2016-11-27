@@ -3875,9 +3875,9 @@ void Bar() { /* ... */ }
 
 void g() {
   Foo<> foo2{};  // OK
-  Foo foo1{};  // error: argument list for template Foo is missing
+  Foo foo1{};    // error: argument list for template Foo is missing
 
   Bar<>();  // OK
-  Bar();  // OK
+  Bar();    // OK
 }
 ```
