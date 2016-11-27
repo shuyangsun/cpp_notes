@@ -3926,5 +3926,5 @@ void g(
 
 * The **template\<>** prefix says that this is a specialization that can be specified without a template parameter.
 * The **Matrix\<void*>** is a *complete specialization*. That is, there is no template parameter to specify or deduce when we use the specialization.
-
+* The specialization pattern **\<T*>** after the name says that this specialization is to be used for every pointer type; that is, this definition is to be used for every **Matrix** with a template argument that can be expressed as **T***.
 
