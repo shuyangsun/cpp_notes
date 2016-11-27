@@ -3930,3 +3930,19 @@ void g(
 * A specialization with a pattern containing a template parameter is called a *partial specialization*.
 * When a partial specialization is used, a template parameter is deduced from the specialization pattern; the template parameter is not simply the actual template argument. (i.e., in **Matrix\<float*>**, **T** is **float** and not **float***)
 
+#### 25.3.1 Interface Specialization
+
+```c++
+tempalte<typename T>
+class Complex {
+public:
+  Complex(const T& real = T{}, const T& imagine = T{});  // not efficient for floats (reference, not constexpr)
+  // ...
+};
+
+template<>
+class Complex<float> {
+  constexpr Complex(const float real = 0.0f, const float imagine = 0.0f);
+  // ...
+};
+```
