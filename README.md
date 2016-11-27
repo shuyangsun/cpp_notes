@@ -3831,6 +3831,24 @@ void g() {
 }
 ```
 
-#### 25.2.3 Operations as Arguments
+#### 25.2.4 Templates as Arguments
 
+template<typename T, template<typename> class C>
+class Foo {
+public:
+  virtual void PrintType() const {
+    std::cout << typeid(C<T>::DType).name() << std::endl;
+  }
+};
 
+template<typename T>
+class MyClass {
+public:
+  using DType = T;
+};
+
+void g() {
+  const Foo<int, MyClass> foo{};  // cannot specify MyClass<int>
+  foo.PrintType();  // int
+}
+```
