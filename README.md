@@ -3833,6 +3833,7 @@ void g() {
 
 #### 25.2.4 Templates as Arguments
 
+```c++
 template<typename T, template<typename> class C>
 class Foo {
 public:
