@@ -3997,7 +3997,7 @@ The primary template defines the interface for all specializations. That is, the
 
 * C++ supports only complete specialization for functions, so we use overloading where we might have tried partial specialization.
 
-###### 25.3.4.1. Specialization and Overloading
+##### 25.3.4.1. Specialization and Overloading
 
 ```c++
 template<typename T>
