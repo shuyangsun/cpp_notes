@@ -3853,3 +3853,31 @@ void g() {
   foo.PrintType();  // int
 }
 ```
+
+#### 25.2.5 Default Template Arguments
+
+```c++
+template<typename T = float>
+class Matrix { /* ... */ };
+```
+
+##### 25.2.5.1 Default Function Template Arguments
+
+* If all function template arguments are defaulted, the **\<>** can be left out (exactly as in function template specializations).
+* If all class template arguments are defaulted, the **\<>** *cannot* be left out.
+
+```c++
+template<typename T = float>
+class Foo { /* ... */ };
+
+template<typename T = float>
+void Bar() { /* ... */ }
+
+void g() {
+  Foo<> foo2{};  // OK
+  Foo foo1{};  // error: argument list for template Foo is missing
+
+  Bar<>();  // OK
+  Bar();  // OK
+}
+```
