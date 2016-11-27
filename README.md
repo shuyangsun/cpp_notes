@@ -3985,4 +3985,32 @@ The primary template defines the interface for all specializations. That is, the
 * A declaration of the primary template is sufficient to allow the definition of a specialization.
 * If the primary template is never instantiated, it need not be defined. This can be used to define a template for which only a fixed set of alternative arguments are accepted.
 * If a user specializes a template, that specialization must be in scope for every use of the template with the type for which it was specialized.
+* All specialization of a template must be declared in the same namespace as the primary template.
+* Explicitly specializing a template implies that no (other) definition is generated for that specialization.
 
+#### 25.3.3 Order of Specialization
+
+* One specialization is *more specialized* than another if every argument list that matches its specialization pattern also matches the other, but not vice versa.
+* The most specialized version will be prefered over the others in declarations of objects.
+
+#### 25.3.4 Function Template Specialization
+
+* C++ supports only complete specialization for functions, so we use overloading where we might have tried partial specialization.
+
+###### 25.3.4.1. Specialization and Overloading
+
+```c++
+template<typename T>
+bool less(T a, T b) {
+  return a < b;
+}
+
+template<>  // can be omitted
+// The next line is the same as "bool less<const char*> ..." or "bool less<> ..."
+bool less(const char* a, const char* b) {
+  return strcmp(a, b) < 0;
+}
+```
+
+* Above code does not improve the algorithm itself, but it allows improvements to its implementation.
+* Because the template argument can be deduced from the function argument list, we need not specify it explicitly.
