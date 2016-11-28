@@ -3765,6 +3765,8 @@ ___
 
 ## 25. Specialization
 
+*It ain't what you don't know that gets you into trouble. It's what you know for sure that just ain't so.* - *Mark Twain*
+
 ### 25.2 Template parameters and Arguments
 
 * A template can take arguments:
@@ -4021,6 +4023,6 @@ bool less(const char* a, const char* b) {
 
 ___
 
-## Instantiation
+## 26. Instantiation
 
 
