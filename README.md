@@ -4050,3 +4050,17 @@ void g() {
 * A template class is *not* instantiated unless its definition is actually needed. (A place where a template is used defines a point of instantiation.)
 * An implementation instantiates a template function only if that function has been used. By "used" we mean "called or had its address taken."
 * Instantiation of a class template does not imply the instantiation of all its member functions.
+
+#### 26.2.2 Manual Control of Instantiation
+
+* The language provides two mechanisms to helps the user take control when needed:
+	* Optimize the compile-and-link process by eliminating redundant replicated instantiations.
+	* Know exactly which point of instantiation is used to eliminate surprises from complicated name-binding contexts.
+* An explicit instantiation request (often simply called an *explicit instantiation*) is a declaration of a specialization prefixed by the keyword **template**.
+
+```c++
+template class vector<int>;                  // class
+template int& vector<int>::operator[](int);  // member function
+template int convert<int, double>(double);   // nonmember function
+```
+
