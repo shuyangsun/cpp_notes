@@ -4125,3 +4125,21 @@ void g() {
 }
 ```
 
+* Naming a member template after a **.** (dot), **->**, or **::** requires similar use of the keyword **template**.
+
+```c++
+class Pool {  // some allocator
+public:
+  template<typename T> T* get();
+  template<typename T> void release(T*);
+};
+
+template<typename Alloc>
+void f(Alloc& alloc) {
+  int* p1{alloc.get<int>()};           // error: "get" is a dependent template name
+  int* p2{alloc.template get<int>()};  // OK
+}
+```
+
+
+
