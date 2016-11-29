@@ -4107,3 +4107,11 @@ extern template class NDArray<float>;
 
 * Basically, the name of a called function is dependent if it is obviously dependent by looking at its arguments or at its formal parameters.
 * By default, a dependent name is assumed to name something that is not a type. So, to use a dependent name as a type, you have to say so, using the keyword **typename**.
+
+```c++
+template<typename T>
+void g() {
+    typename std::vector<T>::value_type a{1.0f};  // "typename" is required
+    std::vector<float>::value_type b{2.0f};       // no need for "typename"
+}
+```
