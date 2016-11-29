@@ -4149,5 +4149,9 @@ void f(Alloc& alloc) {
 
 #### 26.3.3 Point-of-Instantiation Binding
 
+* The context used to determine the meaning of a dependent name is determined by the use of a template with a given set of arguments. This is called a *point of instantiation* for that specialization.
+* Each use of a template for a given set of template arguments defines a point of instantiation.
+* For a function template, that point is in the nearest global or namespace scope enclosing its use, just after the declaration that contains that use.
+
 
 
