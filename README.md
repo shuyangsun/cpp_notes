@@ -4082,6 +4082,8 @@ void g() {
 ```c++
 // File: ndarray_instantiation.hpp
 
+#include "ndarray.hpp"
+
 template class NDArray<float>;
 
 // File: ndarray.cpp
@@ -4093,3 +4095,15 @@ extern template class NDArray<float>;
 
 // ...
 ```
+
+### 26.3 Name Binding
+
+* The process of finding the declaration for each name explicitly or implicitly used in a template is called *name binding*.
+* The language separates names used in a template definition into two categories:
+	* *Dependent names*: names that depend on a template parameter.
+	* *Nondependent names*: names that don't depend on a template parameter.
+
+#### 26.3.1 Dependent Names
+
+* Basically, the name of a called function is dependent if it is obviously dependent by looking at its arguments or at its formal parameters.
+* By default, a dependent name is assumed to name something that is not a type. So, to use a dependent name as a type, you have to say so, using the keyword **typename**.
