@@ -4155,3 +4155,9 @@ void f(Alloc& alloc) {
 
 
 
+## Terminologies
+
+* ADL: Argument Dependent Lookup
+* SFINAE: Substitution Failure Is Not An Error
+* RAII: Resource Allocation Is Instantiation
+
