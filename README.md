@@ -4057,10 +4057,20 @@ void g() {
 	* Optimize the compile-and-link process by eliminating redundant replicated instantiations.
 	* Know exactly which point of instantiation is used to eliminate surprises from complicated name-binding contexts.
 * An explicit instantiation request (often simply called an *explicit instantiation*) is a declaration of a specialization prefixed by the keyword **template**.
+* A template declaration starts with **template\<**, whereas plain **template** starts an instantiation request.
+* As in template function calls, the template arguments that can be deduced from the function arguments can be omitted.
+* Explicit instantiation cannot be in a function.
 
 ```c++
 template class vector<int>;                  // class
 template int& vector<int>::operator[](int);  // member function
 template int convert<int, double>(double);   // nonmember function
+
+template int convert<int, double>();  // error: syntax error
+template int convert<int>(double);    // OK: double as template argument can be deduced
+
+void g() {
+  template class NDArray<float>;  // error: syntax error
+}
 ```
 
