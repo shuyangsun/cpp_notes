@@ -4137,9 +4137,11 @@ public:
 template<typename Alloc>
 void f(Alloc& alloc) {
   int* p1{alloc.get<int>()};           // error: "get" is a dependent template name
-  int* p2{alloc.template get<int>()};  // OK
+  int* p2{alloc.template get<int>()};  // OK (only need to do this if the called function is a template and it's dependent)
 }
 ```
+
+#### 26.3.2 Point-of-Definition Binding
 
 
 
