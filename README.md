@@ -4143,5 +4143,6 @@ void f(Alloc& alloc) {
 
 #### 26.3.2 Point-of-Definition Binding
 
-
+* When the compiler sees a template definition, it determines which names are dependent. If a name is dependent, looking for its declaration is postponed until instantiation time.
+* Names that do not depend on a template argument are treated like names that are not in templates; they must be in scope at the point of definition.
 
