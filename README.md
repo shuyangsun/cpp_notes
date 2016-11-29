@@ -4074,3 +4074,22 @@ void g() {
 }
 ```
 
+* When a class template is explicitly instantiated, every member function is also instantiated.
+* A compiler is not required to diagnose multiple instantiations in separate compilation units.
+* If correctly used, explicit instantiation can significantly cut down build time.
+* To complement explicit instantiation requests, the language provides explicit requests *not* to instantiate (usually called **extern template**s). Instead of instantiating a template, it *assumes* the instantiation is already done in another translation unit, and uses that.
+
+```c++
+// File: ndarray_instantiation.hpp
+
+template class NDArray<float>;
+
+// File: ndarray.cpp
+
+#include "ndarray.hpp"
+#include "ndarray_instantiation.hpp"
+
+extern template class NDArray<float>;
+
+// ...
+```
