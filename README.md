@@ -4110,8 +4110,18 @@ extern template class NDArray<float>;
 
 ```c++
 template<typename T>
+void f() {
+  typename std::vector<T>::value_type a{1.0f};  // "typename" is required
+  std::vector<float>::value_type b{2.0f};       // no need for "typename"
+}
+
+// Use type alias to avoid redundant use of typename
+template<typename T>
+using ValueType<T> = typename T::value_type;
+
+template<typename T>
 void g() {
-    typename std::vector<T>::value_type a{1.0f};  // "typename" is required
-    std::vector<float>::value_type b{2.0f};       // no need for "typename"
+  ValueType<std::vector<T>> a{1.0f};
 }
 ```
+
