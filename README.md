@@ -4152,6 +4152,69 @@ void f(Alloc& alloc) {
 * The context used to determine the meaning of a dependent name is determined by the use of a template with a given set of arguments. This is called a *point of instantiation* for that specialization.
 * Each use of a template for a given set of template arguments defines a point of instantiation.
 * For a function template, that point is in the nearest global or namespace scope enclosing its use, just after the declaration that contains that use.
+* To enable recursive calls, the point of declaration for a function is 
+
+```c++
+constexpr int x{3};
+
+template<typename T>
+void Print(const T& val) {
+  std::cout << x + val << std::endl;
+}
+
+void g() {
+  const int x{5};  
+  Print(3);  // 6, because point of instantiation is outside of g()
+}
+
+// Point of declaration for Print<int>(const int& val)
+```
+
+* For a template class or a class member, the point of instantiation is just *before* the declaration containing its use.
+
+#### 26.3.4 Multiple Instantiation Points
+
+* A template specialization may be generated:
+	* At any point of instantiation. (generate a specialization the first time a call is seen).
+	* At any point subsequence to that in a translation unit (at the end of a translation unit, generate all specializations).
+	* Or in a translation unit specifically created for generating specializations (once every translation unit of a program has been seen, generate all specializations needed for the program).
+* A template used several times with the same set of template arguments has several points of instantiation.
+* A program is illegal if it is possible to construct two different meanings by choosing different points of instantiation.
+* To avoid surprising name bindings, try to limit context dependencies in templates.
+
+#### 26.3.7 Names from Base Classes
+
+* Two possibilities:
+	* The base class depends on a template.
+	* The base class does not depend on a template argument.
+
+```c++
+void g(int);
+
+struct B {
+  void g(double);
+}
+
+template<typename T>
+class Foo: public B {
+public:
+  void h() {
+    g(2.0f);  // calls B::g(double);
+  }
+}
+
+template<typename T>
+class Bar: public T {
+public:
+  void h() {
+    g(2.0f);  // calls ::g(int);
+  }
+}
+```
+
+___
+
+## 27. Templates and Hierarchies
 
 
 
@@ -4160,4 +4223,3 @@ void f(Alloc& alloc) {
 * ADL: Argument Dependent Lookup
 * SFINAE: Substitution Failure Is Not An Error
 * RAII: Resource Allocation Is Instantiation
-
