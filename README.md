@@ -4216,6 +4216,10 @@ ___
 
 ## 27. Templates and Hierarchies
 
+* What virtual functions provide is called *run-time polymorphism*, and what templates offer is called *compile-time polymorphism* or *parametric polymorphism*.
+
+### 27.2 Parameterization and Hierarchy
+
 
 
 ## Terminologies
