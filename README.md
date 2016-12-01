@@ -4222,7 +4222,7 @@ ___
 ### 27.2 Parameterization and Hierarchy
 
 
-#### 27.2.1
+#### 27.2.1 Generated Types
 
 * A class template is sometimes called a *type generator*.
 * The combination of pointers and polymorphic objects can lead to disaster.
@@ -4251,10 +4251,19 @@ void g() {
 
   Circle* arr{new Circle[num_ele]};
 
-  DrawAll(arr, num_ele);  // segmentation fault: because Shape and Circle do not have the same size
+  DrawAll(arr, num_ele);  // segmentation fault: because Shape and Circle have different sizes
 }
 ```
 
+#### 27.2.2 Template Conversions
+
+* There cannot be any *default* relationship between classes generated from the same template (of course, type conversion operators or constructors can always be used for explicit conversion).
+
+### 27.8 Hierarchies of Class Templates
+
+* Parameterizing a huge class hierarchy with many virtual functions is typically a poor idea (because the amount of code needs to be generated, if there are N template parameter combinations, N times the code will be generated).
+* It is generally not a good idea to "overparameterize": try to avoid parameters that affects only a few members.
+* If only a few member functions are affected by a parameter, try to make those function templates with that parameter.
 
 ___
 
