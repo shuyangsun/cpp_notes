@@ -4222,6 +4222,41 @@ ___
 ### 27.2 Parameterization and Hierarchy
 
 
+#### 27.2.1
+
+* A class template is sometimes called a *type generator*.
+* The combination of pointers and polymorphic objects can lead to disaster.
+
+```c++
+class Shape {
+public:
+  virtual void Draw() const { std::cout << "Drawing a Shape." << std::endl; }
+};
+
+class Circle: public Shape {
+public:
+  void Draw() const override { std::cout << "Drawing a Circle." << std::endl; }
+private:
+  int foo_;
+  int bar_;
+};
+
+void DrawAll(const Shape* arr, const std::size_t num_ele) {
+  for (std::size_t i{0}; i < num_ele; ++i)
+    arr[i].Draw();
+}
+
+void g() {
+  std::size_t const num_ele{5};
+
+  Circle* arr{new Circle[num_ele]};
+  for (std::size_t i{0}; i < num_ele; ++i)
+    arr[i] = Circle{};
+
+  DrawAll(arr, num_ele);  // segmentation fault: because Shape and Circle do not have the same size
+}
+```
+
 
 ___
 
