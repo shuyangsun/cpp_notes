@@ -4250,8 +4250,6 @@ void g() {
   std::size_t const num_ele{5};
 
   Circle* arr{new Circle[num_ele]};
-  for (std::size_t i{0}; i < num_ele; ++i)
-    arr[i] = Circle{};
 
   DrawAll(arr, num_ele);  // segmentation fault: because Shape and Circle do not have the same size
 }
