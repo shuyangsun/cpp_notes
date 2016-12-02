@@ -4284,7 +4284,42 @@ ___
 
 ## 28. Metaprogramming
 
+### 28.1 Introduction
 
+* Programming that manipulates program entities, such as classes and functions, is commonly called *metaprogramming*.
+* *Template programming* is also called: *two-level programming*, *multilevel programming*, *generative programming*.
+* Templates and their template instantiation mechanism are Turing complete.
+* A metaprogram is a compile-time computation yielding types or functions to be used at run time.
+* Generic programming focuses on interface specification, whereas metaprogramming is programming, usually with types as the values.
+* Overenthusiastic use of metaprogramming can lead to debugging problems and excessive compile times that render some uses unrealistic.
+
+```c++
+class CPUMemoryHandler {
+    static void* Malloc(const std::size_t num_bytes);
+    static void Memset(void* ptr, const std::size_t num_bytes, const int val);
+    static void Free(void* ptr);
+};
+
+class CUDAMemoryHandler {
+    static void Malloc(void** ptr_add, const std::size_t num_bytes);
+    static void Memset(void* ptr, const std::size_t num_bytes, const int val);
+    static void Free(void* ptr);
+};
+
+template<typename T, typename MemoryHandler = CUDAMemoryHandler>
+class NDArray { /* ... */ };
+
+template<typename T>
+class NDArray<T, CUDAMemoryHandler> { /* ... */ };
+
+template<typename T>
+class NDArray<T, CPUMemoryHandler> { /* ... */ };
+```
+
+### 28.2 Type Functions
+
+* A *type function* is a function that either takes at least one type argument or produces at least one type as a result.
+* 
 
 ___
 
