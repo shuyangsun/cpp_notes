@@ -4259,11 +4259,19 @@ void g() {
 
 * There cannot be any *default* relationship between classes generated from the same template (of course, type conversion operators or constructors can always be used for explicit conversion).
 
-### 27.8 Hierarchies of Class Templates
+### 27.3 Hierarchies of Class Templates
 
 * Parameterizing a huge class hierarchy with many virtual functions is typically a poor idea (because the amount of code needs to be generated, if there are N template parameter combinations, N times the code will be generated).
 * It is generally not a good idea to "overparameterize": try to avoid parameters that affects only a few members.
 * If only a few member functions are affected by a parameter, try to make those function templates with that parameter.
+
+### 27.4 Template Parameters as Base Classes
+
+* Purpose: How can we combine separately specified information into a single compact object with a well-specified interface?
+
+#### 27.4.1 Composing Data Structures
+
+* *Empty-base optimization*: the language guarantees that if a base class has no non-**static** data members, no memory will be allocated for it in an object of derived class.
 
 ___
 
