@@ -4321,6 +4321,15 @@ class NDArray<T, CPUMemoryHandler> { /* ... */ };
 * A *type function* is a function that either takes at least one type argument or produces at least one type as a result.
 * 
 
+```c++
+template<std::size_t M, std::size_t N>
+struct MatrixSelector {
+    using Type = NDArray</* TBD */>;
+};
+
+// Assuming 10 x 20 is the most common size for matrices for this particular application.
+using Matrix = typename MatrixSelector<10, 20>::Type;
+```
 ___
 
 ## Terminologies
