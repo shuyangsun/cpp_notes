@@ -3957,6 +3957,7 @@ class Complex<float> {
 * Specialization can be used to provide alternative implementations of a class template for a specific set of template parameters.
 
 ```c++
+// Example 1
 template<typename T, int N>
 class NDArray;
 
@@ -3978,6 +3979,30 @@ class NDArray {
   std::size_t m_;
   std::size_t n_;
 };
+```
+
+```c++
+// Example 2
+class CPUMemoryHandler {
+    static void* Malloc(const std::size_t num_bytes);
+    static void Memset(void* ptr, const std::size_t num_bytes, const int val);
+    static void Free(void* ptr);
+};
+
+class CUDAMemoryHandler {
+    static void Malloc(void** ptr_add, const std::size_t num_bytes);
+    static void Memset(void* ptr, const std::size_t num_bytes, const int val);
+    static void Free(void* ptr);
+};
+
+template<typename T, typename MemoryHandler = CUDAMemoryHandler>
+class NDArray { /* ... */ };
+
+template<typename T>
+class NDArray<T, CUDAMemoryHandler> { /* ... */ };
+
+template<typename T>
+class NDArray<T, CPUMemoryHandler> { /* ... */ };
 ```
 
 #### 25.3.2 The Primary Template
@@ -4292,29 +4317,6 @@ ___
 * A metaprogram is a compile-time computation yielding types or functions to be used at run time.
 * Generic programming focuses on interface specification, whereas metaprogramming is programming, usually with types as the values.
 * Overenthusiastic use of metaprogramming can lead to debugging problems and excessive compile times that render some uses unrealistic.
-
-```c++
-class CPUMemoryHandler {
-    static void* Malloc(const std::size_t num_bytes);
-    static void Memset(void* ptr, const std::size_t num_bytes, const int val);
-    static void Free(void* ptr);
-};
-
-class CUDAMemoryHandler {
-    static void Malloc(void** ptr_add, const std::size_t num_bytes);
-    static void Memset(void* ptr, const std::size_t num_bytes, const int val);
-    static void Free(void* ptr);
-};
-
-template<typename T, typename MemoryHandler = CUDAMemoryHandler>
-class NDArray { /* ... */ };
-
-template<typename T>
-class NDArray<T, CUDAMemoryHandler> { /* ... */ };
-
-template<typename T>
-class NDArray<T, CPUMemoryHandler> { /* ... */ };
-```
 
 ### 28.2 Type Functions
 
