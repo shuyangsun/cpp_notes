@@ -4273,6 +4273,19 @@ void g() {
 
 * *Empty-base optimization*: the language guarantees that if a base class has no non-**static** data members, no memory will be allocated for it in an object of derived class.
 
+### 27.5 Advice
+
+* Templates have an advantage over abstract classes where inlining is important.
+* Do not mix class hierarchies and arrays.
+* Templates can be used to linearize a class hierarchy (minimizing space and access time).
+
+
+___ 
+
+## 28. Metaprogramming
+
+
+
 ___
 
 ## Terminologies
