@@ -4322,6 +4322,7 @@ class NDArray<T, CPUMemoryHandler> { /* ... */ };
 * Type functions don't have to look like conventional functions. In fact, most don't.
 
 ```c++
+// An example of a "type function" as a struct.
 template<std::size_t M, std::size_t N>
 struct MatrixSelector {
     using Type = NDArray</* TBD */>;
