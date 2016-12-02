@@ -4319,7 +4319,7 @@ class NDArray<T, CPUMemoryHandler> { /* ... */ };
 ### 28.2 Type Functions
 
 * A *type function* is a function that either takes at least one type argument or produces at least one type as a result.
-* 
+* Type functions don't have to look like conventional functions. In fact, most don't.
 
 ```c++
 template<std::size_t M, std::size_t N>
