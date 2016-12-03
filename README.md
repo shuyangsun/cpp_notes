@@ -4333,6 +4333,15 @@ struct MatrixSelector {
 // Assuming 10 x 20 is the most common size for matrices for this particular application.
 using Matrix = typename MatrixSelector<10, 20>::Type;
 ```
+
+* The standard-library template **conditional** is a compile-time selector between two alternatives. If its first argument evaluates to **true**, the result (presented as member **type**) is the second argument; otherwise, the result is the third argument.
+
+```c++
+constexpr bool is_single_precision{true};
+using NDArrayType = std::conditional<is_single_precision, NDArray<float>, NDArray<double>>::type;
+std::cout << typeid(NDArrayType).name() << std::endl;  // NDArray<float>
+```
+
 ___
 
 ## Terminologies
