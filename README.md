@@ -4342,6 +4342,15 @@ using NDArrayType = std::conditional<is_single_precision, NDArray<float>, NDArra
 std::cout << typeid(NDArrayType).name() << std::endl;  // NDArray<float>
 ```
 
+#### 28.2.1 Type Aliases
+
+* Use type aliases to shorten something like **typename TypeSelector<SomeType>::type**.
+
+```c++
+template<typename T>
+using Holder = typename ObjHolder<T>::type;
+```
+
 ___
 
 ## Terminologies
