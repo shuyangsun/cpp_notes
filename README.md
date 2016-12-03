@@ -4351,6 +4351,40 @@ template<typename T>
 using Holder = typename ObjHolder<T>::type;
 ```
 
+#### 28.2.2 Type Predicates
+
+* All standard library type predicates support **()** notion intended use of **::value**.
+
+```c++
+#include <type_traits>
+
+template<typename T>
+void Copy(T* dst, const T* src, const std::size_t size) {
+  if (std::is_pod<T>()) {  // equivalent of: if (std::is_pod<T>::value)
+    memcpy(dst, src, size);
+  } else {
+    for (std::size_t i{0}; i < size; ++i) dst[i] = src[i];
+  }
+}
+```
+
+#### 28.3.3 Selecting a Function
+
+* Use the combination of type selection and function objects (which can be represented as types).
+
+```c++
+struct Foo {
+  template<typename T>
+  T operator() 
+};
+```
+
+#### 28.4.2 Traits
+
+* A trait is used to associate properties with a type.
+* You can see a trait as a type function with many results or as a bundle of type functions.
+* Think of a trait as a small object whose main purpose is to carry information used by another object or algorithm to determine "policy" or "implementation details".
+
 ___
 
 ## Terminologies
