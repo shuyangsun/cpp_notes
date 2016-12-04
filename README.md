@@ -4405,7 +4405,7 @@ struct Conditional<false, T, U> { using Type = U; };
 ```c++
 // Compile-time factorial implementation (recursive function)
 
-template<unsigned long long int N>
+template<unsigned int N>
 constexpr unsigned long long int Factorial1() {
   return N * Factorial<N - 1>();
 }
@@ -4417,7 +4417,7 @@ constexpr unsigned long long int Factorial1<1>() {
 
 // Recursive class
 
-template<unsigned long long int N>
+template<unsigned int N>
 struct Factorial2 {
   static constexpr unsigned long long int value{N * Factorial<N - 1>::value};
 };
