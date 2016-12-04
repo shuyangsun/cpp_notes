@@ -4428,6 +4428,26 @@ struct Factorial2<1> {
 };
 ```
 
+#### 28.3.3 When to Use Metaprogramming
+
+* The most obvious constraint on metaprogramming is that code depending on complicated uses of templates can be hard to read and very hard to debug.
+* In general, look hard for ways to clean up he syntax presented to users without inventing a private language.
+* Prefer systematic techniques, such as specialization and the use of aliases, to macro hackery.
+* Prefer **constexpr** functions to templates for compile-time computation, and hide template programming implementation details in **constexpr** functions whenever feasible.
+
+### 28.4 Conditional Definition: Enable_if
+
+* If **std::enable_if**'s condition evaluates to **true**, its result is its second argument. If **std::enable_if**'s condition evaluates to **false**, the whole function declaration of which it is part of is completely ignored.
+
+```c++
+template<typename T>
+struct Foo {
+  static typename std::enable_if<std::is_scalar<T>::value, int>::type ToInt(const T val) {
+    return static_cast<int>(val);
+  }
+};
+```
+
 ___
 
 ## Terminologies
