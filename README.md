@@ -4372,13 +4372,6 @@ void Copy(T* dst, const T* src, const std::size_t size) {
 
 * Use the combination of type selection and function objects (which can be represented as types).
 
-```c++
-struct Foo {
-  template<typename T>
-  T operator() 
-};
-```
-
 #### 28.4.2 Traits
 
 * A trait is used to associate properties with a type.
@@ -4388,9 +4381,9 @@ struct Foo {
 
 ### 28.3 Control Structures
 
-### 28.3.1 Selection
+#### 28.3.1 Selection
 
-#### 28.3.1.1 Selecting between Two Types
+##### 28.3.1.1 Selecting between Two Types
 
 ```c++
 // A sample "conditional" implementation
@@ -4401,7 +4394,27 @@ template<typename T, typename U>
 struct Conditional<false, T, U> { using Type = U; };
 ```
 
+##### 28.3.1.2 Compile Time vs. Run Time
 
+* An ordinary **if**-statement is useful for ordinary expressions, but not for type selection (use **std::conditional** instead).
+
+#### 28.3.2 Iteration and Recursion
+
+* In template metaprogramming (as in functional programming), the idiomatic way of working your way through a sequence of value is to recurse until you reach a terminating specialization.
+
+```c++
+// Compile-time recursive factorial implementation
+
+template<unsigned long long int N>
+constexpr unsigned long long int Factorial() {
+  return N * Factorial<N - 1>();
+}
+
+template<>
+constexpr unsigned long long int Factorial<1>() {
+  return 1;
+}
+```
 
 ___
 
