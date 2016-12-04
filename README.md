@@ -4440,9 +4440,12 @@ struct Factorial2<1> {
 * If **std::enable_if**'s condition evaluates to **true**, its result is its second argument. If **std::enable_if**'s condition evaluates to **false**, the whole function declaration of which it is part of is completely ignored.
 
 ```c++
+template<bool B, typename T>
+using EnableIf = typename std::enable_if<B, T>::type;
+
 template<typename T>
 struct Foo {
-  static typename std::enable_if<std::is_scalar<T>::value, int>::type ToInt(const T val) {
+  static EnableIf<std::is_scalar<T>::value, int> ToInt(const T val) {
     return static_cast<int>(val);
   }
 };
