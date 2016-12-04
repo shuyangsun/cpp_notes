@@ -4403,7 +4403,7 @@ struct Conditional<false, T, U> { using Type = U; };
 * In template metaprogramming (as in functional programming), the idiomatic way of working your way through a sequence of value is to recurse until you reach a terminating specialization.
 
 ```c++
-// Compile-time recursive factorial implementation
+// Compile-time factorial implementation (recursive function)
 
 template<unsigned long long int N>
 constexpr unsigned long long int Factorial() {
@@ -4414,6 +4414,18 @@ template<>
 constexpr unsigned long long int Factorial<1>() {
   return 1;
 }
+
+// Recursive class
+
+template<unsigned long long int N>
+struct Factorial {
+  static constexpr unsigned long long int value{N * Factorial<N - 1>::value};
+};
+
+template<>
+struct Factorial<1> {
+  static constexpr unsigned long long int value{1};
+};
 ```
 
 ___
