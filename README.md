@@ -4488,6 +4488,8 @@ template<typename T>
 struct EnableIf<false, T> { };  // no "Type" if B is false
 ```
 
+* Note that we can leave out the type argument and get **void** by default.
+
 ___
 
 ## Terminologies
