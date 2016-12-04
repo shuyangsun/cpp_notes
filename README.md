@@ -4446,7 +4446,7 @@ using EnableIf = typename std::enable_if<B, T>::type;
 
 template<typename T>
 struct Foo {
-  static auto ToInt(const T val) -> EnableIf<std::is_scalar<T>::value, int> {
+  static auto ToInt(const T val) -> EnableIf<std::is_arithmetic<T>::value, int> {
     return static_cast<int>(val);
   }
 };
