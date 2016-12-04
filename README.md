@@ -4406,24 +4406,24 @@ struct Conditional<false, T, U> { using Type = U; };
 // Compile-time factorial implementation (recursive function)
 
 template<unsigned long long int N>
-constexpr unsigned long long int Factorial() {
+constexpr unsigned long long int Factorial1() {
   return N * Factorial<N - 1>();
 }
 
 template<>
-constexpr unsigned long long int Factorial<1>() {
+constexpr unsigned long long int Factorial1<1>() {
   return 1;
 }
 
 // Recursive class
 
 template<unsigned long long int N>
-struct Factorial {
+struct Factorial2 {
   static constexpr unsigned long long int value{N * Factorial<N - 1>::value};
 };
 
 template<>
-struct Factorial<1> {
+struct Factorial2<1> {
   static constexpr unsigned long long int value{1};
 };
 ```
