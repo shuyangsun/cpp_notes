@@ -4476,6 +4476,18 @@ void EfficientCopy(T* dst, const T* src, const std::size_t num_bytes) {
 }
 ```
 
+#### 28.4.2 Implementing Enable_if
+
+```c++
+template<bool B, typename T = void>
+struct EnableIf {
+  using Type = T;
+};
+
+template<typename T>
+struct EnableIf<false, T> { };  // no "Type" if B is false
+```
+
 ___
 
 ## Terminologies
