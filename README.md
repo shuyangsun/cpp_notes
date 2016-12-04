@@ -4449,6 +4449,11 @@ struct Foo {
     return static_cast<int>(val);
   }
 };
+
+void g() {
+  std::cout << Foo<float>::ToInt(3.5f) << std::endl;  // 3
+  std::cout << Foo<std::string>::ToInt(std::string{"hey"}) << std::endl;  // error
+}
 ```
 
 ___
