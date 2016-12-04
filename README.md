@@ -4354,6 +4354,7 @@ using Holder = typename ObjHolder<T>::type;
 #### 28.2.2 Type Predicates
 
 * All standard library type predicates support **()** notion intended use of **::value**.
+* For language-technical reasons, this resolution is not available in the context of a template argument.
 
 ```c++
 #include <type_traits>
@@ -4366,6 +4367,10 @@ void Copy(T* dst, const T* src, const std::size_t size) {
     for (std::size_t i{0}; i < size; ++i) dst[i] = src[i];
   }
 }
+
+// error: cannot use "()", use std::is_arithmetic<T>::value instead
+template<typename T, typename = std::enable_if<std::is_arithmetic<T>(), T>::type>
+T Square(const T val) noexcept;
 ```
 
 #### 28.3.3 Selecting a Function
@@ -4454,6 +4459,20 @@ struct Foo {
 void g() {
   std::cout << Foo<float>::ToInt(3.5f) << std::endl;  // 3
   std::cout << Foo<std::string>::ToInt(std::string{"hey"}) << std::endl;  // error
+}
+```
+
+### 28.4.1 Use of Enable_if
+
+* The **enable_if** techniques work for template functions (including member functions of class templates and specializations) only.
+* **enable_if** cannot be used on control declarations of classes, variables, or non-template functions.
+
+```c++
+// Use of enable_if at template argument
+
+template<typename T, typename = std::enable_if<std::is_pod<T>::value, T>::type>
+void EfficientCopy(T* dst, const T* src, const std::size_t num_bytes) {
+  memcpy(dst, src, num_bytes);
 }
 ```
 
