@@ -4384,6 +4384,24 @@ struct Foo {
 * A trait is used to associate properties with a type.
 * You can see a trait as a type function with many results or as a bundle of type functions.
 * Think of a trait as a small object whose main purpose is to carry information used by another object or algorithm to determine "policy" or "implementation details".
+* A type trait is a (templated) struct, and the member variables and/or member types of the struct give you information about the type that it is templated on. Sometimes those members are types, sometimes they are values.
+
+### 28.3 Control Structures
+
+### 28.3.1 Selection
+
+#### 28.3.1.1 Selecting between Two Types
+
+```c++
+// A sample "conditional" implementation
+template<bool B, typename T, typename U>
+struct Conditional { using Type = T; };
+
+template<typename T, typename U>
+struct Conditional<false, T, U> { using Type = U; };
+```
+
+
 
 ___
 
