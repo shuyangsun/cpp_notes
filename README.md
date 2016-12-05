@@ -4495,6 +4495,8 @@ struct EnableIf<false, T> { };  // no "Type" if B is false
 ```c++
 // Using enable_if to implement concepts
 
+// Universal code: for all concepts
+
 struct SubstitutionFailure { };
 
 template<typename T>
@@ -4503,27 +4505,35 @@ struct SubstitutionSucceeded: std::true_type { };
 template<>
 struct SubstitutionSucceeded<SubstitutionFailure>: std::false_type { };
 
+template<bool B, typename T = void>
+using EnableIf = typename std::enable_if<B, T>::type;
+
+// IsAddableTo implementation
+
 template<typename T, typename U>
 struct GetAddResult {
-public:
-  using Type = decltype(Check_(std::declval<T>(), std::declval<U>()));
 private:
   template<typename P, typename Q>
-  static auto Check_(P const& p, Q const& q) -> decltype(p + q);
-  template<typename P, typename Q>
-  static auto Check_(P const& p, Q const& q) -> SubstitutionFailure;
+  static constexpr auto Check_(P const& p, Q const& q) -> decltype(p + q);
+  static constexpr auto Check_(...) -> SubstitutionFailure;
+public:
+  using Type = decltype(Check_(std::declval<T>(), std::declval<U>()));
 };
 
 template<typename T, typename U>
 struct IsAddableTo: SubstitutionSucceeded<typename GetAddResult<T, U>::Type> { };
 
-template<bool B, typename T = void>
-using EnableIf = typename std::enable_if<B, T>::type;
+// Use of IsAddableTo
 
 template<typename T, typename U>
 EnableIf<IsAddableTo<T, U>::value, GetAddResult<T, U>::Type>
 Add(const T& a, const U& b) {
   return a + b;
+}
+
+void g() {
+  auto a{Add(3.2f, 5)};                // 8.2
+  auto b{Add(std::string{"Hey"}, 5)};  // error: no matching function call to 'Add'
 }
 ```
 
