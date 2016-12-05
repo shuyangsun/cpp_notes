@@ -4514,14 +4514,17 @@ template<typename T, typename U>
 struct GetAddResult {
 private:
   template<typename P, typename Q>
-  static constexpr auto Check_(P const& p, Q const& q) -> decltype(p + q);
-  static constexpr auto Check_(...) -> SubstitutionFailure;
+  static constexpr auto Check_(P const& p, Q const& q) noexcept -> decltype(p + q);
+  static constexpr auto Check_(...) noexcept -> SubstitutionFailure;
 public:
   using Type = decltype(Check_(std::declval<T>(), std::declval<U>()));
 };
 
 template<typename T, typename U>
 struct IsAddableTo: SubstitutionSucceeded<typename GetAddResult<T, U>::Type> { };
+
+template<typename T, typename U>
+constexpr bool IsAddableToV() { return IsAddableTo<T, U>::value; }  // alias for '::value'
 
 // Use of IsAddableTo
 
