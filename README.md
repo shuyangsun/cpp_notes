@@ -4492,7 +4492,40 @@ struct EnableIf<false, T> { };  // no "Type" if B is false
 
 #### 28.4.4 More Enable_if Examples
 
+```c++
+// Using enable_if to implement concepts
 
+struct SubstitutionFailure { };
+
+template<typename T>
+struct SubstitutionSucceeded: std::true_type { };
+
+template<>
+struct SubstitutionSucceeded<SubstitutionFailure>: std::false_type { };
+
+template<typename T, typename U>
+struct GetAddResult {
+public:
+  using Type = decltype(Check_(std::declval<T>(), std::declval<U>()));
+private:
+  template<typename P, typename Q>
+  static auto Check_(P const& p, Q const& q) -> decltype(p + q);
+  template<typename P, typename Q>
+  static auto Check_(P const& p, Q const& q) -> SubstitutionFailure;
+};
+
+template<typename T, typename U>
+struct IsAddableTo: SubstitutionSucceeded<typename GetAddResult<T, U>::Type> { };
+
+template<bool B, typename T = void>
+using EnableIf = typename std::enable_if<B, T>::type;
+
+template<typename T, typename U>
+EnableIf<IsAddableTo<T, U>::value, GetAddResult<T, U>::Type>
+Add(const T& a, const U& b) {
+  return a + b;
+}
+```
 
 ### 28.5 A Compile-Time List: Tuple
 
