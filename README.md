@@ -4529,7 +4529,7 @@ constexpr bool IsAddableToV() { return IsAddableTo<T, U>::value; }  // alias for
 // Use of IsAddableTo
 
 template<typename T, typename U>
-EnableIf<IsAddableTo<T, U>::value, GetAddResult<T, U>::Type>
+EnableIf<IsAddableTo<T, U>(), GetAddResult<T, U>::Type>
 Add(const T& a, const U& b) {
   return a + b;
 }
