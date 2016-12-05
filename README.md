@@ -4514,8 +4514,8 @@ template<typename T, typename U>
 struct GetAddResult {
 private:
   template<typename P, typename Q>
-  static constexpr auto Check_(P const& p, Q const& q) noexcept -> decltype(p + q);
-  static constexpr auto Check_(...) noexcept -> SubstitutionFailure;
+  static auto Check_(P const& p, Q const& q) noexcept -> decltype(p + q);
+  static auto Check_(...) noexcept -> SubstitutionFailure;
 public:
   using Type = decltype(Check_(std::declval<T>(), std::declval<U>()));
 };
@@ -4529,8 +4529,7 @@ constexpr bool IsAddableToV() { return IsAddableTo<T, U>::value; }  // alias for
 // Use of IsAddableTo
 
 template<typename T, typename U>
-EnableIf<IsAddableTo<T, U>(), GetAddResult<T, U>::Type>
-Add(const T& a, const U& b) {
+auto Add(const T& a, const U& b) -> EnableIf<IsAddableTo<T, U>(), GetAddResult<T, U>::Type> {
   return a + b;
 }
 
