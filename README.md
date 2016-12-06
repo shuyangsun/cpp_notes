@@ -4572,23 +4572,36 @@ void g() {
 ```c++
 // Print() with delimiter and end char
 
-template<char end = '\n'>
-inline void Print() { std::cout << end; }
+template<char End = '\n', bool ShouldUseEnd = true>
+inline void Print() { if (ShouldUseEnd) std::cout << End; }
 
-template<char delimiter, char end = '\n', typename T>
+template<
+  char Delimiter,
+  char End = '\n',
+  bool ShouldUseDelimiter,
+  bool ShouldUseEnd = true,
+  typename T>
 inline void Print(const T& val) {
   std::cout << val;
-  Print<end>();
+  Print<End, ShouldUseEnd>();
 }
 
-template<char delimiter = ' ', char end = '\n', typename T, typename... Args>
+template<
+  char Delimiter = ' ',
+  char End = '\n',
+  bool ShouldUseDelimiter = true,
+  bool ShouldUseEnd = true,
+  typename T,
+  typename... Args>
 inline void Print(const T& val, const Args&... args) {
-  std::cout << val << delimiter;
-  Print<delimiter, end>(args...);
+  std::cout << val;
+  if (ShouldUseDelimiter) std::cout << Delimiter;
+  Print<Delimiter, End, ShouldUseDelimiter, ShouldUseEnd>(args...);
 }
 
 void g() {
-  Print<'-', '*'>(1, 4, 3.9f, "hey");  // 1-4-3.9-hey*
+  Print(1, 4, 3.9f, "hey");                              // 1 4 3.9 hey\n
+  Print<'-', '*', true, false>(1, 4, str, 3.9f, "hey");  // 1-4-3.9-hey
 }
 ```
 
