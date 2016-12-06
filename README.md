@@ -4569,6 +4569,33 @@ void g() {
 
 * The **Args...** defines what is called a *parameter pack*. A parameter pack is a sequence of (type/value) pairs from which you can "peel off" arguments starting with the first, when the function is called with two or more arguments.
 
+```c++
+// Print() with delimiter and end char
+
+template<char end = '\n'>
+inline void Print() { std::cout << end; }
+
+template<char delimiter, char end = '\n', typename T>
+inline void Print(const T& val) {
+  std::cout << val;
+  Print<end>();
+}
+
+template<char delimiter = ' ', char end = '\n', typename T, typename... Args>
+inline void Print(const T& val, const Args&... args) {
+  std::cout << val << delimiter;
+  Print<delimiter, end>(args...);
+}
+
+void g() {
+  Print<'-', '*'>(1, 4, 3.9f, "hey");  // 1-4-3.9-hey*
+}
+```
+
+#### 28.6.2 Technical Details
+
+* Think of a parameter pack as a sequence of values for which the compiler has remembered the types.
+
 ___
 
 ## Terminologies
