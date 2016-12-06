@@ -4635,6 +4635,8 @@ void g() {
 }
 ```
 
+* A **sizeof...** expression is used to obtain the number of elements in a parameter pack.
+
 ___
 
 ## Terminologies
