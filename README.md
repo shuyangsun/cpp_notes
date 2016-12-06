@@ -4541,6 +4541,33 @@ void g() {
 
 ### 28.5 A Compile-Time List: Tuple
 
+### 28.6 Variadic Template
+
+* *Variadic template* is used to elegantly handle the case of an unknown number of arguments of unknown (and possibly differing) types.
+
+#### 28.6.1 A Type-Safe printf()
+
+```c++
+void Print() { std::cout << std::endl; }
+
+template<typename T>
+void Print(const T& val) {
+  std::cout << val;
+  Print();
+}
+
+template<typename T, typename... Args>
+void Print(const T& val, const Args&... args) {
+  std::cout << val << " ";
+  Print(args...);
+}
+
+void g() {
+  Print(1, 4, 3.9f, "hey");  // 1 4 3.9 hey
+}
+```
+
+* The **Args...** defines what is called a *parameter pack*. A parameter pack is a sequence of (type/value) pairs from which you can "peel off" arguments starting with the first, when the function is called with two or more arguments.
 
 ___
 
