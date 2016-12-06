@@ -4614,6 +4614,24 @@ void g() {
 #### 28.6.2 Technical Details
 
 * Think of a parameter pack as a sequence of values for which the compiler has remembered the types.
+* Expansion of a parameter pack into its elements is not restricted to function calls.
+
+```c++
+template<typename T, typename U, typename... Args>
+struct AreAllTypesEqual {
+    static constexpr bool Value = std::is_same<T, U>::value && AreAllTypesEqual<U, Args...>::Value;
+};
+
+template<typename T, typename U>
+struct AreAllTypesEqual<T, U> {
+    static constexpr bool Value = std::is_same<T, U>::value;
+};
+
+void g() {
+  constexpr bool a{AreAllTypesEqual<int, int, int>::Value};    // true
+  constexpr bool b{AreAllTypesEqual<int, float, int>::Value};  // false
+}
+```
 
 ___
 
