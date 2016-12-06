@@ -4618,7 +4618,7 @@ void g() {
 
 ```c++
 // "typename U = T" to handle single argument case, without it,
-// AreAllTypesEqual<int>::Type would not be valid
+// AreAllTypesEqual<int>::Type would not have been valid.
 template<typename T, typename U = T, typename... Args>
 struct AreAllTypesEqual {
     static constexpr bool Value = std::is_same<T, U>::value && AreAllTypesEqual<U, Args...>::Value;
