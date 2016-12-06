@@ -4617,7 +4617,8 @@ void g() {
 * Expansion of a parameter pack into its elements is not restricted to function calls.
 
 ```c++
-template<typename T, typename U, typename... Args>
+// "typename U = T" to handle single argument case, without it, AreAllTypesEqual<int>::Type would not be valid
+template<typename T, typename U = T, typename... Args>
 struct AreAllTypesEqual {
     static constexpr bool Value = std::is_same<T, U>::value && AreAllTypesEqual<U, Args...>::Value;
 };
