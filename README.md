@@ -4637,6 +4637,17 @@ void g() {
 
 * A **sizeof...** expression is used to obtain the number of elements in a parameter pack.
 
+```c++
+template<typename T, std::size_t NDim, typename Allocator>
+class NDArray {
+public:
+    template<typename U, typename... Args>
+    auto operator[](const Args... args) -> std::enable_if<sizeof...(Args) == NDim, T&>;
+    
+    // ...
+};
+```
+
 ___
 
 ## Terminologies
