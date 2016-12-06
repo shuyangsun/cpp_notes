@@ -4641,10 +4641,10 @@ void g() {
 template<typename T, std::size_t NDim, typename Allocator>
 class NDArray {
 public:
-    template<typename U, typename... Args>
-    auto operator[](const Args... args) -> std::enable_if<sizeof...(Args) == NDim, T&>::type;
-    
-    // ...
+  template<typename U, typename... Args>
+  auto operator[](const Args... args) -> std::enable_if<sizeof...(Args) == NDim, T&>::type;
+  
+  // ...
 };
 ```
 
