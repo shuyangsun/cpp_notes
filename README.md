@@ -4575,8 +4575,8 @@ void g() {
 template<char End = '\n', bool ShouldUseEnd = true>
 inline void Print() {
   // Partial specialization is not allowed for functions, also because of
-  // variadic template, overloading is also not possible in this case,
-  // so it has to be done using if-statement inside the function, which
+  // variadic template, overloading is also not possible in this case.
+  // So it has to be done using if-statement inside the function, which
   // will (possibly in a not so good compiler) result in run-time cost.
   if (ShouldUseEnd) std::cout << End;
 }
