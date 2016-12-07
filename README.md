@@ -4675,7 +4675,14 @@ void g() {
 
 ### 28.7 SI Units Example
 
+### 28.8 Advice
 
+* Use recursion to express compile-time iteration.
+* Don't use variadic templates for homogeneous argument lists (prefer initializer lists for that).
+
+___
+
+## 29. A Matrix Design
 
 ___
 
