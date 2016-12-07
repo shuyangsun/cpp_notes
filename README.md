@@ -4656,6 +4656,15 @@ template<typename F, typename... T>
 void Call(F&& f, T&&... t) {
   f(std::forward<T>(t)...);
 }
+
+void Func(const int x);
+
+void g() {
+  Call(Func, 5);
+  
+  void (*fptr)(const int){Func};
+  Call(fptr, 6);
+}
 ```
 
 * The **...** in **forward\<T>(t)...** is read "forward the zero or more arguments from **t**".
