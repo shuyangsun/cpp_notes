@@ -4673,8 +4673,6 @@ void g() {
 
 * **std::get()** provides compile-time zero-based subscripting of **std::tuple**s.
 
-### 28.7 SI Units Example
-
 ### 28.8 Advice
 
 * Use recursion to express compile-time iteration.
