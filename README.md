@@ -4568,6 +4568,7 @@ void g() {
 ```
 
 * The **Args...** defines what is called a *parameter pack*. A parameter pack is a sequence of (type/value) pairs from which you can "peel off" arguments starting with the first, when the function is called with two or more arguments.
+* A parameter pack can have zero or more elements.
 
 ```c++
 // Print() with delimiter and end char
@@ -4650,7 +4651,18 @@ public:
 
 #### 28.6.3 Forwarding
 
+```c++
+template<typename F, typename... T>
+void Call(F&& f, T&&... t) {
+  f(std::forward<T>(t)...);
+}
+```
 
+* The **...** in **forward\<T>(t)...** is read "forward the zero or more arguments from **t**".
+
+#### 28.6.4 The Standard-Library tuple
+
+* **std::get()** provides compile-time zero-based subscripting of **std::tuple**s.
 
 ___
 
