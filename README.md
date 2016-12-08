@@ -4682,6 +4682,11 @@ ___
 
 ## 29. A Matrix Design
 
+### 29.1 Introduction
+
+#### 29.1.1 Basic Matrix Uses
+
+* As for **std::vector**, we use **()** to specify sizes and **{}** to specify element values.
 
 ___
 
