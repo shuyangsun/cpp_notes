@@ -3836,6 +3836,8 @@ void g() {
 
 #### 25.2.4 Templates as Arguments
 
+* Only class templates can be template arguments.
+
 ```c++
 template<typename T, template<typename> class C>
 class Foo {
