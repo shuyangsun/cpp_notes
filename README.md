@@ -4703,14 +4703,34 @@ ___
 * 2003: "**malloc** is great. Use it."
 * 2013: "**malloc** is wanting. Supplement it."
 
-#### 1.2 Problem with maclloc
+#### 1.2 Problem with malloc
 
-* **malloc** requires **size**, but **free** doesn't. This causes deallocation requires searching for the size category store that contains the allocated object. ([N3536](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3536.html))
+* **malloc** requires **size**, but **free** doesn't. So deallocation requires searching for the size category store that contains the allocated object. ([N3536](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3536.html))
 
-#### 1.3 Problem with std::allocator
+```c++
+// What the correct malloc implementation should've been (from
+// one of the original malloc's author):
 
-* **std::allocator** came out at 1994, was designed to solve [near/far pointer](http://stackoverflow.com/questions/3575592/what-are-near-far-and-huge-pointers) problem, not memory allocation.
+struct Block {
+  void* ptr;
+  size_t lenght;
+};
+
+Block malloc(size_t size);
+void free(Block block);
+```
+
+#### 1.3 Problem with operator new
+
+* Syntactic oddities: **new int;** returns a pointer to **int**; **new int[8];** also returns a pointer to **int**, instead of **int[8]** (which is a type).
+* Had to work with **malloc**.
+* No communication with the constructor.
+
+#### 1.4 Problem with std::allocator
+
+* **std::allocator** came out at 1994, was designed to solve [near/far pointer](http://stackoverflow.com/questions/3575592/what-are-near-far-and-huge-pointers) problem, not memory allocation. It had no intent to expand scope beyond that, hence it's not a good allocator because it wasn't designed to be.
 * It takes type argument, whereas allocation isn't related to the type (except size, but that should be calculated beforehand).
+* Stateless assumption does not make sense for an allocator.
 
 ___
 
