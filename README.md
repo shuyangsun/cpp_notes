@@ -3857,6 +3857,31 @@ void g() {
 }
 ```
 
+```c++
+enum MemoryStorageLocation {
+  MemoryStorageLocationHost = 0,
+  MemoryStorageLocationDevice
+};
+
+template<int StorageLocation>
+struct MemoryHandler { /* ... */ };
+
+template<
+  typename T,
+  int StorageLocation = MemoryStorageLocationDevice,
+  template<int> class MemHandler = MemoryHandler>
+class Matrix {
+private:
+  using MemH = MemoryHandler<StorageLocation>;
+public:
+  // ...
+};
+
+void g() {
+  const Matrix<float> a{};  // A Matrix stored on device, using default allocator.
+}
+```
+
 #### 25.2.5 Default Template Arguments
 
 ```c++
@@ -4687,6 +4712,13 @@ ___
 #### 29.1.1 Basic Matrix Uses
 
 * As for **std::vector**, we use **()** to specify sizes and **{}** to specify element values.
+
+### 29.3 Matrix Arithmetic Operations
+
+#### 29.3.2 Addition
+
+* Use **std::common_type** to determine the type that preserves values for arithmetic operations.
+* There is no difference between **Matrix** and **Matrix_ref** element access: the difference between **Matrix** and **Matrix_ref** is in the initialization and ownership of elements.
 
 ___
 
