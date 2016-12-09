@@ -4690,6 +4690,30 @@ ___
 
 ___
 
+## Allocator
+
+### 1. CppCon 2015: [Andrei Alexandrescu](http://erdani.com/) “std::allocator...”
+
+[YouTube Video](https://www.youtube.com/watch?v=LIb3L4vKZ7U)
+
+#### 1.1 Attitude towards Allocator
+
+* 1983: "**malloc** is awesome. Use it."
+* 1993: "**malloc** is awful. Replace it."
+* 2003: "**malloc** is great. Use it."
+* 2013: "**malloc** is wanting. Supplement it."
+
+#### 1.2 Problem with maclloc
+
+* **malloc** requires **size**, but **free** doesn't. This causes deallocation requires searching for the size category store that contains the allocated object. ([N3536](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3536.html))
+
+#### 1.3 Problem with std::allocator
+
+* **std::allocator** came out at 1994, was designed to solve [near/far pointer](http://stackoverflow.com/questions/3575592/what-are-near-far-and-huge-pointers) problem, not memory allocation.
+* It takes type argument, whereas allocation isn't related to the type (except size, but that should be calculated beforehand).
+
+___
+
 ## Terminologies
 
 * ADL: Argument Dependent Lookup
