@@ -4726,6 +4726,15 @@ ___
 
 ## 30. Standard-Library Overview
 
+### 30.1 Introduction
+
+* Maybe you can design and implement a better alternative for your application, but:
+	* How easy will it be for some future maintainer to learn that alternative design?
+	* How likely is the alternative to be available on a yet unknown platform ten years from now?
+	* How likely is the alternative to be useful for future applications?
+	* How likely is it that your alternative will be interoperable with code written using the standard library?
+	* How likely is it that you can spend as much effort optimizing and testing your alternative as was done for the standard library?
+
 
 
 ___
