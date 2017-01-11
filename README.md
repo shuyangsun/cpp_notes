@@ -4548,7 +4548,10 @@ public:
 };
 
 template<typename T, typename U>
-struct IsAddableTo: SubstitutionSucceeded<typename GetAddResult<T, U>::Type> { };
+using GetAddResultT = typename GetAddResult<T, U>::Type;
+
+template<typename T, typename U>
+struct IsAddableTo: SubstitutionSucceeded<GetAddResultT<T, U>> { };
 
 template<typename T, typename U>
 constexpr bool IsAddableToV() { return IsAddableTo<T, U>::value; }  // alias for '::value'
@@ -4556,7 +4559,7 @@ constexpr bool IsAddableToV() { return IsAddableTo<T, U>::value; }  // alias for
 // Use of IsAddableTo
 
 template<typename T, typename U>
-auto Add(const T& a, const U& b) -> EnableIf<IsAddableTo<T, U>(), GetAddResult<T, U>::Type> {
+auto Add(const T& a, const U& b) -> EnableIf<IsAddableToV<T, U>(), GetAddResultT<T, U>> {
   return a + b;
 }
 
