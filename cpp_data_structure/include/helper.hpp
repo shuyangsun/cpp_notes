@@ -23,8 +23,14 @@
 *
 ******************************************************************************/
 
-#ifndef __CPP_DS_GENERAL_HPP__
-#define __CPP_DS_GENERAL_HPP__
+#ifndef __CPP_DS_HELPER_HPP__
+#define __CPP_DS_HELPER_HPP__
 
-#endif  // __CPP_DS_GENERAL_HPP__
+namespace helper {
+
+  void ShowQuitPrompt();
+
+}
+
+#endif  // __CPP_DS_HELPER_HPP__
 

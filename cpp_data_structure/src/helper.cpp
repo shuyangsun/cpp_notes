@@ -23,8 +23,12 @@
 *
 ******************************************************************************/
 
-#ifndef __CPP_DS_GENERAL_HPP__
-#define __CPP_DS_GENERAL_HPP__
+#include <iostream>
+#include "../include/helper.hpp"
 
-#endif  // __CPP_DS_GENERAL_HPP__
+void helper::ShowQuitPrompt()
+{
+  std::cout << "Press \"Enter\" to exit: ";
+  std::cin.get();
+}
 
