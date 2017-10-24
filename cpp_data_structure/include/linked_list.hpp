@@ -26,5 +26,29 @@
 #ifndef __CPP_DS_LINKED_LIST_HPP__
 #define __CPP_DS_LINKED_LIST_HPP__
 
+namespace cppds {
+  template<typename T>
+  class LinkedListNode {
+  public:
+    LinkedListNode();
+    LinkedListNode(T const value);
+    LinkedListNode(T& const value);
+    LinkedListNode(T&& value);
+    ~LinkedListNode();
+
+    T Value() const;
+    void SetValue(T const value);
+    void SetValue(T& const value);
+    void SetValue(T&& value);
+
+    LinkedListNode Next() const;
+    void SetNext(LinkedListNode const * const nextNode) const;
+
+  private:
+    T value_;
+    mutable LinkedListNode* next_;
+  };
+}
+
 #endif  // __CPP_DS_LINKED_LIST_HPP__
 
