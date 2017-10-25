@@ -26,23 +26,27 @@
 #ifndef __CPP_DS_LINKED_LIST_HPP__
 #define __CPP_DS_LINKED_LIST_HPP__
 
+#include <iostream>
+
 namespace cppds {
   template<typename T>
   class LinkedListNode {
   public:
     LinkedListNode();
     LinkedListNode(T const value);
-    LinkedListNode(T& const value);
-    LinkedListNode(T&& value);
+    LinkedListNode(T & const value);
+    LinkedListNode(T && value);
     ~LinkedListNode();
 
     T Value() const;
     void SetValue(T const value);
-    void SetValue(T& const value);
-    void SetValue(T&& value);
+    void SetValue(T & const value);
+    void SetValue(T && value);
 
-    LinkedListNode Next() const;
+    LinkedListNode* Next() const;
     void SetNext(LinkedListNode const * const nextNode) const;
+
+    operator std::string() const;
 
   private:
     T value_;
